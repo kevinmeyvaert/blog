@@ -1,0 +1,17 @@
+---
+layout: default
+---
+
+<div class="home-container">
+  <div class="photo-grid" id="photo-masonry">
+    {% assign all_posts = site.posts | concat: site.photos %}
+    {% for post in all_posts %}
+      <article class="photo-item" data-post-url="{{ post.url | relative_url }}" data-width="{{ post.width }}" data-height="{{ post.height }}" data-full-image="{{ post.image | relative_url }}">
+        {% if post.image %}
+          {% assign image_path = post.image | replace: "/assets/images/", "" %}
+          {% picture {{ image_path }} --alt {{ post.title | default: "Photo" }} --img class="photo-image" loading="lazy" %}
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+</div>

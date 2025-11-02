@@ -1,0 +1,46 @@
+---
+layout: default
+---
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">{{ page.title }}</h1>
+    <div class="article-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      {% if page.categories %}
+        <span class="article-categories">
+          {% for category in page.categories %}
+            <span class="category">{{ category }}</span>
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="article-content">
+    {{ content }}
+  </div>
+
+  {% if page.tags %}
+  <footer class="article-footer">
+    <div class="article-tags">
+      {% for tag in page.tags %}
+        <span class="tag">#{{ tag }}</span>
+      {% endfor %}
+    </div>
+  </footer>
+  {% endif %}
+
+  <nav class="article-navigation">
+    {% if page.previous %}
+      <a href="{{ page.previous.url | relative_url }}" class="article-nav-prev">
+        ← {{ page.previous.title }}
+      </a>
+    {% endif %}
+    {% if page.next %}
+      <a href="{{ page.next.url | relative_url }}" class="article-nav-next">
+        {{ page.next.title }} →
+      </a>
+    {% endif %}
+  </nav>
+</article>

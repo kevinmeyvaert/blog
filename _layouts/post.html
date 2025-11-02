@@ -1,0 +1,54 @@
+---
+layout: default
+---
+
+<article class="post">
+  <div class="post-content">
+    {% if page.image %}
+      <div class="post-image-wrapper">
+        <img
+          src="{{ page.image | relative_url }}"
+          alt="{{ page.title | default: 'Photo' }}"
+          class="post-image"
+          data-full-image="{{ page.image | relative_url }}"
+        >
+      </div>
+    {% endif %}
+
+    <div class="post-meta">
+      {% if page.title %}
+        <h1 class="post-title">{{ page.title }}</h1>
+      {% endif %}
+
+      {% if page.caption %}
+        <p class="post-caption">{{ page.caption }}</p>
+      {% endif %}
+
+      {{ content }}
+
+      {% if page.tags %}
+        <div class="post-tags">
+          {% for tag in page.tags %}
+            <span class="tag">#{{ tag }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if page.date %}
+        <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
+          {{ page.date | date: "%B %d, %Y" }}
+        </time>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Post navigation -->
+  <nav class="post-navigation">
+    {% if page.previous.url %}
+      <a href="{{ page.previous.url | relative_url }}" class="nav-previous" title="Previous: {{ page.previous.title }}">&larr;</a>
+    {% endif %}
+    {% if page.next.url %}
+      <a href="{{ page.next.url | relative_url }}" class="nav-next" title="Next: {{ page.next.title }}">&rarr;</a>
+    {% endif %}
+  </nav>
+</article>

@@ -1,0 +1,35 @@
+---
+layout: default
+title: Blog
+---
+
+<div class="blog-container">
+  <header class="blog-header">
+    <h1>Blog</h1>
+    <p class="blog-description">Technical articles about photography, web development, and running.</p>
+  </header>
+
+  <div class="blog-list">
+    {% assign sorted_articles = site.articles | sort: 'date' | reverse %}
+    {% for article in sorted_articles %}
+      <article class="blog-item">
+        <time class="blog-date" datetime="{{ article.date | date_to_xmlschema }}">
+          {{ article.date | date: "%b %d, %Y" }}
+        </time>
+        <h2 class="blog-title">
+          <a href="{{ article.url | relative_url }}">{{ article.title }}</a>
+        </h2>
+        {% if article.excerpt %}
+          <p class="blog-excerpt">{{ article.excerpt }}</p>
+        {% endif %}
+        {% if article.categories %}
+          <div class="blog-categories">
+            {% for category in article.categories %}
+              <span class="category">{{ category }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+</div>
