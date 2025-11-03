@@ -32,6 +32,14 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
 
+      - name: Cache generated images
+        uses: actions/cache@v4
+        with:
+          path: assets/generated
+          key: ${{ runner.os }}-generated-images-${{ hashFiles('assets/images/**', '_config.yml', '_data/picture.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-generated-images-
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
