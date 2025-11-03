@@ -35,7 +35,9 @@ jobs:
       - name: Cache generated images
         uses: actions/cache@v4
         with:
-          path: assets/generated
+          path: |
+            assets/generated
+            .jekyll-cache
           key: ${{ runner.os }}-generated-images-${{ hashFiles('assets/images/**', '_config.yml', '_data/picture.yml') }}
           restore-keys: |
             ${{ runner.os }}-generated-images-
