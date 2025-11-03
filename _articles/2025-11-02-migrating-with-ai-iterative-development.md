@@ -134,6 +134,8 @@ Embrace constraints. Perfect architecture isn't always practical. Ship the thing
 
 Review, don't just accept. The first solution often works, but not always optimally. The masonry grid needed three attempts to get right.
 
+> **Want predictable results from AI coding agents?** The iterative approach described here works great for smaller projects. For larger codebases and enterprise applications, I've developed a more structured approach using NX, module boundaries, and code generators that makes AI-generated code consistently production-ready. Learn more in [Architecting for AI: How NX, Module Boundaries, and Code Generators Transformed My Development Workflow](/articles/2025-08-25-architecting-for-ai).
+
 ## The Real Value
 
 The final blog works great. But the real value wasn't the code. It was learning how to collaborate effectively with AI tooling. These patterns apply whether you're building a blog, refactoring an app, or debugging production issues.
