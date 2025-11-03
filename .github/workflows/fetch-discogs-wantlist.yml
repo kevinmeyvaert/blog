@@ -1,0 +1,55 @@
+name: Fetch Discogs Wantlist
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  fetch-wantlist:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch Discogs wantlist
+        env:
+          DISCOGS_TOKEN: ${{ secrets.DISCOGS_TOKEN }}
+        run: |
+          # Create _data directory if it doesn't exist
+          mkdir -p _data
+
+          # Fetch wantlist from Discogs API
+          curl -H "Authorization: Discogs token=$DISCOGS_TOKEN" \
+               -H "User-Agent: KevinMeyvaertBlog/1.0 +https://kevinmeyvaert.be" \
+               -H "Accept: application/json" \
+               "https://api.discogs.com/users/kevinmeyvaert/wantlist?per_page=100" \
+               -o _data/wantlist.json
+
+          # Pretty print the JSON
+          cat _data/wantlist.json | jq '.' > _data/wantlist.tmp.json
+          mv _data/wantlist.tmp.json _data/wantlist.json
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git status --porcelain _data/wantlist.json | grep -q . && echo "changed=true" >> $GITHUB_OUTPUT || true
+
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/wantlist.json
+          git commit -m "Update Discogs wantlist [skip ci]"
+          git push
+
+      - name: No changes detected
+        if: steps.check_changes.outputs.changed != 'true'
+        run: echo "No changes to wantlist detected. Skipping commit and deployment."

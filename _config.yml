@@ -30,6 +30,8 @@ url: "https://kevinmeyvaert.be" # the base hostname & protocol for your site
 navigation:
   - name: articles
     url: /articles
+  - name: records i want
+    url: /wantlist
   - name: behangmotief.com
     url: https://behangmotief.com
   - name: i like running

@@ -1,0 +1,52 @@
+---
+layout: default
+title: Wantlist
+---
+
+<div class="wantlist-container">
+  <header class="wantlist-header">
+    <h1>Vinyl Wantlist</h1>
+    <p class="wantlist-description">Records I'm hunting for on Discogs</p>
+  </header>
+
+  {% if site.data.wantlist and site.data.wantlist.wants %}
+  <div class="wantlist-grid">
+    {% for want in site.data.wantlist.wants %}
+      <div class="wantlist-item">
+        <a href="https://www.discogs.com/release/{{ want.id }}" target="_blank" rel="noopener noreferrer" class="wantlist-link">
+          <div class="wantlist-image-wrapper">
+            <img src="{{ want.basic_information.cover_image }}"
+                 alt="{{ want.basic_information.title }} by {% for artist in want.basic_information.artists %}{{ artist.name }}{% unless forloop.last %}, {% endunless %}{% endfor %}"
+                 class="wantlist-image"
+                 loading="lazy">
+          </div>
+          <div class="wantlist-info">
+            <h3 class="wantlist-title">{{ want.basic_information.title }}</h3>
+            <p class="wantlist-artist">
+              {% for artist in want.basic_information.artists %}
+                {{ artist.name }}{% unless forloop.last %}, {% endunless %}
+              {% endfor %}
+            </p>
+            <div class="wantlist-meta">
+              {% if want.basic_information.year %}
+                <span class="wantlist-year">{{ want.basic_information.year }}</span>
+              {% endif %}
+              {% if want.basic_information.formats %}
+                <span class="wantlist-format">
+                  {% for format in want.basic_information.formats %}
+                    {{ format.name }}{% unless forloop.last %}, {% endunless %}
+                  {% endfor %}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="wantlist-empty">
+    <p>No items in the wantlist yet. Check back soon!</p>
+  </div>
+  {% endif %}
+</div>
