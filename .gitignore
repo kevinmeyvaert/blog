@@ -4,3 +4,11 @@ _site
 .jekyll-metadata
 vendor
 assets/generated
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
