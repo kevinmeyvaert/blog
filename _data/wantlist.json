@@ -3,10 +3,182 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 1,
+    "items": 8,
     "urls": {}
   },
   "wants": [
+    {
+      "id": 34740591,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/34740591",
+      "date_added": "2025-11-03T06:23:28-08:00",
+      "basic_information": {
+        "id": 34740591,
+        "master_id": 3945833,
+        "master_url": "https://api.discogs.com/masters/3945833",
+        "resource_url": "https://api.discogs.com/releases/34740591",
+        "title": "Rihla ",
+        "year": 2025,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Stereo"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Mansur Brown",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 5354931,
+            "resource_url": "https://api.discogs.com/artists/5354931"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Amai Records",
+            "catno": "AMAI004LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 2382775,
+            "resource_url": "https://api.discogs.com/labels/2382775"
+          }
+        ],
+        "thumb": "https://i.discogs.com/mEqBkKjJk9PNB3tVDQH2iZvXd9xgWjTmby46l47DWyo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0NzQw/NTkxLTE3NTQ0MDM4/MjEtMTQ4MS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/uXkJ13H_wmZx3zG56QjC_pIUpksnR46QuRC52_y79NI/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0NzQw/NTkxLTE3NTQ0MDM4/MjEtMTQ4MS5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock",
+          "Post Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 1865080,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/1865080",
+      "date_added": "2025-11-03T06:23:51-08:00",
+      "basic_information": {
+        "id": 1865080,
+        "master_id": 134243,
+        "master_url": "https://api.discogs.com/masters/134243",
+        "resource_url": "https://api.discogs.com/releases/1865080",
+        "title": "Battle For The Sun",
+        "year": 2009,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Placebo",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 9436,
+            "resource_url": "https://api.discogs.com/artists/9436"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Dreambrother Ltd",
+            "catno": "BATTLE09LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 154292,
+            "resource_url": "https://api.discogs.com/labels/154292"
+          },
+          {
+            "name": "[PIAS] Entertainment Group",
+            "catno": "956.0009.012",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 142816,
+            "resource_url": "https://api.discogs.com/labels/142816"
+          }
+        ],
+        "thumb": "https://i.discogs.com/VsYFlqvRO6u_i4Oa-_YX0dy3LLoZExR_7g2CNnBKHCA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4NjUw/ODAtMTI0ODcyMTg0/OC5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/MTNhFBGb-xLWuf6gYra3AAtI8YIL0FnAAVOoFwk-XAw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4NjUw/ODAtMTI0ODcyMTg0/OC5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 27535212,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/27535212",
+      "date_added": "2025-11-03T06:24:07-08:00",
+      "basic_information": {
+        "id": 27535212,
+        "master_id": 3153258,
+        "master_url": "https://api.discogs.com/masters/3153258",
+        "resource_url": "https://api.discogs.com/releases/27535212",
+        "title": "Messy",
+        "year": 2023,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Olivia Dean",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 9686557,
+            "resource_url": "https://api.discogs.com/artists/9686557"
+          }
+        ],
+        "labels": [
+          {
+            "name": "EMI",
+            "catno": "EMIV2093",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 26126,
+            "resource_url": "https://api.discogs.com/labels/26126"
+          }
+        ],
+        "thumb": "https://i.discogs.com/bNB6i1RGZ6PyPuX_iUDNHvmwBQ_ktrQG4AfeO9qXC_k/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE2ODgxMTU5/NjYtMzYzOC5wbmc.jpeg",
+        "cover_image": "https://i.discogs.com/CqIm9g_rpxKqEy3S6CpI0_zfqkiysIvde9oL14gFHKc/rs:fit/g:sm/q:90/h:591/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE2ODgxMTU5/NjYtMzYzOC5wbmc.jpeg",
+        "genres": [
+          "Funk / Soul",
+          "Pop"
+        ],
+        "styles": []
+      },
+      "rating": 0,
+      "notes": ""
+    },
     {
       "id": 3004588,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/3004588",
@@ -64,6 +236,243 @@
         ],
         "styles": [
           "Indie Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 31724039,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/31724039",
+      "date_added": "2025-11-03T06:22:32-08:00",
+      "basic_information": {
+        "id": 31724039,
+        "master_id": 3602906,
+        "master_url": "https://api.discogs.com/masters/3602906",
+        "resource_url": "https://api.discogs.com/releases/31724039",
+        "title": "Come And See",
+        "year": 2024,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ],
+            "text": "Oxblood"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Gurriers",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 13529416,
+            "resource_url": "https://api.discogs.com/artists/13529416"
+          }
+        ],
+        "labels": [
+          {
+            "name": "No Filter (2)",
+            "catno": "NOFI001LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 3831827,
+            "resource_url": "https://api.discogs.com/labels/3831827"
+          },
+          {
+            "name": "No Filter (2)",
+            "catno": "NOFI001LPX",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 3831827,
+            "resource_url": "https://api.discogs.com/labels/3831827"
+          }
+        ],
+        "thumb": "https://i.discogs.com/owp_P1EYXcuMcDwQWukNC6Gz6UVqKhBfrFT1AdcydiA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxNzI0/MDM5LTE3MjY0NzE1/NzItMTkwNi5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/2N1OIKCKaib2FSyi7O258aow5K56J8uzfILtTV2hwnY/rs:fit/g:sm/q:90/h:595/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxNzI0/MDM5LTE3MjY0NzE1/NzItMTkwNi5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Post-Punk",
+          "Shoegaze"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 30926445,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/30926445",
+      "date_added": "2025-11-03T06:22:57-08:00",
+      "basic_information": {
+        "id": 30926445,
+        "master_id": 3510960,
+        "master_url": "https://api.discogs.com/masters/3510960",
+        "resource_url": "https://api.discogs.com/releases/30926445",
+        "title": "Timeless",
+        "year": 2024,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "2",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Kaytranada",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 3160392,
+            "resource_url": "https://api.discogs.com/artists/3160392"
+          }
+        ],
+        "labels": [
+          {
+            "name": "RCA",
+            "catno": "none",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 895,
+            "resource_url": "https://api.discogs.com/labels/895"
+          }
+        ],
+        "thumb": "https://i.discogs.com/WhRlUoDpe4Hd_7S9ynzrDR6RTQ_pZQKmlVf6g4HbxIg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwOTI2/NDQ1LTE3MTg1MDYy/NjEtNTMwNy5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/sZuFJPTIGOzCwmsfiBsGglhF9MacyYYnGutwcZplTBI/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwOTI2/NDQ1LTE3MTg1MDYy/NjEtNTMwNy5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Hip Hop",
+          "Funk / Soul",
+          "Pop"
+        ],
+        "styles": [
+          "Contemporary R&B",
+          "House"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 23608436,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/23608436",
+      "date_added": "2025-11-03T06:22:18-08:00",
+      "basic_information": {
+        "id": 23608436,
+        "master_id": 2682152,
+        "master_url": "https://api.discogs.com/masters/2682152",
+        "resource_url": "https://api.discogs.com/releases/23608436",
+        "title": "Up And Away",
+        "year": 2022,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition",
+              "Stereo"
+            ],
+            "text": "Blue"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Σtella",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 3686664,
+            "resource_url": "https://api.discogs.com/artists/3686664"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Sub Pop",
+            "catno": "SP 1483",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 77343,
+            "resource_url": "https://api.discogs.com/labels/77343"
+          }
+        ],
+        "thumb": "https://i.discogs.com/KvL1s83nDYxQXilC92W2uDW8L84p1V-55n7koj5didA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzNjA4/NDM2LTE2NTU5OTY3/MjgtNDI1Ny5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/AvXromDvdEtybS9cI75Vbjhd_M_7ZTIsj9pWp0NEXI4/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzNjA4/NDM2LTE2NTU5OTY3/MjgtNDI1Ny5qcGVn.jpeg",
+        "genres": [
+          "Rock",
+          "Pop",
+          "Folk, World, & Country"
+        ],
+        "styles": [
+          "Indie Pop",
+          "Folk Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 4858772,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/4858772",
+      "date_added": "2025-11-03T06:23:13-08:00",
+      "basic_information": {
+        "id": 4858772,
+        "master_id": 589122,
+        "master_url": "https://api.discogs.com/masters/589122",
+        "resource_url": "https://api.discogs.com/releases/4858772",
+        "title": "6 Feet Beneath The Moon",
+        "year": 2013,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "2",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "King Krule",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 2177938,
+            "resource_url": "https://api.discogs.com/artists/2177938"
+          }
+        ],
+        "labels": [
+          {
+            "name": "XL Recordings",
+            "catno": "XLLP618",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 160,
+            "resource_url": "https://api.discogs.com/labels/160"
+          }
+        ],
+        "thumb": "https://i.discogs.com/Ly13bstagIbJCDex3zXyV0BOTTdyXHr-PEAKeLte3tQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ4NTg3/NzItMTM3NzY5NzA0/MC05ODc1LmpwZWc.jpeg",
+        "cover_image": "https://i.discogs.com/9CDzt34fSneERZ0Es_Wrj4E7_MS9zCLDi3drTOrLhqA/rs:fit/g:sm/q:90/h:480/w:480/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ4NTg3/NzItMTM3NzY5NzA0/MC05ODc1LmpwZWc.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock"
         ]
       },
       "rating": 0,
