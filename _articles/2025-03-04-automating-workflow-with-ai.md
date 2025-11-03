@@ -7,6 +7,8 @@ tags: [cursor, ai, automation, mcp, azure-devops]
 excerpt: "This article explores how I use AI-powered tools like Cursor and Model Context Protocol (MCP) to automate my web development workflow, enhance efficiency, and stay ahead in the rapidly evolving AI-driven coding landscape."
 ---
 
+> **Update (August 2025):** This article is outdated. I no longer use Cursor to build software. My approach has evolved significantly since writing this post. For a more recent and comprehensive look at how I integrate AI into my development workflow, see [Architecting for AI: How NX, Module Boundaries, and Code Generators Transformed My Development Workflow](/articles/2025-08-25-architecting-for-ai).
+
 I'm lazy. Not in a bad way, but in the "how can I get more done with less effort?" way. As a web engineer, I look for ways to improve my workflows. I want to spend less time on repetitive tasks and more time on creative problem-solving. AI has become my tool of choice. It helps me build software faster and smarter. Cursor is an AI-powered coding assistant that has changed how I develop software.
 
 ## Using Cursor to Build Software

@@ -9,6 +9,9 @@ excerpt: "What I learned about effective AI collaboration while migrating 85 pho
 
 I recently migrated my photography blog from Tumblr to Jekyll with help from Claude Code. The project took a few hours and involved migrating 85 posts, optimizing 839 MB of images, and building a custom blog section. But more interesting than the technical outcome was learning how to effectively work with an AI coding assistant.
 
+![My Tumblr page](/assets/images/articles/my-tumblr.webp)
+*This is a screenshot from my Tumblr. Looks familiar?*
+
 This isn't a tutorial. It's a reflection on what works (and what doesn't) when building something real with AI.
 
 ## Starting with Context
