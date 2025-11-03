@@ -5,10 +5,15 @@ layout: default
 <div class="home-container">
   <div class="photo-grid" id="photo-masonry">
     {% for post in paginator.posts %}
-      <article class="photo-item" data-post-url="{{ post.url | relative_url }}" data-width="{{ post.width }}" data-height="{{ post.height }}" data-full-image="{{ post.image | relative_url }}">
+      <article class="photo-item" data-post-url="{{ post.url | relative_url }}" data-width="{{ post.width }}" data-height="{{ post.height }}">
         {% if post.image %}
           {% assign image_path = post.image | replace: "/assets/images/", "" %}
           {% picture {{ image_path }} --alt {{ post.title | default: "Photo" }} --img class="photo-image" loading="lazy" %}
+
+          {%comment%} Generate lightbox image (2048px optimized) - hidden but provides data-src {%endcomment%}
+          <div style="display:none;">
+            {% picture lightbox {{ image_path }} --img class="lightbox-image" %}
+          </div>
         {% endif %}
       </article>
     {% endfor %}

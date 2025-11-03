@@ -1,0 +1,9 @@
+presets:
+  default:
+    widths: [400, 600, 800, 1000]
+    formats: [webp, original]
+
+  lightbox:
+    widths: [2048]
+    formats: [webp, original]
+    quality: 85

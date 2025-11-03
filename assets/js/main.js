@@ -54,10 +54,11 @@
       img.addEventListener('click', function(e) {
         e.preventDefault();
         currentImageIndex = index;
-        // Get full image from parent article's data attribute
+        // Get optimized lightbox image from the hidden lightbox-image element
         const article = img.closest('.photo-item');
-        const fullImage = article ? article.dataset.fullImage : img.src;
-        openModal(fullImage);
+        const lightboxImg = article ? article.querySelector('.lightbox-image') : null;
+        const lightboxImage = lightboxImg ? lightboxImg.currentSrc || lightboxImg.src : img.src;
+        openModal(lightboxImage);
       });
     });
 
@@ -72,7 +73,9 @@
             const index = allImages.indexOf(img);
             if (index !== -1) {
               currentImageIndex = index;
-              openModal(item.dataset.fullImage);
+              const lightboxImg = item.querySelector('.lightbox-image');
+              const lightboxImage = lightboxImg ? lightboxImg.currentSrc || lightboxImg.src : img.src;
+              openModal(lightboxImage);
             }
           }
         }
@@ -142,8 +145,9 @@
     currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
     const img = allImages[currentImageIndex];
     const article = img.closest('.photo-item');
-    const fullImage = article ? article.dataset.fullImage : img.src;
-    modalImage.src = fullImage;
+    const lightboxImg = article ? article.querySelector('.lightbox-image') : null;
+    const lightboxImage = lightboxImg ? lightboxImg.currentSrc || lightboxImg.src : img.src;
+    modalImage.src = lightboxImage;
     updateModalNavigation();
   }
 
@@ -153,8 +157,9 @@
     currentImageIndex = (currentImageIndex + 1) % allImages.length;
     const img = allImages[currentImageIndex];
     const article = img.closest('.photo-item');
-    const fullImage = article ? article.dataset.fullImage : img.src;
-    modalImage.src = fullImage;
+    const lightboxImg = article ? article.querySelector('.lightbox-image') : null;
+    const lightboxImage = lightboxImg ? lightboxImg.currentSrc || lightboxImg.src : img.src;
+    modalImage.src = lightboxImage;
     updateModalNavigation();
   }
 

@@ -58,7 +58,6 @@ picture:
   output: "assets/generated"
   markup: "picture"
   formats: [avif, webp, original]
-  widths: [640, 1024, 1600, 1920]
   dimension_attributes: true
   fast_build: true
   nomarkdown: false
