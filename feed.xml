@@ -1,0 +1,45 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
+  <link href="{{ site.url }}/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="{{ site.url }}/" rel="alternate" type="text/html"/>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>{{ site.url }}/feed.xml</id>
+
+  <title type="html">{{ site.title }} - Articles</title>
+  <subtitle>{{ site.description }}</subtitle>
+  <author>
+    <name>{{ site.title }}</name>
+  </author>
+
+  {% assign articles = site.articles | sort: 'date' | reverse %}
+  {% for article in articles limit: 20 %}
+    <entry>
+      <title type="html">{{ article.title | smartify | xml_escape }}</title>
+      <link href="{{ site.url }}{{ article.url }}" rel="alternate" type="text/html" title="{{ article.title | xml_escape }}"/>
+      <published>{{ article.date | date_to_xmlschema }}</published>
+      <updated>{{ article.date | date_to_xmlschema }}</updated>
+      <id>{{ site.url }}{{ article.url }}</id>
+      <content type="html" xml:base="{{ site.url }}{{ article.url }}">{{ article.content | strip | xml_escape }}</content>
+
+      {% if article.excerpt %}
+      <summary type="html">{{ article.excerpt | strip_html | xml_escape }}</summary>
+      {% endif %}
+
+      {% if article.categories %}
+        {% for category in article.categories %}
+        <category term="{{ category | xml_escape }}"/>
+        {% endfor %}
+      {% endif %}
+
+      {% if article.tags %}
+        {% for tag in article.tags %}
+        <category term="{{ tag | xml_escape }}"/>
+        {% endfor %}
+      {% endif %}
+    </entry>
+  {% endfor %}
+</feed>

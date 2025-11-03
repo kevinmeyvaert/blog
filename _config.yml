@@ -46,7 +46,6 @@ social:
 # Build settings
 # theme: minima  # Disabled - using custom layouts
 plugins:
-  - jekyll-feed
   - jekyll_picture_tag
   - jekyll-paginate
 
