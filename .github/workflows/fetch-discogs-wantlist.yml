@@ -29,7 +29,7 @@ jobs:
           curl -H "Authorization: Discogs token=$DISCOGS_TOKEN" \
                -H "User-Agent: KevinMeyvaertBlog/1.0 +https://kevinmeyvaert.be" \
                -H "Accept: application/json" \
-               "https://api.discogs.com/users/kevinmeyvaert/wantlist?per_page=100" \
+               "https://api.discogs.com/users/kevinmeyvaert/wants?per_page=100" \
                -o _data/wantlist.json
 
           # Pretty print the JSON
@@ -47,7 +47,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add _data/wantlist.json
-          git commit -m "Update Discogs wantlist [skip ci]"
+          git commit -m "chore: update discogs wantlist [skip ci]"
           git push
 
       - name: No changes detected
