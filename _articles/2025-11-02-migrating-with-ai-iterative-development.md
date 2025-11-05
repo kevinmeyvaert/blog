@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Migrating My Photography Blog with AI: Lessons in Iterative Development"
+title: "Migrating my photography blog with AI: Lessons in iterative development"
 date: 2025-11-02
 categories: [web-development, ai]
 tags: [jekyll, claude, workflow, migration]
@@ -14,7 +14,7 @@ I recently migrated my photography blog from Tumblr to Jekyll with help from Cla
 
 This isn't a tutorial. It's a reflection on what works (and what doesn't) when building something real with AI.
 
-## Starting with Context
+## Starting with context
 
 My first prompt was straightforward:
 
@@ -24,7 +24,7 @@ What worked here: I provided the actual URL instead of describing the design. I 
 
 The AI analyzed my Tumblr theme and started building. But immediately, we hit the first lesson.
 
-## Visual Feedback Beats Everything
+## Visual feedback beats everything
 
 The initial build looked clean but wrong. Instead of my sidebar navigation, it created a horizontal header. I could have written a paragraph explaining the difference, but instead:
 
@@ -34,7 +34,7 @@ Two screenshots. One sentence. Problem solved.
 
 Lesson: When something doesn't match your vision, show it. Screenshots, mockups, or rough sketches communicate infinitely faster than descriptions.
 
-## The Masonry Grid Saga
+## The masonry grid saga
 
 This is where things got interesting. My Tumblr blog used a masonry layout. Images of different aspect ratios flowed naturally into two columns. Simple to see, harder to build.
 
@@ -69,7 +69,7 @@ Perfect. Zero JavaScript. True masonry effect. The right solution was simpler al
 
 Lesson: Don't get attached to the first approach. If something fundamental isn't working, say so and explore alternatives.
 
-## Asking for Best Practices
+## Asking for best practices
 
 I had 839 MB of images sitting in the project. I didn't know if Jekyll had built-in optimization, so I asked:
 
@@ -81,7 +81,7 @@ Result: 839 MB to 21 MB (97.5% reduction)
 
 Lesson: You don't need to know every solution. Ask about best practices for the problem you're trying to solve. "Does X have a way to handle Y?" is a powerful prompt pattern.
 
-## When Constraints Change Plans
+## When constraints change plans
 
 Later in the project, I wanted better URL structure. The blog listing was at `/blog` but individual articles used `/articles/article-title`. Confusing.
 
@@ -96,7 +96,7 @@ I chose option 1: keep it simple. The URLs are clear even if the directory name 
 
 Lesson: Real projects have constraints (hosting limitations, plugin compatibility, deadlines). Perfect architecture sometimes loses to practical shipping.
 
-## Prompting Patterns That Worked
+## Prompting patterns that worked
 
 Looking back at the conversation, the most effective prompts were:
 
@@ -110,7 +110,7 @@ Context-rich for complex requests. Not "Add a blog" but "I want a separate page 
 
 Questions over commands. Not "Implement image compression" but "Does Jekyll offer some kind of image optimization plugin?"
 
-## What We Built
+## What we built
 
 In a few hours:
 
@@ -118,7 +118,7 @@ We migrated 85 photo posts from Tumblr HTML. We optimized and served responsive 
 
 The conversation had ~50 exchanges. Most were quick iterations and refinements.
 
-## Takeaways for AI-Assisted Development
+## Takeaways for AI-assisted development
 
 Start with context. Give the AI your actual URL, existing code, or screenshots. Context beats lengthy descriptions.
 
@@ -134,9 +134,9 @@ Embrace constraints. Perfect architecture isn't always practical. Ship the thing
 
 Review, don't just accept. The first solution often works, but not always optimally. The masonry grid needed three attempts to get right.
 
-> **Want predictable results from AI coding agents?** The iterative approach described here works great for smaller projects. For larger codebases and enterprise applications, I've developed a more structured approach using NX, module boundaries, and code generators that makes AI-generated code consistently production-ready. Learn more in [Architecting for AI: How NX, Module Boundaries, and Code Generators Transformed My Development Workflow](/articles/2025-08-25-architecting-for-ai).
+> **Want predictable results from AI coding agents?** The iterative approach described here works great for smaller projects. For larger codebases and enterprise applications, I've developed a more structured approach using NX, module boundaries, and code generators that makes AI-generated code consistently production-ready. Learn more in [Architecting for AI: How NX, module boundaries, and code generators transformed my development workflow](/articles/architecting-for-ai/).
 
-## The Real Value
+## The real value
 
 The final blog works great. But the real value wasn't the code. It was learning how to collaborate effectively with AI tooling. These patterns apply whether you're building a blog, refactoring an app, or debugging production issues.
 

@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Architecting for AI: How NX, Module Boundaries, and Code Generators Transformed My Development Workflow"
+title: "Architecting for AI: How NX, module boundaries, and code generators transformed my development workflow"
 date: 2025-08-25
 categories: [architecture, ai]
 tags: [ai, nx, architecture, angular, monorepo, developer-productivity]
@@ -11,13 +11,13 @@ When ChatGPT appeared, every dev team rushed to integrate it into their workflow
 
 This is the story of how I prepared my enterprise Angular app for the AI age. I didn't write better prompts. I enforced better architecture.
 
-## The Problem: AI Assistants Don't Know Your Architecture
+## The problem: AI assistants don't know your architecture
 
 Here's a scenario you've probably lived through. You ask your AI assistant to "add a new feature to the stories module." It generates code enthusiastically. But the code imports from unrelated modules. It creates files in the wrong directories. It uses outdated Angular patterns from its training data. It violates your team's linting rules and breaks your dependency graph.
 
 That was my daily reality until I realized something. AI assistants need guardrails, not guidelines.
 
-## NX: The Monorepo That Thinks Like an Architect
+## NX: The monorepo that thinks like an architect
 
 [NX](https://nx.dev) is more than a monorepo tool. It's a framework for architectural discipline. When I migrated my social-style application to NX, I wasn't just cleaning up the repo. I was creating a structure both humans and AIs could navigate without ambiguity.
 
@@ -41,7 +41,7 @@ libs/posts/feat-scheduler/
 
 This predictability eliminates guesswork for humans and machines.
 
-## Module Boundaries: Your Architectural Immune System
+## Module boundaries: Your architectural immune system
 
 The key to AI-safe architecture isn't documentation. It's enforcement. I use ESLint's `@nx/enforce-module-boundaries` rule. This rule relies on a two-dimensional tagging system that defines both the domain and type of each library.
 
@@ -81,7 +81,7 @@ UI code can't call APIs directly. It must go through the data-access layer. No d
 
 Libraries must satisfy both domain and type constraints. A library tagged `["domain:stories", "type:feature"]` must respect both sets of boundaries. It can import `domain:shared, type:ui`. It cannot import `domain:ads, type:ui`. It cannot import `domain:shared, type:api-service` from a UI component. The boundaries are enforced automatically. AI has no room to color outside the lines.
 
-## What Happens When AI Hits a Boundary
+## What happens when AI hits a boundary
 
 When AI-generated code violates a rule, it doesn't fail silently. It hits a lint wall:
 
@@ -95,7 +95,7 @@ A project tagged with "domain:posts" can only depend on libs tagged with
 
 The feedback is immediate and clear. The AI adapts. Next time, it generates correct imports. Your architecture becomes the AI's training data.
 
-## Custom Generators: Teaching AI to Fish
+## Custom generators: Teaching AI to fish
 
 Boundaries defend your architecture. Generators let you go on offense. I built custom NX generators that wrap my architectural patterns into reusable commands.
 
@@ -103,7 +103,7 @@ I can create a new feature module with `npx nx g @app/generators:library feat-hi
 
 Every generator creates files in the right places. It applies architectural tags. It sets up linting, tests, and i18n. It uses modern Angular syntax like signals, standalone components, and the inject() function. The AI doesn't need to generate boilerplate. It just calls the right generator.
 
-## CLAUDE.md: Context for AI, Not Rules for Humans
+## CLAUDE.md: Context for AI, not rules for humans
 
 Many teams maintain massive documentation files describing coding conventions. I deleted mine. I replaced it with a `CLAUDE.md` file that focuses on context, not rules:
 
@@ -126,24 +126,24 @@ Many teams maintain massive documentation files describing coding conventions. I
 
 Everything that can be enforced through tooling gets enforced. Linting, code structure, import rules, and formatting are not written down. They're baked into the tools.
 
-## Enforcement Over Documentation
+## Enforcement over documentation
 
 If a rule can be enforced, don't document it. This creates immediate feedback for AI and humans. Your tooling configuration becomes your single source of truth. When you update ESLint rules, you update AI behavior. There's zero drift between documentation and implementation.
 
-## Real Results
+## Real results
 
 Since I adopted this approach, module boundary violations dropped to near zero. AI assistants generate code that passes lint on the first try. New developers onboard in days, not weeks. Code reviews focus on business logic, not structure. My AI assistants now self-lint before suggesting commits.
 
-## What I Wish I'd Known Earlier
+## What I wish I'd known earlier
 
 Start with boundaries, not features. Architectural constraints teach AI faster than documentation. Treat generators as infrastructure. They're as critical as CI/CD pipelines. Use tags, types, and tooling to make wrong code impossible. Lint early and often. If it doesn't lint, it doesn't ship. Treat your architectural context like code and version-control it.
 
-## When Architecture Meets AI
+## When architecture meets AI
 
 Once your architecture enforces itself, AI becomes a productive collaborator instead of a liability. Onboarding happens in minutes, whether the new team member is human or AI. Every library follows the same structure. Refactors become safe. Consistency scales with your team size.
 
 When AI and architecture align, velocity and stability increase together. That's rare in software engineering.
 
-## The Takeaway
+## The takeaway
 
 The teams that thrive in the AI era won't be the ones with the best prompts. They'll be the ones with the best architectures. Make your architecture enforceable. Make your AI architecturally aware. Let your development team and your AI move faster, safely.

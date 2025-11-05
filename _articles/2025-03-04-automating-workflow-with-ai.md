@@ -1,23 +1,23 @@
 ---
 layout: article
-title: "Automating My Workflow with AI: A Web Engineer's Journey"
+title: "Automating my workflow with AI: A web engineer's journey"
 date: 2025-03-04
 categories: [web-development, ai]
 tags: [cursor, ai, automation, mcp, azure-devops]
 excerpt: "This article explores how I use AI-powered tools like Cursor and Model Context Protocol (MCP) to automate my web development workflow, enhance efficiency, and stay ahead in the rapidly evolving AI-driven coding landscape."
 ---
 
-> **Update (August 2025):** This article is outdated. I no longer use Cursor to build software. My approach has evolved significantly since writing this post. For a more recent and comprehensive look at how I integrate AI into my development workflow, see [Architecting for AI: How NX, Module Boundaries, and Code Generators Transformed My Development Workflow](/articles/2025-08-25-architecting-for-ai).
+> **Update (August 2025):** This article is outdated. I no longer use Cursor to build software. My approach has evolved significantly since writing this post. For a more recent and comprehensive look at how I integrate AI into my development workflow, see [Architecting for AI: How NX, module boundaries, and code generators transformed my development workflow](/articles/architecting-for-ai/).
 
 I'm lazy. Not in a bad way, but in the "how can I get more done with less effort?" way. As a web engineer, I look for ways to improve my workflows. I want to spend less time on repetitive tasks and more time on creative problem-solving. AI has become my tool of choice. It helps me build software faster and smarter. Cursor is an AI-powered coding assistant that has changed how I develop software.
 
-## Using Cursor to Build Software
+## Using Cursor to build software
 
 Cursor helps me accelerate my workflow. It writes boilerplate code, debugs issues, and generates complex logic. The integration with my IDE is smooth. I can generate functions and components quickly. I get instant code suggestions and improvements. I debug and troubleshoot problems faster. I automate repetitive coding tasks.
 
 With this help, I focus more on high-level architecture and problem-solving. I don't get stuck on syntax and routine coding patterns. Getting started is easy. Install it, integrate it into your workflow, and watch it handle the tedious parts. But anyone can use Cursor. I've found ways to use it better. I'll share how I get the most out of it.
 
-## Be Smart About Prompting
+## Be smart about prompting
 
 Crafting good prompts is critical when working with AI tools. The quality of the output depends on the quality of the input. Context matters. Clear, well-structured instructions help AI models generate meaningful responses.
 
@@ -25,7 +25,7 @@ Here are some principles to keep in mind. Be specific. Vague prompts lead to gen
 
 Mastering prompt engineering unlocks AI's full potential. It makes AI a powerful assistant rather than just a tool. But prompting comes with challenges.
 
-## Treat Your Agent Like an Intern
+## Treat your agent like an intern
 
 One challenge is making sure AI-generated code follows your team's coding standards. Your AI assistant is like an intern or junior engineer. It needs guidance to produce high-quality work. AI can generate impressive results, but it doesn't know your team's best practices. I use Cursor Rules to align the AI's output with our coding standards.
 
@@ -36,7 +36,7 @@ Cursor Rules act as safeguards. They enforce best practices and prevent inconsis
 
 These are the classic boy scout rules. Always leave the code better than you found it. Just like when we mentor interns and junior engineers, we need to train our AI assistant.
 
-## Getting Structured Output in Large-Scale Projects
+## Getting structured output in large-scale projects
 
 Another hurdle is consistency of output. Large language models are stochastic. If you ask an AI to generate the same code multiple times, you'll get different implementations. This leads to fragmented code, redundant logic, and a lack of cohesion. In small scripts, this might not matter. In larger projects with multiple developers, it's a problem. You need more than good prompts.
 
@@ -57,7 +57,7 @@ MCP provides structured context to AI models. This improves response accuracy. I
 
 Engineers can create more intelligent integrations between AI tools and their software development lifecycle.
 
-## Building a Custom MCP Server for Azure DevOps
+## Building a custom MCP server for Azure DevOps
 
 AI-assisted coding had already improved my development speed. Recently I took automation one step further. I built a custom MCP server to interface with Azure DevOps directly from Cursor chat.
 
@@ -68,7 +68,7 @@ This integration lets me interact with Azure DevOps without leaving my developme
 
 By integrating Azure DevOps with Cursor, I've reduced context-switching and manual interactions. My workflow is far more efficient.
 
-## The Future of AI-Driven Development
+## The future of AI-driven development
 
 AI-powered coding assistants like Cursor are reshaping how engineers build software. With AI-driven automation, we can reduce friction in our workflows. We minimize repetitive tasks. We focus more on creativity and problem-solving. My custom MCP for Azure DevOps is just the beginning. I'm constantly exploring new ways to integrate AI into my development process.
 
