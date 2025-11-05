@@ -38,9 +38,9 @@ jobs:
           path: |
             assets/generated
             .jekyll-cache
-          key: ${{ runner.os }}-generated-images-${{ hashFiles('assets/images/**', '_config.yml', '_data/picture.yml') }}
+          key: ${{ runner.os }}-generated-images-v2-${{ hashFiles('assets/images/**', '_config.yml', '_data/picture.yml') }}
           restore-keys: |
-            ${{ runner.os }}-generated-images-
+            ${{ runner.os }}-generated-images-v2-
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
