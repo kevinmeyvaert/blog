@@ -1039,3 +1039,465 @@ button {
     font-size: 14px;
   }
 }
+
+
+/* ============================================
+   RUNNING PAGE
+   ============================================ */
+
+.running-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.running-header {
+  margin-bottom: 60px;
+}
+
+.running-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.running-description {
+  color: #666666;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.running-description a {
+  text-decoration: underline;
+}
+
+.running-last-updated {
+  color: #999999;
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* Hero Image */
+.running-hero-image {
+  width: 100%;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.running-hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Stats Summary Cards */
+.running-stats-summary {
+  margin-bottom: 60px;
+}
+
+.stats-since {
+  font-size: 13px;
+  color: #999999;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.stat-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background-color: #f9f9f9;
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* This Year Stats */
+.running-stats-year {
+  margin-bottom: 60px;
+}
+
+.running-stats-year h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+/* Charts Section */
+.running-charts {
+  margin-bottom: 60px;
+}
+
+.running-charts h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.charts-note {
+  font-size: 13px;
+  color: #999999;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.chart-container {
+  margin-bottom: 50px;
+}
+
+.chart-container h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.chart-container > div {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Activity Map */
+.running-map-section {
+  margin-bottom: 60px;
+}
+
+.running-map-section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.activity-map {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Activity Calendar */
+.running-calendar-section {
+  margin-bottom: 60px;
+}
+
+.running-calendar-section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.activity-calendar {
+  width: 100%;
+}
+
+.calendar-months {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.calendar-month {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.calendar-month-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #000000;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-day-header {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666666;
+  padding: 8px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  position: relative;
+  cursor: default;
+  transition: all 0.2s ease;
+}
+
+.calendar-day-empty {
+  background-color: transparent;
+  border: none;
+}
+
+.calendar-day-future {
+  opacity: 0.3;
+}
+
+.calendar-day-active {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.calendar-day-active:hover {
+  transform: scale(1.05);
+}
+
+.calendar-day-number {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.calendar-day-active .calendar-day-number {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.calendar-day-indicator {
+  position: absolute;
+  bottom: 3px;
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+/* Recent Activities Feed */
+.running-activities {
+  margin-bottom: 60px;
+}
+
+.running-activities h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.activity-item {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.activity-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  gap: 15px;
+}
+
+.activity-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.activity-date {
+  font-size: 13px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.activity-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.activity-stat strong {
+  color: #000000;
+  font-weight: 600;
+}
+
+.activity-achievements {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #999999;
+  font-style: italic;
+}
+
+/* Empty State */
+.running-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999999;
+  font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .running-container {
+    padding: 20px 15px;
+  }
+
+  .running-header {
+    margin-bottom: 40px;
+  }
+
+  .running-header h1 {
+    font-size: 24px;
+  }
+
+  .running-description {
+    font-size: 14px;
+  }
+
+  .stat-cards-grid,
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .stat-card {
+    padding: 20px 15px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .running-charts h2,
+  .running-map-section h2,
+  .running-calendar-section h2,
+  .running-activities h2 {
+    font-size: 20px;
+  }
+
+  .chart-container h3 {
+    font-size: 16px;
+  }
+
+  .activity-map {
+    height: 350px;
+  }
+
+  .calendar-months {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .calendar-month {
+    padding: 15px;
+  }
+
+  .calendar-day-header {
+    font-size: 10px;
+    padding: 6px 2px;
+  }
+
+  .calendar-day-number {
+    font-size: 11px;
+  }
+
+  .activity-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .activity-name {
+    font-size: 16px;
+  }
+
+  .activity-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-cards-grid,
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .activity-map {
+    height: 300px;
+  }
+}

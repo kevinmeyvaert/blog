@@ -1,0 +1,171 @@
+---
+layout: default
+title: Running
+---
+
+<!-- Include ApexCharts and Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.1/dist/apexcharts.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div class="running-container">
+  <header class="running-header">
+    <h1>I like running</h1>
+    <p class="running-description">
+      It's an essential part of my creative process.
+    </p>
+    {% if site.data.strava.last_updated %}
+    <p class="running-last-updated">Last updated: {{ site.data.strava.last_updated | date: "%B %d, %Y at %H:%M UTC" }}</p>
+    {% endif %}
+  </header>
+
+  {% if site.data.strava %}
+  <!-- Hero Image -->
+  <section class="running-hero-image">
+    <img src="/assets/images/pages/running.jpg" alt="Running track" />
+  </section>
+
+  <!-- Summary Stats Cards -->
+  <section class="running-stats-summary">
+    <p class="stats-since">All-time stats since {{ site.data.strava.athlete.created_at | date: "%B %Y" }}</p>
+    <div class="stat-cards-grid">
+      <div class="stat-card">
+        <div class="stat-value">{{ site.data.strava.stats.all_run_totals.count }}</div>
+        <div class="stat-label">Total Runs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ site.data.strava.stats.all_run_totals.distance | divided_by: 1000.0 | round: 1 }} km</div>
+        <div class="stat-label">Total Distance</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ site.data.strava.stats.all_run_totals.moving_time | divided_by: 3600 | round: 0 }}h</div>
+        <div class="stat-label">Total Time</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- This Year Stats -->
+  <section class="running-stats-year">
+    <h2>This year</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value">{{ site.data.strava.stats.ytd_run_totals.count }}</div>
+        <div class="stat-label">Runs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ site.data.strava.stats.ytd_run_totals.distance | divided_by: 1000.0 | round: 1 }} km</div>
+        <div class="stat-label">Distance</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ site.data.strava.stats.ytd_run_totals.moving_time | divided_by: 3600 | round: 0 }}h</div>
+        <div class="stat-label">Time</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activity Calendar -->
+  <section class="running-calendar-section">
+    <h2>Activity calendar</h2>
+    <div id="activity-calendar" class="activity-calendar"></div>
+  </section>
+
+  <!-- Recent Activities Feed -->
+  <section class="running-activities">
+    <h2>Recent activities</h2>
+    <div class="activities-list">
+      {% for activity in site.data.strava.activities limit:5 %}
+        {% if activity.type == "Run" %}
+        <div class="activity-item">
+          <div class="activity-header">
+            <h3 class="activity-name">{{ activity.name }}</h3>
+            <time class="activity-date">{{ activity.start_date_local | date: "%B %d, %Y" }}</time>
+          </div>
+          <div class="activity-stats">
+            <span class="activity-stat">
+              <strong>{{ activity.distance | divided_by: 1000.0 | round: 2 }} km</strong>
+            </span>
+            <span class="activity-stat">
+              {% assign pace_seconds = activity.moving_time | divided_by: activity.distance | times: 1000 %}
+              {% assign pace_minutes = pace_seconds | divided_by: 60 | floor %}
+              {% assign pace_secs = pace_seconds | modulo: 60 | round: 0 %}
+              <strong>{{ pace_minutes }}:{% if pace_secs < 10 %}0{% endif %}{{ pace_secs }} /km</strong>
+            </span>
+            <span class="activity-stat">
+              <strong>{{ activity.total_elevation_gain | round: 0 }}m</strong> elevation
+            </span>
+            {% if activity.average_heartrate %}
+            <span class="activity-stat">
+              <strong>{{ activity.average_heartrate | round: 0 }} bpm</strong> avg HR
+            </span>
+            {% endif %}
+          </div>
+          {% if activity.achievement_count > 0 %}
+          <div class="activity-achievements">
+            {{ activity.achievement_count }} achievement{% if activity.achievement_count > 1 %}s{% endif %}
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Charts Section -->
+  <section class="running-charts">
+    <h2>Trends</h2>
+    {% if site.data.strava.activities.size > 0 %}
+    {% assign oldest_activity = site.data.strava.activities | last %}
+    <p class="charts-note">Charts based on last 100 activities (since {{ oldest_activity.start_date_local | date: "%B %d, %Y" }})</p>
+    {% endif %}
+
+    <div class="chart-container">
+      <h3>Distance over time</h3>
+      <div id="distance-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Average pace</h3>
+      <div id="pace-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Heart rate zones</h3>
+      <div id="hr-zones-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Running efficiency (pace vs heart rate)</h3>
+      <div id="efficiency-chart"></div>
+    </div>
+  </section>
+
+  <!-- Activity Map -->
+  <section class="running-map-section">
+    <h2>Activity map</h2>
+    <div id="activity-map" class="activity-map"></div>
+  </section>
+
+  {% else %}
+  <div class="running-empty">
+    <p>No Strava data available yet. Check back soon!</p>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Load Strava visualization script -->
+<script src="{{ '/assets/js/strava.js' | relative_url }}"></script>
+
+<!-- Initialize charts with data -->
+{% if site.data.strava %}
+<script>
+  // Pass Jekyll data to JavaScript
+  const stravaData = {{ site.data.strava | jsonify }};
+
+  // Initialize visualizations when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initializeStravaCharts(stravaData));
+  } else {
+    initializeStravaCharts(stravaData);
+  }
+</script>
+{% endif %}

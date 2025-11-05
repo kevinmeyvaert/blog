@@ -35,7 +35,7 @@ navigation:
   - name: behangmotief.com
     url: https://behangmotief.com
   - name: i like running
-    url: https://www.strava.com/athletes/37171291
+    url: /running
 
 # Social Links
 social:
