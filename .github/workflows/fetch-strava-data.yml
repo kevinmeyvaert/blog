@@ -1,0 +1,152 @@
+name: Fetch Strava Data
+
+on:
+  schedule:
+    # Run daily at 3 AM UTC (after Discogs at 2 AM)
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  fetch-strava:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Refresh Strava access token
+        id: refresh_token
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: |
+          # Refresh the access token
+          RESPONSE=$(curl -X POST https://www.strava.com/oauth/token \
+            -d client_id=$STRAVA_CLIENT_ID \
+            -d client_secret=$STRAVA_CLIENT_SECRET \
+            -d refresh_token=$STRAVA_REFRESH_TOKEN \
+            -d grant_type=refresh_token)
+
+          # Extract the new access token
+          ACCESS_TOKEN=$(echo $RESPONSE | jq -r '.access_token')
+          echo "ACCESS_TOKEN=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+          echo "Access token refreshed successfully"
+
+      - name: Fetch Strava athlete data
+        env:
+          ACCESS_TOKEN: ${{ steps.refresh_token.outputs.ACCESS_TOKEN }}
+        run: |
+          # Create _data directory if it doesn't exist
+          mkdir -p _data
+
+          # Fetch athlete profile
+          echo "Fetching athlete profile..."
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" \
+               "https://www.strava.com/api/v3/athlete" \
+               -o _data/athlete.json
+
+          # Fetch athlete stats
+          ATHLETE_ID=$(cat _data/athlete.json | jq -r '.id')
+          echo "Fetching athlete stats for ID: $ATHLETE_ID"
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" \
+               "https://www.strava.com/api/v3/athletes/$ATHLETE_ID/stats" \
+               -o _data/athlete_stats.json
+
+      - name: Fetch recent activities
+        env:
+          ACCESS_TOKEN: ${{ steps.refresh_token.outputs.ACCESS_TOKEN }}
+        run: |
+          # Fetch last 100 activities (can be adjusted)
+          echo "Fetching recent activities..."
+          curl -H "Authorization: Bearer $ACCESS_TOKEN" \
+               "https://www.strava.com/api/v3/athlete/activities?per_page=100" \
+               -o _data/activities_raw.json
+
+      - name: Process and aggregate data
+        run: |
+          # Install jq if not available (should be pre-installed on ubuntu-latest)
+          # Combine all data into a single structured JSON file
+
+          cat > _data/strava.json << 'EOF'
+          {
+            "last_updated": "",
+            "athlete": {},
+            "stats": {},
+            "activities": [],
+            "aggregated": {
+              "weekly": [],
+              "monthly": []
+            }
+          }
+          EOF
+
+          # Add timestamp
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          # Process the data using jq
+          jq -n \
+            --arg timestamp "$TIMESTAMP" \
+            --slurpfile athlete _data/athlete.json \
+            --slurpfile stats _data/athlete_stats.json \
+            --slurpfile activities _data/activities_raw.json \
+            '{
+              last_updated: $timestamp,
+              athlete: $athlete[0],
+              stats: $stats[0],
+              activities: $activities[0],
+              aggregated: {
+                weekly: (
+                  $activities[0]
+                  | group_by(.start_date[:10] | strptime("%Y-%m-%d") | strftime("%Y-W%U"))
+                  | map({
+                      week: .[0].start_date[:10] | strptime("%Y-%m-%d") | strftime("%Y-W%U"),
+                      total_distance: (map(.distance) | add),
+                      total_time: (map(.moving_time) | add),
+                      total_elevation: (map(.total_elevation_gain) | add),
+                      activity_count: length
+                    })
+                ),
+                monthly: (
+                  $activities[0]
+                  | group_by(.start_date[:7])
+                  | map({
+                      month: .[0].start_date[:7],
+                      total_distance: (map(.distance) | add),
+                      total_time: (map(.moving_time) | add),
+                      total_elevation: (map(.total_elevation_gain) | add),
+                      activity_count: length
+                    })
+                )
+              }
+            }' > _data/strava.tmp.json
+
+          # Move temp file to final location
+          mv _data/strava.tmp.json _data/strava.json
+
+          # Clean up temporary files
+          rm -f _data/athlete.json _data/athlete_stats.json _data/activities_raw.json
+
+          echo "Strava data processed successfully"
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git status --porcelain _data/strava.json | grep -q . && echo "changed=true" >> $GITHUB_OUTPUT || true
+
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _data/strava.json
+          git commit -m "chore: update strava data"
+          git push
+
+      - name: No changes detected
+        if: steps.check_changes.outputs.changed != 'true'
+        run: echo "No changes to Strava data detected. Skipping commit and deployment."
