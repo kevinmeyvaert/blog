@@ -137,6 +137,18 @@ title: Running
       <h3>Running efficiency (pace vs heart rate)</h3>
       <div id="efficiency-chart"></div>
     </div>
+
+    <div class="chart-container">
+      <h3>Fitness, Fatigue & Form (CTL/ATL/TSB)</h3>
+      <p class="chart-description">Training load analysis over the last 90 days</p>
+      <div id="training-load-chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Interval workouts</h3>
+      <p class="chart-description">Recent quality workouts and training sessions</p>
+      <div id="interval-scorecard" class="interval-scorecard"></div>
+    </div>
   </section>
 
   <!-- Activity Map -->
@@ -152,7 +164,8 @@ title: Running
   {% endif %}
 </div>
 
-<!-- Load Strava visualization script -->
+<!-- Load Strava visualization scripts -->
+<script src="{{ '/assets/js/strava-metrics.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/strava.js' | relative_url }}"></script>
 
 <!-- Initialize charts with data -->

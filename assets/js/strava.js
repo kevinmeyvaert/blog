@@ -14,6 +14,8 @@ function initializeStravaCharts(data) {
   initializePaceChart(data);
   initializeHRZonesChart(data);
   initializeEfficiencyChart(data);
+  initializeTrainingLoadChart(data);
+  initializeIntervalScorecard(data);
   initializeActivityMap(data);
   initializeActivityCalendar(data);
 }
@@ -22,6 +24,9 @@ function initializeStravaCharts(data) {
  * Distance Over Time Chart
  */
 function initializeDistanceChart(data) {
+  // CHART TYPE CONFIG: Change 'line' to 'bar' to switch visualization style
+  const CHART_TYPE = 'bar'; // Options: 'line' or 'bar'
+
   if (!data.aggregated || !data.aggregated.monthly) {
     return;
   }
@@ -31,8 +36,32 @@ function initializeDistanceChart(data) {
   // Sort by month
   monthlyData.sort((a, b) => a.month.localeCompare(b.month));
 
+  // Filter out first month if it's partial (activities don't start in first few days)
+  let filteredMonthlyData = [...monthlyData];
+  if (filteredMonthlyData.length > 0 && data.activities) {
+    const firstMonth = filteredMonthlyData[0].month;
+    const activitiesInFirstMonth = data.activities.filter(a =>
+      a.start_date_local && a.start_date_local.startsWith(firstMonth)
+    );
+
+    if (activitiesInFirstMonth.length > 0) {
+      // Find the earliest activity in the first month
+      const earliestActivity = activitiesInFirstMonth.reduce((earliest, current) =>
+        current.start_date_local < earliest.start_date_local ? current : earliest
+      );
+
+      // Extract day of month from date (format: YYYY-MM-DD)
+      const dayOfMonth = parseInt(earliestActivity.start_date_local.split('T')[0].split('-')[2]);
+
+      // If first activity is after day 3, consider it a partial month and remove it
+      if (dayOfMonth > 3) {
+        filteredMonthlyData = filteredMonthlyData.slice(1);
+      }
+    }
+  }
+
   // Take last 12 months
-  const last12Months = monthlyData.slice(-12);
+  const last12Months = filteredMonthlyData.slice(-12);
 
   const options = {
     series: [{
@@ -43,16 +72,12 @@ function initializeDistanceChart(data) {
       }))
     }],
     chart: {
-      type: 'line',
+      type: CHART_TYPE,
       height: 350,
       toolbar: {
         show: false
       },
       fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    stroke: {
-      curve: 'smooth',
-      width: 2
     },
     colors: ['#000000'],
     xaxis: {
@@ -90,6 +115,21 @@ function initializeDistanceChart(data) {
       }
     }
   };
+
+  // Add chart type-specific options
+  if (CHART_TYPE === 'line') {
+    options.stroke = {
+      curve: 'smooth',
+      width: 2
+    };
+  } else if (CHART_TYPE === 'bar') {
+    options.plotOptions = {
+      bar: {
+        borderRadius: 4,
+        columnWidth: '60%'
+      }
+    };
+  }
 
   const chart = new ApexCharts(document.querySelector('#distance-chart'), options);
   chart.render();
@@ -319,7 +359,7 @@ function initializeEfficiencyChart(data) {
   // Filter runs with HR data and sort by date
   const runsWithHR = data.activities
     .filter(a => a.type === 'Run' && a.has_heartrate && a.average_heartrate && a.distance > 1000)
-    .sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+    .sort((a, b) => new Date(a.start_date_local) - new Date(b.start_date_local))
     .slice(-50); // Last 50 runs with HR data
 
   if (runsWithHR.length === 0) {
@@ -328,40 +368,158 @@ function initializeEfficiencyChart(data) {
     return;
   }
 
-  // Calculate pace (min/km) and HR for each run
-  const scatterData = runsWithHR.map(run => {
+  // Get date range for color mapping
+  const timestamps = runsWithHR.map(r => new Date(r.start_date_local).getTime());
+  const minDate = Math.min(...timestamps);
+  const maxDate = Math.max(...timestamps);
+  const dateRange = maxDate - minDate || 1;
+
+  // Calculate pace, EF, and color for each run
+  const scatterData = runsWithHR.map((run, index) => {
     const paceMinPerKm = (run.moving_time / 60) / (run.distance / 1000);
+    const speedKmPerMin = 1 / paceMinPerKm; // km/min
+    const ef = speedKmPerMin / run.average_heartrate * 1000; // Scale for readability
+    const timestamp = new Date(run.start_date_local).getTime();
+    const dateProgress = (timestamp - minDate) / dateRange;
+
+    // Color gradient: light gray (old) to dark blue (recent)
+    const lightness = 80 - (dateProgress * 50); // 80 to 30
+    const hue = 210; // Blue hue
+
     return {
       x: run.average_heartrate,
       y: paceMinPerKm,
       date: new Date(run.start_date_local).toLocaleDateString(),
-      name: run.name
+      timestamp: timestamp,
+      name: run.name,
+      distance: (run.distance / 1000).toFixed(2),
+      ef: ef.toFixed(2),
+      color: `hsl(${hue}, 60%, ${lightness}%)`,
+      dateProgress: dateProgress
     };
   });
 
+  // Calculate LOWESS smoothed trend line
+  // Sort by HR for LOWESS
+  const sortedData = [...scatterData].sort((a, b) => a.x - b.x);
+
+  // Simple LOWESS implementation with tricube weighting
+  const lowessSmooth = (data, bandwidth = 0.3) => {
+    const n = data.length;
+    const result = [];
+
+    for (let i = 0; i < n; i++) {
+      const x0 = data[i].x;
+      const distances = data.map(d => Math.abs(d.x - x0));
+      const maxDist = Math.max(...distances);
+
+      // Calculate weights using tricube kernel
+      const weights = distances.map(d => {
+        const u = d / (maxDist * bandwidth);
+        return u < 1 ? Math.pow(1 - Math.pow(u, 3), 3) : 0;
+      });
+
+      // Weighted linear regression
+      const sumW = weights.reduce((a, b) => a + b, 0);
+      const sumWX = weights.reduce((sum, w, j) => sum + w * data[j].x, 0);
+      const sumWY = weights.reduce((sum, w, j) => sum + w * data[j].y, 0);
+      const sumWXX = weights.reduce((sum, w, j) => sum + w * data[j].x * data[j].x, 0);
+      const sumWXY = weights.reduce((sum, w, j) => sum + w * data[j].x * data[j].y, 0);
+
+      const meanX = sumWX / sumW;
+      const meanY = sumWY / sumW;
+
+      const slope = (sumWXY - sumW * meanX * meanY) / (sumWXX - sumW * meanX * meanX);
+      const intercept = meanY - slope * meanX;
+
+      result.push({ x: x0, y: slope * x0 + intercept });
+    }
+
+    return result;
+  };
+
+  const trendLineData = lowessSmooth(sortedData, 0.4);
+
+  // Detect outliers using signed residuals
+  // Positive residual = slower than trend (bad), Negative residual = faster than trend (good)
+  const signedResiduals = scatterData.map((d, i) => {
+    const trendY = trendLineData.find(t => Math.abs(t.x - d.x) < 1)?.y || d.y;
+    return d.y - trendY; // Keep sign: positive = slower, negative = faster
+  });
+
+  const absResiduals = signedResiduals.map(r => Math.abs(r));
+  const meanResidual = absResiduals.reduce((a, b) => a + b, 0) / absResiduals.length;
+  const stdResidual = Math.sqrt(
+    absResiduals.reduce((sum, r) => sum + Math.pow(r - meanResidual, 2), 0) / absResiduals.length
+  );
+
+  const threshold = 2 * stdResidual;
+
+  // Classify outliers
+  scatterData.forEach((d, i) => {
+    const signedRes = signedResiduals[i];
+    d.isPositiveOutlier = signedRes < -threshold; // Faster than expected (GOOD)
+    d.isNegativeOutlier = signedRes > threshold;  // Slower than expected (BAD)
+    d.isOutlier = d.isPositiveOutlier || d.isNegativeOutlier;
+  });
+
+  // Calculate overall and recent EF statistics
+  const allEF = scatterData.map(d => parseFloat(d.ef));
+  const meanEF = (allEF.reduce((a, b) => a + b, 0) / allEF.length).toFixed(2);
+
+  // Last 30 days
+  const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+  const recentEF = scatterData
+    .filter(d => d.timestamp >= thirtyDaysAgo)
+    .map(d => parseFloat(d.ef));
+  const recentMeanEF = recentEF.length > 0
+    ? (recentEF.reduce((a, b) => a + b, 0) / recentEF.length).toFixed(2)
+    : meanEF;
+
   const options = {
-    series: [{
-      name: 'Runs',
-      data: scatterData
-    }],
+    series: [
+      {
+        name: 'Runs',
+        type: 'scatter',
+        data: scatterData
+      },
+      {
+        name: 'Trend',
+        type: 'line',
+        data: trendLineData
+      }
+    ],
     chart: {
-      type: 'scatter',
-      height: 350,
+      type: 'line', // Changed from 'scatter' to support mixed types
+      height: 400,
       toolbar: {
         show: false
       },
       fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
       zoom: {
         enabled: false
+      },
+      animations: {
+        enabled: true,
+        speed: 800
       }
     },
-    colors: ['#000000'],
+    colors: ['#4169E1', '#333333'],
+    stroke: {
+      width: [0, 3],
+      dashArray: [0, 0],
+      curve: ['straight', 'straight']
+    },
+    fill: {
+      opacity: [1, 0.5]
+    },
     xaxis: {
       title: {
         text: 'Average Heart Rate (bpm)',
         style: {
           color: '#000000',
-          fontSize: '12px'
+          fontSize: '12px',
+          fontWeight: 600
         }
       },
       labels: {
@@ -373,13 +531,12 @@ function initializeEfficiencyChart(data) {
       tickAmount: 8
     },
     yaxis: {
-      min: 3.0,
-      max: 6.0,
       title: {
         text: 'Pace (min/km)',
         style: {
           color: '#000000',
-          fontSize: '12px'
+          fontSize: '12px',
+          fontWeight: 600
         }
       },
       labels: {
@@ -396,35 +553,148 @@ function initializeEfficiencyChart(data) {
       reversed: true // Lower pace (faster) at top
     },
     grid: {
-      borderColor: '#e0e0e0'
+      borderColor: '#e0e0e0',
+      strokeDashArray: 3
     },
     markers: {
-      size: 6,
-      strokeWidth: 1,
-      strokeColors: '#ffffff',
+      size: [7, 0],
+      strokeWidth: 2,
+      strokeColors: ['#ffffff'],
       hover: {
-        size: 8
+        size: 10
+      },
+      discrete: scatterData.map((d, index) => ({
+        seriesIndex: 0,
+        dataPointIndex: index,
+        fillColor: d.isPositiveOutlier ? '#4CAF50' : (d.isNegativeOutlier ? '#FF6B6B' : d.color),
+        strokeColor: d.isOutlier ? '#ffffff' : '#ffffff',
+        strokeWidth: d.isOutlier ? 3 : 2,
+        size: d.isOutlier ? 9 : 7,
+        shape: d.isOutlier ? 'square' : 'circle'
+      }))
+    },
+    legend: {
+      show: true,
+      position: 'top',
+      horizontalAlign: 'right',
+      markers: {
+        width: 12,
+        height: 12
+      },
+      labels: {
+        colors: '#000000'
       }
     },
     tooltip: {
-      custom: function({ seriesIndex, dataPointIndex, w }) {
-        const data = scatterData[dataPointIndex];
-        const minutes = Math.floor(data.y);
-        const seconds = Math.round((data.y - minutes) * 60);
+      shared: false,
+      intersect: true,
+      custom: function({ series, seriesIndex, dataPointIndex, w }) {
+        if (seriesIndex === 1) return ''; // No tooltip for trend line
+
+        const d = scatterData[dataPointIndex];
+        const minutes = Math.floor(d.y);
+        const seconds = Math.round((d.y - minutes) * 60);
         const pace = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 
-        return `<div style="padding: 10px; background: white; border: 1px solid #e0e0e0; border-radius: 4px;">
-          <strong>${data.name}</strong><br>
-          ${data.date}<br>
-          <strong>HR:</strong> ${Math.round(data.x)} bpm<br>
-          <strong>Pace:</strong> ${pace} /km
+        let outlierBadge = '';
+        if (d.isPositiveOutlier) {
+          outlierBadge = '<span style="display: inline-block; background: #4CAF50; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 6px;">▲ FASTER</span>';
+        } else if (d.isNegativeOutlier) {
+          outlierBadge = '<span style="display: inline-block; background: #FF6B6B; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 6px;">▼ SLOWER</span>';
+        }
+
+        return `<div style="padding: 12px; background: white; border: 1px solid #e0e0e0; border-radius: 6px; min-width: 220px;">
+          <strong style="color: #333; font-size: 13px;">${d.name}</strong>${outlierBadge}<br>
+          <div style="margin-top: 8px; font-size: 12px; color: #666;">
+            <strong>Date:</strong> ${d.date}<br>
+            <strong>Distance:</strong> ${d.distance} km<br>
+            <strong>HR:</strong> ${Math.round(d.x)} bpm<br>
+            <strong>Pace:</strong> ${pace} /km<br>
+            <strong>EF:</strong> ${d.ef}
+          </div>
         </div>`;
       }
+    },
+    annotations: {
+      position: 'back',
+      yaxis: [],
+      points: scatterData
+        .filter(d => d.isOutlier)
+        .map((d, idx) => ({
+          x: d.x,
+          y: d.y,
+          marker: {
+            size: 0
+          },
+          label: {
+            text: d.isPositiveOutlier ? '▲' : '▼',
+            offsetY: d.isPositiveOutlier ? -12 : -12,
+            style: {
+              fontSize: '14px',
+              background: 'transparent',
+              color: d.isPositiveOutlier ? '#4CAF50' : '#FF6B6B',
+              fontWeight: 'bold'
+            }
+          }
+        }))
     }
   };
 
   const chart = new ApexCharts(document.querySelector('#efficiency-chart'), options);
   chart.render();
+
+  // Add EF statistics and interpretation below chart
+  const chartContainer = document.querySelector('#efficiency-chart').parentElement;
+  let statsElement = chartContainer.querySelector('.efficiency-stats');
+
+  if (!statsElement) {
+    statsElement = document.createElement('div');
+    statsElement.className = 'efficiency-stats';
+    chartContainer.appendChild(statsElement);
+  }
+
+  const positiveOutlierCount = scatterData.filter(d => d.isPositiveOutlier).length;
+  const negativeOutlierCount = scatterData.filter(d => d.isNegativeOutlier).length;
+
+  statsElement.innerHTML = `
+    <div class="efficiency-metrics">
+      <div class="efficiency-metric">
+        <span class="metric-label">▲ Better than expected:</span>
+        <span class="metric-value" style="color: #4CAF50;">${positiveOutlierCount}</span>
+      </div>
+      <div class="efficiency-metric">
+        <span class="metric-label">▼ Worse than expected:</span>
+        <span class="metric-value" style="color: #FF6B6B;">${negativeOutlierCount}</span>
+      </div>
+      <div class="efficiency-legend">
+        <div class="legend-gradient-bar"></div>
+        <div class="legend-labels-row">
+          <span>Older</span>
+          <span>Recent</span>
+        </div>
+      </div>
+    </div>
+    <div class="efficiency-info">
+      <p class="efficiency-interpretation">
+        ⚙️ Each dot represents one run. A flatter or upward-shifting <strong>LOWESS trend line</strong> indicates improved aerobic efficiency (faster pace at the same heart rate).
+      </p>
+      <div class="efficiency-outlier-guide">
+        <div class="outlier-guide-item">
+          <span class="outlier-icon" style="color: #4CAF50; font-weight: bold;">▲</span>
+          <span class="outlier-text"><strong>Faster pace</strong> (better efficiency) — pace faster than expected for given HR</span>
+        </div>
+        <div class="outlier-guide-item">
+          <span class="outlier-icon" style="color: #FF6B6B; font-weight: bold;">▼</span>
+          <span class="outlier-text"><strong>Slower pace</strong> (less efficient) — pace slower than expected for given HR</span>
+        </div>
+      </div>
+      <p class="efficiency-features">
+        • <strong>Color:</strong> Light to dark blue shows older to recent runs<br>
+        • <strong>Outliers:</strong> Green squares (▲) and red squares (▼) mark unusual performances (±2σ from trend)<br>
+        • <strong>Trend:</strong> LOWESS smoothed line captures non-linear HR response patterns
+      </p>
+    </div>
+  `;
 }
 
 /**
@@ -498,12 +768,41 @@ function initializeActivityMap(data) {
     maxZoom: 19
   }).addTo(map);
 
+  // Calculate tile coverage for explorer view
+  const visitedTiles = new Set();
+  const tileZoom = 14; // Tile zoom level for coverage calculation
+
+  allPolylines.forEach(({ polyline }) => {
+    polyline.forEach(([lat, lng]) => {
+      const tileX = Math.floor((lng + 180) / 360 * Math.pow(2, tileZoom));
+      const tileY = Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, tileZoom));
+      visitedTiles.add(`${tileX},${tileY}`);
+    });
+  });
+
+  // Add coverage overlay
+  visitedTiles.forEach(tileKey => {
+    const [tileX, tileY] = tileKey.split(',').map(Number);
+    const n = Math.pow(2, tileZoom);
+    const lng1 = tileX / n * 360 - 180;
+    const lng2 = (tileX + 1) / n * 360 - 180;
+    const lat1 = Math.atan(Math.sinh(Math.PI * (1 - 2 * tileY / n))) * 180 / Math.PI;
+    const lat2 = Math.atan(Math.sinh(Math.PI * (1 - 2 * (tileY + 1) / n))) * 180 / Math.PI;
+
+    L.rectangle([[lat1, lng1], [lat2, lng2]], {
+      color: '#000000',
+      weight: 1,
+      fillColor: '#000000',
+      fillOpacity: 0.05
+    }).addTo(map);
+  });
+
   // Second pass: add polylines to map
   allPolylines.forEach(({ polyline, activity }) => {
     const line = L.polyline(polyline, {
       color: '#000000',
       weight: 2,
-      opacity: 0.3
+      opacity: 0.5
     }).addTo(map);
 
     // Add popup with activity info
@@ -523,7 +822,7 @@ function initializeActivityMap(data) {
     });
   }
 
-  console.log(`Loaded ${routeCount} activity routes on map, centered at [${centerLat.toFixed(4)}, ${centerLng.toFixed(4)}]`);
+  console.log(`Loaded ${routeCount} activity routes on map with ${visitedTiles.size} explored tiles, centered at [${centerLat.toFixed(4)}, ${centerLng.toFixed(4)}]`);
 }
 
 /**
@@ -579,7 +878,7 @@ function formatMonth(monthStr) {
 }
 
 /**
- * Activity Calendar - shows last 4 months of activities
+ * Activity Calendar - shows last 4 months of activities with TSS intensity
  */
 function initializeActivityCalendar(data) {
   if (!data.activities) {
@@ -591,12 +890,15 @@ function initializeActivityCalendar(data) {
     return;
   }
 
+  // Initialize metrics calculator
+  const metrics = new StravaMetrics(data);
+
   // Get dates for last 4 months
   const today = new Date();
   const fourMonthsAgo = new Date(today);
   fourMonthsAgo.setMonth(today.getMonth() - 4);
 
-  // Create map of dates with activities
+  // Create map of dates with activities and TSS
   const activityDates = new Map();
   data.activities.forEach(activity => {
     if (activity.type === 'Run') {
@@ -604,18 +906,26 @@ function initializeActivityCalendar(data) {
       if (activityDate >= fourMonthsAgo) {
         const dateKey = activityDate.toISOString().split('T')[0];
         if (!activityDates.has(dateKey)) {
-          activityDates.set(dateKey, []);
+          activityDates.set(dateKey, { activities: [], tss: 0 });
         }
-        activityDates.get(dateKey).push(activity);
+        const tss = metrics.calculateTSS(activity);
+        activityDates.get(dateKey).activities.push(activity);
+        activityDates.get(dateKey).tss += tss;
       }
     }
+  });
+
+  // Find max TSS for scaling colors
+  let maxTSS = 0;
+  activityDates.forEach(data => {
+    if (data.tss > maxTSS) maxTSS = data.tss;
   });
 
   // Generate calendar HTML
   let calendarHTML = '<div class="calendar-months">';
 
-  // Generate for current month and previous 3 months
-  for (let i = 3; i >= 0; i--) {
+  // Generate for current month and previous month only
+  for (let i = 1; i >= 0; i--) {
     const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
     const monthName = monthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
@@ -646,28 +956,31 @@ function initializeActivityCalendar(data) {
     for (let day = 1; day <= daysInMonth; day++) {
       const currentDate = new Date(monthDate.getFullYear(), monthDate.getMonth(), day);
       const dateKey = currentDate.toISOString().split('T')[0];
-      const activities = activityDates.get(dateKey) || [];
-      const hasActivity = activities.length > 0;
+      const dayData = activityDates.get(dateKey);
       const isFuture = currentDate > today;
+      const hasActivity = !isFuture && dayData && dayData.activities.length > 0;
 
       let dayClass = 'calendar-day';
-      if (isFuture) {
-        dayClass += ' calendar-day-future';
-      } else if (hasActivity) {
+      let dayStyle = '';
+
+      if (hasActivity) {
         dayClass += ' calendar-day-active';
+
+        // Calculate color intensity based on TSS (0-100% scale)
+        const intensity = Math.min(dayData.tss / Math.max(maxTSS, 100), 1);
+        // Use grayscale from light to dark gray
+        const grayValue = Math.round(255 - (intensity * 180)); // 255 (light) to 75 (dark)
+        dayStyle = `background-color: rgb(${grayValue}, ${grayValue}, ${grayValue});`;
       }
 
       let title = '';
       if (hasActivity) {
-        const totalDistance = activities.reduce((sum, a) => sum + a.distance, 0) / 1000;
-        title = `${activities.length} run${activities.length > 1 ? 's' : ''} - ${totalDistance.toFixed(1)} km`;
+        const totalDistance = dayData.activities.reduce((sum, a) => sum + a.distance, 0) / 1000;
+        title = `${dayData.activities.length} run${dayData.activities.length > 1 ? 's' : ''} - ${totalDistance.toFixed(1)} km - TSS: ${Math.round(dayData.tss)}`;
       }
 
-      calendarHTML += `<div class="${dayClass}" title="${title}">`;
+      calendarHTML += `<div class="${dayClass}" style="${dayStyle}" title="${title}">`;
       calendarHTML += `<span class="calendar-day-number">${day}</span>`;
-      if (hasActivity) {
-        calendarHTML += `<span class="calendar-day-indicator"></span>`;
-      }
       calendarHTML += `</div>`;
     }
 
@@ -677,5 +990,474 @@ function initializeActivityCalendar(data) {
 
   calendarHTML += '</div>'; // calendar-months
 
+  // Add gradient legend below calendars
+  calendarHTML += '<div class="calendar-legend">';
+  calendarHTML += '<span class="legend-label">Training Load:</span>';
+  calendarHTML += '<div class="legend-gradient"></div>';
+  calendarHTML += '<div class="legend-labels">';
+  calendarHTML += '<span class="legend-text">Low</span>';
+  calendarHTML += '<span class="legend-text">High</span>';
+  calendarHTML += '</div>';
+  calendarHTML += '</div>';
+
   calendarElement.innerHTML = calendarHTML;
+}
+
+/**
+ * VO2max Trend Chart
+ */
+function initializeVO2maxChart(data) {
+  if (!data.activities) {
+    return;
+  }
+
+  const metrics = new StravaMetrics(data);
+  const vo2History = metrics.generateVO2maxHistory();
+
+  if (vo2History.length === 0) {
+    document.querySelector('#vo2max-chart').innerHTML =
+      '<p style="text-align: center; color: #999; padding: 40px;">Not enough data to estimate VO2max. Need runs >3km with heart rate data.</p>';
+    return;
+  }
+
+  const options = {
+    series: [{
+      name: 'VO2max',
+      data: vo2History.map(h => ({
+        x: new Date(h.date).getTime(),
+        y: h.vo2max
+      }))
+    }],
+    chart: {
+      type: 'line',
+      height: 350,
+      toolbar: {
+        show: false
+      },
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 2
+    },
+    colors: ['#000000'],
+    xaxis: {
+      type: 'datetime',
+      labels: {
+        style: {
+          colors: '#000000',
+          fontSize: '12px'
+        }
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'VO2max (ml/kg/min)',
+        style: {
+          color: '#000000',
+          fontSize: '12px'
+        }
+      },
+      labels: {
+        style: {
+          colors: '#000000',
+          fontSize: '12px'
+        }
+      },
+      min: Math.floor(Math.min(...vo2History.map(h => h.vo2max)) - 2),
+      max: Math.ceil(Math.max(...vo2History.map(h => h.vo2max)) + 2)
+    },
+    grid: {
+      borderColor: '#e0e0e0'
+    },
+    tooltip: {
+      x: {
+        format: 'MMM dd, yyyy'
+      },
+      custom: function({ seriesIndex, dataPointIndex, w }) {
+        const point = vo2History[dataPointIndex];
+        return `<div style="padding: 10px; background: white; border: 1px solid #e0e0e0; border-radius: 4px;">
+          <strong>${point.activityName}</strong><br>
+          ${new Date(point.date).toLocaleDateString()}<br>
+          <strong>VO2max:</strong> ${point.vo2max.toFixed(1)} ml/kg/min<br>
+          <strong>Distance:</strong> ${(point.distance / 1000).toFixed(2)} km
+        </div>`;
+      }
+    }
+  };
+
+  const chart = new ApexCharts(document.querySelector('#vo2max-chart'), options);
+  chart.render();
+}
+
+/**
+ * Race Predictions Table
+ */
+function initializeRacePredictions(data) {
+  if (!data.activities) {
+    return;
+  }
+
+  const metrics = new StravaMetrics(data);
+  const predictions = metrics.predictRaceTimes();
+
+  const predElement = document.querySelector('#race-predictions');
+  if (!predElement) return;
+
+  if (!predictions) {
+    predElement.innerHTML =
+      '<p style="text-align: center; color: #999; padding: 20px;">Not enough data for race predictions.</p>';
+    return;
+  }
+
+  let html = `
+    <div class="predictions-header">
+      <p>Based on current VO2max: <strong>${predictions.currentVO2max}</strong> ml/kg/min</p>
+    </div>
+    <table class="predictions-table">
+      <thead>
+        <tr>
+          <th>Distance</th>
+          <th>Predicted Time</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  for (const [distance, time] of Object.entries(predictions.predictions)) {
+    html += `
+      <tr>
+        <td>${distance}</td>
+        <td>${time}</td>
+      </tr>
+    `;
+  }
+
+  html += `
+      </tbody>
+    </table>
+  `;
+
+  predElement.innerHTML = html;
+}
+
+/**
+ * Training Load Chart (CTL/ATL/TSB)
+ */
+function initializeTrainingLoadChart(data) {
+  if (!data.activities) {
+    return;
+  }
+
+  const metrics = new StravaMetrics(data);
+  const history = metrics.generateTrainingLoadHistory(90);
+
+  if (history.length === 0) {
+    document.querySelector('#training-load-chart').innerHTML =
+      '<p style="text-align: center; color: #999; padding: 40px;">Not enough activity data.</p>';
+    return;
+  }
+
+  // Calculate warm-up period (first 42 days)
+  const WARMUP_DAYS = 42;
+  const firstDate = new Date(history[0].date).getTime();
+  const warmupEndDate = new Date(history[0].date);
+  warmupEndDate.setDate(warmupEndDate.getDate() + WARMUP_DAYS);
+  const warmupEndTime = warmupEndDate.getTime();
+  const lastDate = new Date(history[history.length - 1].date).getTime();
+
+  // Check if entire dataset is within warm-up period
+  const entirelyWarmup = history.length <= WARMUP_DAYS;
+
+  const options = {
+    series: [
+      {
+        name: 'CTL (Fitness)',
+        data: history.map(h => ({ x: new Date(h.date).getTime(), y: h.ctl }))
+      },
+      {
+        name: 'ATL (Fatigue)',
+        data: history.map(h => ({ x: new Date(h.date).getTime(), y: h.atl }))
+      },
+      {
+        name: 'TSB (Form)',
+        data: history.map(h => ({ x: new Date(h.date).getTime(), y: h.tsb }))
+      }
+    ],
+    chart: {
+      type: 'line',
+      height: 400,
+      toolbar: {
+        show: false
+      },
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 2
+    },
+    colors: ['#4169E1', '#DC143C', '#32CD32'],
+    xaxis: {
+      type: 'datetime',
+      labels: {
+        style: {
+          colors: '#000000',
+          fontSize: '12px'
+        }
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Training Load',
+        style: {
+          color: '#000000',
+          fontSize: '12px'
+        }
+      },
+      labels: {
+        style: {
+          colors: '#000000',
+          fontSize: '12px'
+        }
+      }
+    },
+    grid: {
+      borderColor: '#e0e0e0'
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'center',
+      labels: {
+        colors: '#000000'
+      }
+    },
+    tooltip: {
+      x: {
+        format: 'MMM dd, yyyy'
+      }
+    },
+    annotations: {
+      xaxis: [
+        {
+          x: firstDate,
+          x2: entirelyWarmup ? lastDate : warmupEndTime,
+          fillColor: '#808080',
+          opacity: 0.15,
+          label: {
+            text: 'Warm-up period',
+            borderColor: 'transparent',
+            style: {
+              color: '#666',
+              background: 'transparent',
+              fontSize: '11px'
+            },
+            position: 'top',
+            offsetY: 0
+          }
+        }
+      ]
+    }
+  };
+
+  const chart = new ApexCharts(document.querySelector('#training-load-chart'), options);
+  chart.render();
+
+  // Add warning caption below the chart
+  const chartContainer = document.querySelector('#training-load-chart').parentElement;
+  let captionElement = chartContainer.querySelector('.warmup-caption');
+
+  if (!captionElement) {
+    captionElement = document.createElement('p');
+    captionElement.className = 'warmup-caption';
+    chartContainer.appendChild(captionElement);
+  }
+
+  captionElement.innerHTML = '⚠️ <strong>Model warm-up:</strong> Absolute fitness values may be underestimated during the first 6 weeks due to limited historical data.';
+}
+
+/**
+ * Power-Duration Curve Chart
+ */
+function initializePowerCurveChart(data) {
+  if (!data.activities) {
+    return;
+  }
+
+  const metrics = new StravaMetrics(data);
+  const powerData = metrics.analyzePowerCurve();
+
+  const chartElement = document.querySelector('#power-curve-chart');
+  if (!chartElement) return;
+
+  if (!powerData || powerData.curve.length === 0) {
+    chartElement.innerHTML =
+      '<p style="text-align: center; color: #999; padding: 40px;">No power data available. Power meter required.</p>';
+    return;
+  }
+
+  const options = {
+    series: [{
+      name: 'Best Power',
+      data: powerData.curve.map(c => ({
+        x: c.duration,
+        y: c.power
+      }))
+    }],
+    chart: {
+      type: 'line',
+      height: 350,
+      toolbar: {
+        show: false
+      },
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 2
+    },
+    colors: ['#000000'],
+    xaxis: {
+      type: 'numeric',
+      title: {
+        text: 'Duration (seconds)',
+        style: {
+          color: '#000000',
+          fontSize: '12px'
+        }
+      },
+      labels: {
+        style: {
+          colors: '#000000',
+          fontSize: '12px'
+        },
+        formatter: function(val) {
+          if (val < 60) return val + 's';
+          if (val < 3600) return (val / 60).toFixed(0) + 'min';
+          return (val / 3600).toFixed(1) + 'h';
+        }
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Power (watts)',
+        style: {
+          color: '#000000',
+          fontSize: '12px'
+        }
+      },
+      labels: {
+        style: {
+          colors: '#000000',
+          fontSize: '12px'
+        }
+      }
+    },
+    grid: {
+      borderColor: '#e0e0e0'
+    },
+    markers: {
+      size: 5,
+      strokeWidth: 1,
+      strokeColors: '#ffffff',
+      hover: {
+        size: 7
+      }
+    },
+    tooltip: {
+      custom: function({ seriesIndex, dataPointIndex, w }) {
+        const point = powerData.curve[dataPointIndex];
+        let durationStr = '';
+        if (point.duration < 60) durationStr = point.duration + 's';
+        else if (point.duration < 3600) durationStr = Math.round(point.duration / 60) + ' min';
+        else durationStr = (point.duration / 3600).toFixed(1) + ' hours';
+
+        return `<div style="padding: 10px; background: white; border: 1px solid #e0e0e0; border-radius: 4px;">
+          <strong>${point.activityName}</strong><br>
+          ${new Date(point.date).toLocaleDateString()}<br>
+          <strong>Duration:</strong> ${durationStr}<br>
+          <strong>Power:</strong> ${point.power}W
+        </div>`;
+      }
+    },
+    annotations: powerData.criticalPower ? {
+      yaxis: [{
+        y: powerData.criticalPower.cp,
+        borderColor: '#999',
+        label: {
+          borderColor: '#999',
+          style: {
+            color: '#fff',
+            background: '#999',
+          },
+          text: `Critical Power: ${powerData.criticalPower.cp}W`
+        }
+      }]
+    } : {}
+  };
+
+  const chart = new ApexCharts(chartElement, options);
+  chart.render();
+}
+
+/**
+ * Interval Scorecard Table
+ */
+function initializeIntervalScorecard(data) {
+  if (!data.activities) {
+    return;
+  }
+
+  const metrics = new StravaMetrics(data);
+  const intervals = metrics.detectIntervals();
+
+  const scorecardElement = document.querySelector('#interval-scorecard');
+  if (!scorecardElement) return;
+
+  if (intervals.length === 0) {
+    scorecardElement.innerHTML =
+      '<p style="text-align: center; color: #999; padding: 20px;">No interval workouts detected. Workouts with "interval", "tempo", or "rep" in the name will appear here.</p>';
+    return;
+  }
+
+  // Show last 10 interval workouts
+  const recentIntervals = intervals.slice(0, 10);
+
+  let html = `
+    <table class="interval-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Workout</th>
+          <th>Distance</th>
+          <th>Avg Pace</th>
+          <th>Avg HR</th>
+          <th>Avg Power</th>
+          <th>TSS</th>
+          <th>Quality</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  for (const workout of recentIntervals) {
+    html += `
+      <tr>
+        <td>${new Date(workout.date).toLocaleDateString()}</td>
+        <td class="workout-name">${workout.name}</td>
+        <td>${workout.distance} km</td>
+        <td>${workout.avgPace}</td>
+        <td>${workout.avgHR ? workout.avgHR + ' bpm' : '-'}</td>
+        <td>${workout.avgPower ? workout.avgPower + 'W' : '-'}</td>
+        <td>${workout.tss}</td>
+        <td><span class="quality-badge quality-${Math.floor(workout.quality / 3)}">${workout.quality.toFixed(1)}/10</span></td>
+      </tr>
+    `;
+  }
+
+  html += `
+      </tbody>
+    </table>
+  `;
+
+  scorecardElement.innerHTML = html;
 }

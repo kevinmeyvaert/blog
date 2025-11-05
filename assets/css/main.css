@@ -1195,6 +1195,181 @@ button {
   padding: 20px;
 }
 
+/* Training Load Warm-up Caption */
+.warmup-caption {
+  font-size: 13px;
+  color: #666666;
+  margin-top: 15px;
+  padding: 12px 16px;
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+.warmup-caption strong {
+  color: #333333;
+}
+
+@media (max-width: 768px) {
+  .warmup-caption {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+}
+
+/* Efficiency Chart Stats */
+.efficiency-stats {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.efficiency-metrics {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.efficiency-metric {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.metric-label {
+  color: #666666;
+  font-weight: 500;
+}
+
+.metric-value {
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.efficiency-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+}
+
+.legend-gradient-bar {
+  height: 16px;
+  background: linear-gradient(to right, hsl(210, 60%, 80%), hsl(210, 60%, 30%));
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.legend-labels-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #666666;
+}
+
+.efficiency-info {
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.efficiency-interpretation {
+  font-size: 13px;
+  color: #666666;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+  font-style: italic;
+}
+
+.efficiency-features {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.8;
+  margin: 0;
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: 4px;
+  border-left: 3px solid #4169E1;
+}
+
+.efficiency-features strong {
+  color: #333333;
+}
+
+.efficiency-outlier-guide {
+  margin: 15px 0;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.outlier-guide-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 13px;
+  color: #666666;
+}
+
+.outlier-guide-item:first-child {
+  margin-top: 0;
+}
+
+.outlier-guide-item:last-child {
+  margin-bottom: 0;
+}
+
+.outlier-icon {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.outlier-text {
+  line-height: 1.5;
+}
+
+.outlier-text strong {
+  color: #333333;
+}
+
+@media (max-width: 768px) {
+  .efficiency-metrics {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .efficiency-legend {
+    width: 100%;
+  }
+
+  .efficiency-interpretation {
+    font-size: 12px;
+  }
+
+  .efficiency-features {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .outlier-guide-item {
+    font-size: 12px;
+  }
+
+  .outlier-icon {
+    font-size: 16px;
+  }
+}
+
 /* Activity Map */
 .running-map-section {
   margin-bottom: 60px;
@@ -1231,6 +1406,40 @@ button {
 
 .activity-calendar {
   width: 100%;
+}
+
+/* Calendar Legend */
+.calendar-legend {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.legend-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333333;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.legend-gradient {
+  height: 20px;
+  background: linear-gradient(to right, rgb(255, 255, 255), rgb(75, 75, 75));
+  border-radius: 4px;
+  max-width: 300px;
+  margin: 0 auto 8px;
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.legend-text {
+  font-size: 11px;
+  color: #666666;
 }
 
 .calendar-months {
@@ -1287,10 +1496,6 @@ button {
 .calendar-day-empty {
   background-color: transparent;
   border: none;
-}
-
-.calendar-day-future {
-  opacity: 0.3;
 }
 
 .calendar-day-active {
@@ -1395,6 +1600,79 @@ button {
   font-style: italic;
 }
 
+/* Chart descriptions */
+.chart-description {
+  color: #666666;
+  font-size: 13px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+/* Interval Scorecard Table */
+.interval-scorecard {
+  overflow-x: auto;
+}
+
+.interval-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.interval-table th,
+.interval-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.interval-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #666666;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.interval-table td {
+  font-size: 13px;
+}
+
+.interval-table .workout-name {
+  font-weight: 500;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Quality Badge */
+.quality-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.quality-badge.quality-0,
+.quality-badge.quality-1 {
+  background-color: #f0f0f0;
+  color: #666666;
+}
+
+.quality-badge.quality-2 {
+  background-color: #e0e0e0;
+  color: #333333;
+}
+
+.quality-badge.quality-3 {
+  background-color: #000000;
+  color: #ffffff;
+}
+
 /* Empty State */
 .running-empty {
   text-align: center;
@@ -1452,6 +1730,23 @@ button {
 
   .activity-map {
     height: 350px;
+  }
+
+  .calendar-legend {
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 6px;
+  }
+
+  .legend-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .legend-color {
+    width: 16px;
+    height: 16px;
   }
 
   .calendar-months {
