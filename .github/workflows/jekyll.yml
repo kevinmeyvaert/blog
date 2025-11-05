@@ -38,9 +38,16 @@ jobs:
           path: |
             assets/generated
             .jekyll-cache
-          key: ${{ runner.os }}-generated-images-v2-${{ hashFiles('assets/images/**', '_config.yml', '_data/picture.yml') }}
+          key: ${{ runner.os }}-generated-images-v3-${{ hashFiles('assets/images/**', '_config.yml', '_data/picture.yml') }}
           restore-keys: |
-            ${{ runner.os }}-generated-images-v2-
+            ${{ runner.os }}-generated-images-v3-
+
+      - name: Restore cached images to _site
+        run: |
+          if [ -d "assets/generated" ]; then
+            mkdir -p _site/assets
+            cp -r assets/generated _site/assets/ || true
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -49,6 +56,13 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
+      - name: Copy generated images back to source for caching
+        run: |
+          if [ -d "_site/assets/generated" ]; then
+            mkdir -p assets
+            cp -r _site/assets/generated assets/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
