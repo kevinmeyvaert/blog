@@ -1,0 +1,56 @@
+name: Deploy Orchestrator
+
+on:
+  schedule:
+    # Run daily at 4:00 AM UTC (1 hour after Strava pipeline completes)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history to check recent commits
+
+      - name: Check for data changes in last 2 hours
+        id: check_changes
+        run: |
+          echo "Checking for data changes in the last 2 hours..."
+
+          # Get the current time and 2 hours ago
+          TWO_HOURS_AGO=$(date -u -d '2 hours ago' '+%Y-%m-%d %H:%M:%S')
+          echo "Checking commits since: $TWO_HOURS_AGO UTC"
+
+          # Check if there are any commits to _data/ directory in the last 2 hours
+          CHANGES=$(git log --since="2 hours ago" --pretty=format:"%H %s" -- _data/)
+
+          if [ -n "$CHANGES" ]; then
+            echo "Data changes detected:"
+            echo "$CHANGES"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No data changes detected in the last 2 hours"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Trigger Jekyll deployment
+        if: steps.check_changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW_TOKEN }}
+        run: |
+          echo "Triggering Jekyll deployment workflow..."
+          gh workflow run jekyll.yml \
+            --repo ${{ github.repository }} \
+            --ref main
+          echo "Deployment workflow triggered successfully"
+
+      - name: No deployment needed
+        if: steps.check_changes.outputs.changed == 'false'
+        run: |
+          echo "No deployment triggered - no data changes detected"
