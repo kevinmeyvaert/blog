@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 8,
+    "items": 9,
     "urls": {}
   },
   "wants": [
@@ -59,6 +59,60 @@
         "styles": [
           "Alternative Rock",
           "Post Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 2188767,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/2188767",
+      "date_added": "2025-11-08T23:30:03-08:00",
+      "basic_information": {
+        "id": 2188767,
+        "master_id": 156214,
+        "master_url": "https://api.discogs.com/masters/156214",
+        "resource_url": "https://api.discogs.com/releases/2188767",
+        "title": "Payable On Death",
+        "year": 2003,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "P.O.D.",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 41449,
+            "resource_url": "https://api.discogs.com/artists/41449"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Atlantic",
+            "catno": "83661-1",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 681,
+            "resource_url": "https://api.discogs.com/labels/681"
+          }
+        ],
+        "thumb": "https://i.discogs.com/rsjVJwic0y9amPCnAr90IjMBct5i5PqgKdR-3WUeiLE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxODg3/NjctMTU5NDMzMTAw/OS01ODgyLmpwZWc.jpeg",
+        "cover_image": "https://i.discogs.com/z7ms-CMueDaehp0_l_RQisDZSHWzoBTBTWtZsgBF_9s/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxODg3/NjctMTU5NDMzMTAw/OS01ODgyLmpwZWc.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Nu Metal"
         ]
       },
       "rating": 0,
