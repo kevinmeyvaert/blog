@@ -852,6 +852,41 @@ button {
   margin: 40px 0;
 }
 
+.article-content em {
+  color: #999999;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.article-content .image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.article-content .image-grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.article-content .image-grid-item img {
+  width: 100%;
+  height: auto;
+}
+
+.article-content .image-grid-item em {
+  display: block;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .article-content .image-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .article-footer {
   margin-top: 40px;
   padding-top: 30px;
