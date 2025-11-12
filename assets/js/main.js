@@ -32,11 +32,56 @@
   // ============================================
 
   document.addEventListener('DOMContentLoaded', function() {
+    initTheme();
     initImageGallery();
     initModalViewer();
     initKeyboardNavigation();
     initSidebarMenu();
   });
+
+  // ============================================
+  // THEME SWITCHING
+  // ============================================
+
+  function initTheme() {
+    // Get saved theme from localStorage or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+    // Apply theme immediately to prevent flash
+    setTheme(theme);
+
+    // Theme toggle buttons
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    if (themeToggleMobile) {
+      themeToggleMobile.addEventListener('click', toggleTheme);
+    }
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
 
   // ============================================
   // IMAGE GALLERY

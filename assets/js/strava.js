@@ -3,6 +3,27 @@
  * Initializes ApexCharts and Leaflet.js for running statistics
  */
 
+// Store chart instances for re-rendering on theme change
+const chartInstances = {};
+
+/**
+ * Get theme-aware colors from CSS variables
+ */
+function getThemeColors() {
+  const root = document.documentElement;
+  const style = getComputedStyle(root);
+
+  return {
+    textPrimary: style.getPropertyValue('--color-text-primary').trim() || '#000000',
+    textSecondary: style.getPropertyValue('--color-text-secondary').trim() || '#333333',
+    textMuted: style.getPropertyValue('--color-text-muted').trim() || '#666666',
+    textLight: style.getPropertyValue('--color-text-light').trim() || '#999999',
+    borderPrimary: style.getPropertyValue('--color-border-primary').trim() || '#e0e0e0',
+    bgPrimary: style.getPropertyValue('--color-bg-primary').trim() || '#ffffff',
+    bgSecondary: style.getPropertyValue('--color-bg-secondary').trim() || '#f9f9f9'
+  };
+}
+
 function initializeStravaCharts(data) {
   if (!data || !data.activities) {
     console.warn('No Strava data available');
@@ -18,6 +39,26 @@ function initializeStravaCharts(data) {
   initializeIntervalScorecard(data);
   initializeActivityMap(data);
   initializeActivityCalendar(data);
+
+  // Re-render charts on theme change
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+        // Re-render all charts with new theme
+        Object.values(chartInstances).forEach(chart => {
+          if (chart && chart.destroy) {
+            chart.destroy();
+          }
+        });
+        initializeStravaCharts(data);
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
 }
 
 /**
@@ -63,6 +104,8 @@ function initializeDistanceChart(data) {
   // Take last 12 months
   const last12Months = filteredMonthlyData.slice(-12);
 
+  const colors = getThemeColors();
+
   const options = {
     series: [{
       name: 'Distance (km)',
@@ -79,12 +122,12 @@ function initializeDistanceChart(data) {
       },
       fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
     },
-    colors: ['#000000'],
+    colors: [colors.textPrimary],
     xaxis: {
       type: 'category',
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
@@ -93,19 +136,19 @@ function initializeDistanceChart(data) {
       title: {
         text: 'Distance (km)',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px'
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
     },
     grid: {
-      borderColor: '#e0e0e0'
+      borderColor: colors.borderPrimary
     },
     tooltip: {
       y: {
@@ -133,6 +176,7 @@ function initializeDistanceChart(data) {
 
   const chart = new ApexCharts(document.querySelector('#distance-chart'), options);
   chart.render();
+  chartInstances.distance = chart;
 }
 
 /**
@@ -170,6 +214,8 @@ function initializePaceChart(data) {
     .sort((a, b) => a.month.localeCompare(b.month))
     .slice(-12); // Last 12 months
 
+  const colors = getThemeColors();
+
   const options = {
     series: [{
       name: 'Avg Pace (min/km)',
@@ -190,12 +236,12 @@ function initializePaceChart(data) {
       curve: 'smooth',
       width: 2
     },
-    colors: ['#000000'],
+    colors: [colors.textPrimary],
     xaxis: {
       type: 'category',
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
@@ -204,13 +250,13 @@ function initializePaceChart(data) {
       title: {
         text: 'Pace (min/km)',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px'
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         },
         formatter: function(val) {
@@ -222,7 +268,7 @@ function initializePaceChart(data) {
       reversed: true // Lower pace is better
     },
     grid: {
-      borderColor: '#e0e0e0'
+      borderColor: colors.borderPrimary
     },
     tooltip: {
       y: {
@@ -237,6 +283,7 @@ function initializePaceChart(data) {
 
   const chart = new ApexCharts(document.querySelector('#pace-chart'), options);
   chart.render();
+  chartInstances.pace = chart;
 }
 
 /**
@@ -272,9 +319,11 @@ function initializeHRZonesChart(data) {
   // Filter out zones with no activities
   const activeZones = zoneCounts.filter(z => z.count > 0);
 
+  const colors = getThemeColors();
+
   if (activeZones.length === 0) {
     document.querySelector('#hr-zones-chart').innerHTML =
-      '<p style="text-align: center; color: #999; padding: 40px;">No heart rate data available</p>';
+      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">No heart rate data available</p>`;
     return;
   }
 
@@ -308,7 +357,7 @@ function initializeHRZonesChart(data) {
         return val + ' runs';
       },
       style: {
-        colors: ['#000000'],
+        colors: [colors.textPrimary],
         fontSize: '12px'
       }
     },
@@ -316,7 +365,7 @@ function initializeHRZonesChart(data) {
       categories: activeZones.map(z => `${z.name} (${z.min}-${z.max} bpm)`),
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
@@ -324,13 +373,13 @@ function initializeHRZonesChart(data) {
     yaxis: {
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
     },
     grid: {
-      borderColor: '#e0e0e0'
+      borderColor: colors.borderPrimary
     },
     legend: {
       show: false
@@ -346,6 +395,7 @@ function initializeHRZonesChart(data) {
 
   const chart = new ApexCharts(document.querySelector('#hr-zones-chart'), options);
   chart.render();
+  chartInstances.hrZones = chart;
 }
 
 /**
@@ -362,9 +412,11 @@ function initializeEfficiencyChart(data) {
     .sort((a, b) => new Date(a.start_date_local) - new Date(b.start_date_local))
     .slice(-50); // Last 50 runs with HR data
 
+  const colors = getThemeColors();
+
   if (runsWithHR.length === 0) {
     document.querySelector('#efficiency-chart').innerHTML =
-      '<p style="text-align: center; color: #999; padding: 40px;">Not enough heart rate data available</p>';
+      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">Not enough heart rate data available</p>`;
     return;
   }
 
@@ -504,7 +556,7 @@ function initializeEfficiencyChart(data) {
         speed: 800
       }
     },
-    colors: ['#4169E1', '#333333'],
+    colors: ['#4169E1', colors.textSecondary],
     stroke: {
       width: [0, 3],
       dashArray: [0, 0],
@@ -517,14 +569,14 @@ function initializeEfficiencyChart(data) {
       title: {
         text: 'Average Heart Rate (bpm)',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px',
           fontWeight: 600
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       },
@@ -534,14 +586,14 @@ function initializeEfficiencyChart(data) {
       title: {
         text: 'Pace (min/km)',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px',
           fontWeight: 600
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         },
         formatter: function(val) {
@@ -553,13 +605,13 @@ function initializeEfficiencyChart(data) {
       reversed: true // Lower pace (faster) at top
     },
     grid: {
-      borderColor: '#e0e0e0',
+      borderColor: colors.borderPrimary,
       strokeDashArray: 3
     },
     markers: {
       size: [7, 0],
       strokeWidth: 2,
-      strokeColors: ['#ffffff'],
+      strokeColors: [colors.bgPrimary],
       hover: {
         size: 10
       },
@@ -567,7 +619,7 @@ function initializeEfficiencyChart(data) {
         seriesIndex: 0,
         dataPointIndex: index,
         fillColor: d.isPositiveOutlier ? '#4CAF50' : (d.isNegativeOutlier ? '#FF6B6B' : d.color),
-        strokeColor: d.isOutlier ? '#ffffff' : '#ffffff',
+        strokeColor: d.isOutlier ? colors.bgPrimary : colors.bgPrimary,
         strokeWidth: d.isOutlier ? 3 : 2,
         size: d.isOutlier ? 9 : 7,
         shape: d.isOutlier ? 'square' : 'circle'
@@ -582,7 +634,7 @@ function initializeEfficiencyChart(data) {
         height: 12
       },
       labels: {
-        colors: '#000000'
+        colors: colors.textPrimary
       }
     },
     tooltip: {
@@ -591,6 +643,7 @@ function initializeEfficiencyChart(data) {
       custom: function({ series, seriesIndex, dataPointIndex, w }) {
         if (seriesIndex === 1) return ''; // No tooltip for trend line
 
+        const colors = getThemeColors();
         const d = scatterData[dataPointIndex];
         const minutes = Math.floor(d.y);
         const seconds = Math.round((d.y - minutes) * 60);
@@ -603,9 +656,9 @@ function initializeEfficiencyChart(data) {
           outlierBadge = '<span style="display: inline-block; background: #FF6B6B; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 6px;">▼ SLOWER</span>';
         }
 
-        return `<div style="padding: 12px; background: white; border: 1px solid #e0e0e0; border-radius: 6px; min-width: 220px;">
-          <strong style="color: #333; font-size: 13px;">${d.name}</strong>${outlierBadge}<br>
-          <div style="margin-top: 8px; font-size: 12px; color: #666;">
+        return `<div style="padding: 12px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 6px; min-width: 220px;">
+          <strong style="color: ${colors.textSecondary}; font-size: 13px;">${d.name}</strong>${outlierBadge}<br>
+          <div style="margin-top: 8px; font-size: 12px; color: ${colors.textMuted};">
             <strong>Date:</strong> ${d.date}<br>
             <strong>Distance:</strong> ${d.distance} km<br>
             <strong>HR:</strong> ${Math.round(d.x)} bpm<br>
@@ -642,6 +695,7 @@ function initializeEfficiencyChart(data) {
 
   const chart = new ApexCharts(document.querySelector('#efficiency-chart'), options);
   chart.render();
+  chartInstances.efficiency = chart;
 
   // Add EF statistics and interpretation below chart
   const chartContainer = document.querySelector('#efficiency-chart').parentElement;
@@ -709,6 +763,8 @@ function initializeActivityMap(data) {
   if (!mapElement) {
     return;
   }
+
+  const colors = getThemeColors();
 
   // Collect activity data first before initializing map
   const activityCenters = [];
@@ -790,9 +846,9 @@ function initializeActivityMap(data) {
     const lat2 = Math.atan(Math.sinh(Math.PI * (1 - 2 * (tileY + 1) / n))) * 180 / Math.PI;
 
     L.rectangle([[lat1, lng1], [lat2, lng2]], {
-      color: '#000000',
+      color: '#4169E1',
       weight: 1,
-      fillColor: '#000000',
+      fillColor: '#4169E1',
       fillOpacity: 0.05
     }).addTo(map);
   });
@@ -800,9 +856,9 @@ function initializeActivityMap(data) {
   // Second pass: add polylines to map
   allPolylines.forEach(({ polyline, activity }) => {
     const line = L.polyline(polyline, {
-      color: '#000000',
+      color: '#4169E1',  // Royal blue - visible in both light and dark modes
       weight: 2,
-      opacity: 0.5
+      opacity: 0.7
     }).addTo(map);
 
     // Add popup with activity info
@@ -889,6 +945,8 @@ function initializeActivityCalendar(data) {
   if (!calendarElement) {
     return;
   }
+
+  const colors = getThemeColors();
 
   // Initialize metrics calculator
   const metrics = new StravaMetrics(data);
@@ -1014,9 +1072,11 @@ function initializeVO2maxChart(data) {
   const metrics = new StravaMetrics(data);
   const vo2History = metrics.generateVO2maxHistory();
 
+  const colors = getThemeColors();
+
   if (vo2History.length === 0) {
     document.querySelector('#vo2max-chart').innerHTML =
-      '<p style="text-align: center; color: #999; padding: 40px;">Not enough data to estimate VO2max. Need runs >3km with heart rate data.</p>';
+      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">Not enough data to estimate VO2max. Need runs >3km with heart rate data.</p>`;
     return;
   }
 
@@ -1040,12 +1100,12 @@ function initializeVO2maxChart(data) {
       curve: 'smooth',
       width: 2
     },
-    colors: ['#000000'],
+    colors: [colors.textPrimary],
     xaxis: {
       type: 'datetime',
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
@@ -1054,13 +1114,13 @@ function initializeVO2maxChart(data) {
       title: {
         text: 'VO2max (ml/kg/min)',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px'
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       },
@@ -1068,15 +1128,16 @@ function initializeVO2maxChart(data) {
       max: Math.ceil(Math.max(...vo2History.map(h => h.vo2max)) + 2)
     },
     grid: {
-      borderColor: '#e0e0e0'
+      borderColor: colors.borderPrimary
     },
     tooltip: {
       x: {
         format: 'MMM dd, yyyy'
       },
       custom: function({ seriesIndex, dataPointIndex, w }) {
+        const colors = getThemeColors();
         const point = vo2History[dataPointIndex];
-        return `<div style="padding: 10px; background: white; border: 1px solid #e0e0e0; border-radius: 4px;">
+        return `<div style="padding: 10px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 4px;">
           <strong>${point.activityName}</strong><br>
           ${new Date(point.date).toLocaleDateString()}<br>
           <strong>VO2max:</strong> ${point.vo2max.toFixed(1)} ml/kg/min<br>
@@ -1088,6 +1149,7 @@ function initializeVO2maxChart(data) {
 
   const chart = new ApexCharts(document.querySelector('#vo2max-chart'), options);
   chart.render();
+  chartInstances.vo2max = chart;
 }
 
 /**
@@ -1104,9 +1166,11 @@ function initializeRacePredictions(data) {
   const predElement = document.querySelector('#race-predictions');
   if (!predElement) return;
 
+  const colors = getThemeColors();
+
   if (!predictions) {
     predElement.innerHTML =
-      '<p style="text-align: center; color: #999; padding: 20px;">Not enough data for race predictions.</p>';
+      `<p style="text-align: center; color: ${colors.textLight}; padding: 20px;">Not enough data for race predictions.</p>`;
     return;
   }
 
@@ -1152,9 +1216,11 @@ function initializeTrainingLoadChart(data) {
   const metrics = new StravaMetrics(data);
   const history = metrics.generateTrainingLoadHistory(90);
 
+  const colors = getThemeColors();
+
   if (history.length === 0) {
     document.querySelector('#training-load-chart').innerHTML =
-      '<p style="text-align: center; color: #999; padding: 40px;">Not enough activity data.</p>';
+      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">Not enough activity data.</p>`;
     return;
   }
 
@@ -1201,7 +1267,7 @@ function initializeTrainingLoadChart(data) {
       type: 'datetime',
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
@@ -1210,25 +1276,25 @@ function initializeTrainingLoadChart(data) {
       title: {
         text: 'Training Load',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px'
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
     },
     grid: {
-      borderColor: '#e0e0e0'
+      borderColor: colors.borderPrimary
     },
     legend: {
       position: 'top',
       horizontalAlign: 'center',
       labels: {
-        colors: '#000000'
+        colors: colors.textPrimary
       }
     },
     tooltip: {
@@ -1241,13 +1307,13 @@ function initializeTrainingLoadChart(data) {
         {
           x: firstDate,
           x2: entirelyWarmup ? lastDate : warmupEndTime,
-          fillColor: '#808080',
+          fillColor: colors.textMuted,
           opacity: 0.15,
           label: {
             text: 'Warm-up period',
             borderColor: 'transparent',
             style: {
-              color: '#666',
+              color: colors.textMuted,
               background: 'transparent',
               fontSize: '11px'
             },
@@ -1261,6 +1327,7 @@ function initializeTrainingLoadChart(data) {
 
   const chart = new ApexCharts(document.querySelector('#training-load-chart'), options);
   chart.render();
+  chartInstances.trainingLoad = chart;
 
   // Add warning caption below the chart
   const chartContainer = document.querySelector('#training-load-chart').parentElement;
@@ -1289,9 +1356,11 @@ function initializePowerCurveChart(data) {
   const chartElement = document.querySelector('#power-curve-chart');
   if (!chartElement) return;
 
+  const colors = getThemeColors();
+
   if (!powerData || powerData.curve.length === 0) {
     chartElement.innerHTML =
-      '<p style="text-align: center; color: #999; padding: 40px;">No power data available. Power meter required.</p>';
+      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">No power data available. Power meter required.</p>`;
     return;
   }
 
@@ -1315,19 +1384,19 @@ function initializePowerCurveChart(data) {
       curve: 'smooth',
       width: 2
     },
-    colors: ['#000000'],
+    colors: [colors.textPrimary],
     xaxis: {
       type: 'numeric',
       title: {
         text: 'Duration (seconds)',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px'
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         },
         formatter: function(val) {
@@ -1341,37 +1410,38 @@ function initializePowerCurveChart(data) {
       title: {
         text: 'Power (watts)',
         style: {
-          color: '#000000',
+          color: colors.textPrimary,
           fontSize: '12px'
         }
       },
       labels: {
         style: {
-          colors: '#000000',
+          colors: colors.textPrimary,
           fontSize: '12px'
         }
       }
     },
     grid: {
-      borderColor: '#e0e0e0'
+      borderColor: colors.borderPrimary
     },
     markers: {
       size: 5,
       strokeWidth: 1,
-      strokeColors: '#ffffff',
+      strokeColors: colors.bgPrimary,
       hover: {
         size: 7
       }
     },
     tooltip: {
       custom: function({ seriesIndex, dataPointIndex, w }) {
+        const colors = getThemeColors();
         const point = powerData.curve[dataPointIndex];
         let durationStr = '';
         if (point.duration < 60) durationStr = point.duration + 's';
         else if (point.duration < 3600) durationStr = Math.round(point.duration / 60) + ' min';
         else durationStr = (point.duration / 3600).toFixed(1) + ' hours';
 
-        return `<div style="padding: 10px; background: white; border: 1px solid #e0e0e0; border-radius: 4px;">
+        return `<div style="padding: 10px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 4px;">
           <strong>${point.activityName}</strong><br>
           ${new Date(point.date).toLocaleDateString()}<br>
           <strong>Duration:</strong> ${durationStr}<br>
@@ -1382,12 +1452,12 @@ function initializePowerCurveChart(data) {
     annotations: powerData.criticalPower ? {
       yaxis: [{
         y: powerData.criticalPower.cp,
-        borderColor: '#999',
+        borderColor: colors.textLight,
         label: {
-          borderColor: '#999',
+          borderColor: colors.textLight,
           style: {
-            color: '#fff',
-            background: '#999',
+            color: colors.bgPrimary,
+            background: colors.textLight,
           },
           text: `Critical Power: ${powerData.criticalPower.cp}W`
         }
@@ -1397,6 +1467,7 @@ function initializePowerCurveChart(data) {
 
   const chart = new ApexCharts(chartElement, options);
   chart.render();
+  chartInstances.powerCurve = chart;
 }
 
 /**
@@ -1413,9 +1484,11 @@ function initializeIntervalScorecard(data) {
   const scorecardElement = document.querySelector('#interval-scorecard');
   if (!scorecardElement) return;
 
+  const colors = getThemeColors();
+
   if (intervals.length === 0) {
     scorecardElement.innerHTML =
-      '<p style="text-align: center; color: #999; padding: 20px;">No interval workouts detected. Workouts with "interval", "tempo", or "rep" in the name will appear here.</p>';
+      `<p style="text-align: center; color: ${colors.textLight}; padding: 20px;">No interval workouts detected. Workouts with "interval", "tempo", or "rep" in the name will appear here.</p>`;
     return;
   }
 
