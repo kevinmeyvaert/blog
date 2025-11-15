@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 11,
+    "items": 12,
     "urls": {}
   },
   "wants": [
@@ -401,6 +401,63 @@
         "styles": [
           "Alternative Rock",
           "Indie Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 30779241,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/30779241",
+      "date_added": "2025-11-14T01:16:43-08:00",
+      "basic_information": {
+        "id": 30779241,
+        "master_id": 3496851,
+        "master_url": "https://api.discogs.com/masters/3496851",
+        "resource_url": "https://api.discogs.com/releases/30779241",
+        "title": "3FOR82",
+        "year": 2024,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Machinedrum",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 167734,
+            "resource_url": "https://api.discogs.com/artists/167734"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Ninja Tune",
+            "catno": "ZEN299",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 109,
+            "resource_url": "https://api.discogs.com/labels/109"
+          }
+        ],
+        "thumb": "https://i.discogs.com/C2x8yFYtTgz5Q6vyk9Dvf48wmKRjMb0sTi_PHV-Y1cY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNzc5/MjQxLTE3MTY2NjE0/MTctNzcxMC5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/XIYH3U1qLR6iAEGU7EBdBn1Rj3QaEesx8Aq7g8BmvRU/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNzc5/MjQxLTE3MTY2NjE0/MTctNzcxMC5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Hip Hop"
+        ],
+        "styles": [
+          "Hip Hop",
+          "Drum n Bass",
+          "UK Garage"
         ]
       },
       "rating": 0,
