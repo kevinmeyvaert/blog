@@ -408,7 +408,14 @@ function initializeEfficiencyChart(data) {
 
   // Filter runs with HR data and sort by date
   const runsWithHR = data.activities
-    .filter(a => a.type === 'Run' && a.has_heartrate && a.average_heartrate && a.distance > 1000)
+    .filter(a => {
+      if (a.type !== 'Run' || !a.has_heartrate || !a.average_heartrate || a.distance <= 1000) {
+        return false;
+      }
+      // Exclude runs with pace slower than 5:30 min/km
+      const paceMinPerKm = (a.moving_time / 60) / (a.distance / 1000);
+      return paceMinPerKm <= 5.5;
+    })
     .sort((a, b) => new Date(a.start_date_local) - new Date(b.start_date_local))
     .slice(-50); // Last 50 runs with HR data
 
