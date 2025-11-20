@@ -1,0 +1,7 @@
+# robots.txt for https://kevinmeyvaert.be
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://kevinmeyvaert.be/sitemap.xml

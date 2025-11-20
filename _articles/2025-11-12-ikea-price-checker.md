@@ -2,9 +2,11 @@
 layout: article
 title: "I built an IKEA price checker for a friend's renovation"
 date: 2025-11-12
+last_modified_at: 2025-11-12
 categories: [web-development, ai]
 tags: [ikea, web-scraping, side-project, chrome-extension]
 excerpt: "How I built a price comparison tool that saved €1,000 on a kitchen renovation by checking IKEA prices across Belgium, the Netherlands, France, and Germany."
+image: /assets/images/articles/ikea-price-checker-og.jpg
 ---
 
 A friend was redoing his kitchen.

@@ -2,9 +2,11 @@
 layout: article
 title: "Migrating my photography blog with AI: Lessons in iterative development"
 date: 2025-11-02
+last_modified_at: 2025-11-02
 categories: [web-development, ai]
 tags: [jekyll, claude, workflow, migration]
 excerpt: "What I learned about effective AI collaboration while migrating 85 photos from Tumblr to Jekyll."
+image: /assets/images/articles/migrating-blog-ai-og.jpg
 ---
 
 I recently migrated my photography blog from Tumblr to Jekyll with help from Claude Code. The project took a few hours and involved migrating 85 posts, optimizing 839 MB of images, and building a custom blog section. But more interesting than the technical outcome was learning how to effectively work with an AI coding assistant.

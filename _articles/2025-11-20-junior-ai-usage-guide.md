@@ -2,9 +2,11 @@
 layout: article
 title: "A junior software engineer's AI usage guide"
 date: 2025-11-20
+last_modified_at: 2025-11-20
 categories: [ai, software engineering]
 tags: [ai, coding-assistants, learning, best-practices, llm, mcp]
 excerpt: "A comprehensive guide for junior developers on using AI coding assistants effectively while building deep foundational knowledge. Learn the 5-phase roadmap from smart autocomplete to agentic workflows."
+image: /assets/images/articles/junior-ai-guide-og.jpg
 ---
 
 Lately, in conversations with other engineers, I’ve noticed a growing concern: AI is widening the gap between junior and senior developers. Seniors know how to structure problems and recognize good solutions, so AI feels like a boost. Juniors, still learning those fundamentals, often feel unsure about how to get the same value from these tools.

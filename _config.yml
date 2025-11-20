@@ -20,11 +20,43 @@
 
 title: Kevin Meyvaert
 tagline: photographer based in gent, belgium. personal work on film. full stack engineer.
-email: your-email@example.com
+email: kevin.meyvaert@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Kevin Meyvaert - photographer based in Gent, Belgium. Personal work on film.
+  Kevin Meyvaert - photographer based in Gent, Belgium. Personal work on film. Full stack engineer.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kevinmeyvaert.be" # the base hostname & protocol for your site
+
+# Author information for SEO
+author:
+  name: Kevin Meyvaert
+  email: kevin.meyvaert@gmail.com
+
+# SEO Settings
+lang: en_US
+logo: /assets/images/logo.png # Add your logo path if you have one
+
+# Social links (used by header/footer AND SEO)
+social:
+  name: Kevin Meyvaert
+  links:
+    - https://www.instagram.com/kevinmeyvaert/
+    - https://github.com/kevinmeyvaert
+  instagram: https://www.instagram.com/kevinmeyvaert/
+  github: https://github.com/kevinmeyvaert
+  email: kevin.meyvaert@gmail.com
+
+# Twitter card defaults
+twitter:
+  card: summary_large_image
+
+# Default image for Open Graph (used when article doesn't have an image)
+defaults:
+  - scope:
+      path: ""
+      type: "articles"
+    values:
+      layout: "article"
+      image: /assets/images/default-og-image.jpg # You'll need to create this
 
 # Navigation
 navigation:
@@ -37,17 +69,13 @@ navigation:
   - name: i like running
     url: /running
 
-# Social Links
-social:
-  instagram: https://www.instagram.com/kevinmeyvaert/
-  github: https://github.com/kevinmeyvaert
-  email: kevin.meyvaert@gmail.com
-
 # Build settings
 # theme: minima  # Disabled - using custom layouts
 plugins:
   - jekyll_picture_tag
   - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Pagination settings
 paginate: 10
