@@ -534,28 +534,21 @@ button {
   display: flex;
   justify-content: space-between;
   margin-top: 50px;
-  padding-top: 30px;
-  border-top: 1px solid var(--color-border-primary);
 }
 
 .nav-previous,
 .nav-next {
   font-size: 24px;
   font-weight: 700;
-  width: 50px;
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-text-primary);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-previous:hover,
 .nav-next:hover {
-  background-color: var(--color-text-primary);
-  color: var(--color-bg-primary);
-  opacity: 1;
+  opacity: 0.6;
 }
 
 
@@ -600,7 +593,7 @@ button {
   top: 20px;
   right: 30px;
   font-size: 40px;
-  color: var(--color-text-inverse);
+  color: #ffffff;
   cursor: pointer;
   z-index: 2001;
   width: 50px;
@@ -620,10 +613,8 @@ button {
   top: 50%;
   transform: translateY(-50%);
   font-size: 24px;
-  color: var(--color-text-inverse);
-  opacity: 0.5;
-  width: 50px;
-  height: 50px;
+  font-weight: 700;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -632,10 +623,12 @@ button {
   transition: opacity 0.2s ease;
   z-index: 2001;
   cursor: pointer;
+  width: 50px;
+  height: 50px;
 }
 
 .modal-nav:hover {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .modal-prev {
@@ -687,8 +680,6 @@ button {
 
   /* Modal adjustments */
   .modal-nav {
-    width: 50px;
-    height: 50px;
     font-size: 24px;
   }
 
@@ -713,6 +704,49 @@ button {
     height: 40px;
     font-size: 20px;
   }
+
+  /* Article headings - tighter line height for mobile */
+  .article-content h2,
+  .article-content h3,
+  .article-content h4 {
+    line-height: 1.2 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .article-content h2 {
+    margin-top: 48px !important;
+  }
+
+  .article-content h3 {
+    margin-top: 36px !important;
+  }
+
+  /* More breathing room for content */
+  .article-content p {
+    line-height: 2.0 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .article-content ul li,
+  .article-content ol li {
+    margin-bottom: 12px !important;
+  }
+
+  /* Better readability on mobile */
+  .article-content {
+    font-size: 17px !important;
+    font-weight: 400 !important;
+  }
+
+  /* Softer text color only in dark mode */
+  [data-theme="dark"] .article-content {
+    color: #b8b8b8 !important;
+  }
+
+  [data-theme="dark"] .article-content ul,
+  [data-theme="dark"] .article-content ol {
+    color: #b8b8b8 !important;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -726,6 +760,7 @@ button {
 
   .post-title {
     font-size: 20px;
+    line-height: 1.2;
   }
 }
 
@@ -870,6 +905,7 @@ button {
   font-weight: 700;
   margin-top: 30px;
   margin-bottom: 12px;
+  line-height: 1.2;
 }
 
 .article-content h3 {
@@ -877,6 +913,7 @@ button {
   font-weight: 700;
   margin-top: 24px;
   margin-bottom: 10px;
+  line-height: 1.2;
 }
 
 .article-content h4 {
@@ -884,6 +921,7 @@ button {
   font-weight: 700;
   margin-top: 20px;
   margin-bottom: 8px;
+  line-height: 1.2;
 }
 
 .article-content p {
@@ -1090,8 +1128,6 @@ button {
   display: flex;
   justify-content: space-between;
   margin-top: 60px;
-  padding-top: 30px;
-  border-top: 1px solid var(--color-border-secondary);
   gap: 20px;
 }
 

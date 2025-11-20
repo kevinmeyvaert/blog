@@ -71,6 +71,7 @@ navigation:
 
 # Build settings
 # theme: minima  # Disabled - using custom layouts
+timezone: Europe/Brussels
 plugins:
   - jekyll_picture_tag
   - jekyll-paginate

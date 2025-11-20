@@ -12,11 +12,8 @@ title: Running
   <header class="running-header">
     <h1>I like running</h1>
     <p class="running-description">
-      It's an essential part of my creative process.
+      It's an essential part of my creative process
     </p>
-    {% if site.data.strava.last_updated %}
-    <p class="running-last-updated">Last updated: {{ site.data.strava.last_updated | date: "%B %d, %Y at %H:%M UTC" }}</p>
-    {% endif %}
   </header>
 
   {% if site.data.strava %}
@@ -27,7 +24,7 @@ title: Running
 
   <!-- Summary Stats Cards -->
   <section class="running-stats-summary">
-    <p class="stats-since">All-time stats since {{ site.data.strava.athlete.created_at | date: "%B %Y" }}</p>
+    <p class="stats-since">All-time stats since {{ site.data.strava.athlete.created_at | date: "%B %Y" }}. Last updated: {{ site.data.strava.last_updated | date: "%d %B %Y at %H:%M" }}.</p>
     <div class="stat-cards-grid">
       <div class="stat-card">
         <div class="stat-value">{{ site.data.strava.stats.all_run_totals.count }}</div>
@@ -78,7 +75,7 @@ title: Running
         <div class="activity-item">
           <div class="activity-header">
             <h3 class="activity-name">{{ activity.name }}</h3>
-            <time class="activity-date">{{ activity.start_date_local | date: "%B %d, %Y" }}</time>
+            <time class="activity-date">{{ activity.start_date_local | date: "%d %B %Y" }}</time>
           </div>
           <div class="activity-stats">
             <span class="activity-stat">
@@ -115,7 +112,7 @@ title: Running
     <h2>Trends</h2>
     {% if site.data.strava.activities.size > 0 %}
     {% assign oldest_activity = site.data.strava.activities | last %}
-    <p class="charts-note">Charts based on last 100 activities (since {{ oldest_activity.start_date_local | date: "%B %d, %Y" }})</p>
+    <p class="charts-note">Charts based on last 100 activities (since {{ oldest_activity.start_date_local | date: "%d %B %Y" }})</p>
     {% endif %}
 
     <div class="chart-container">
