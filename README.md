@@ -63,6 +63,15 @@ Multi-format responsive images generated automatically with srcset attributes fo
 
 ## Development Workflow
 
+**System Dependencies**
+This project uses jekyll_picture_tag, which requires the libvips image library.
+
+macOS (Homebrew):
+  brew install vips
+
+Ubuntu/Debian:
+  sudo apt install libvips-dev
+
 **Initial Setup:**
 ```bash
 bundle install
