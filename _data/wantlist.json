@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 14,
+    "items": 16,
     "urls": {}
   },
   "wants": [
@@ -407,6 +407,71 @@
       "notes": ""
     },
     {
+      "id": 35782369,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/35782369",
+      "date_added": "2025-12-02T14:13:06-08:00",
+      "basic_information": {
+        "id": 35782369,
+        "master_id": 0,
+        "master_url": null,
+        "resource_url": "https://api.discogs.com/releases/35782369",
+        "title": "Live",
+        "year": 2025,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "10\"",
+              "33 ⅓ RPM",
+              "EP",
+              "Record Store Day",
+              "Stereo"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Billie Eilish",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 5590213,
+            "resource_url": "https://api.discogs.com/artists/5590213"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Interscope Records",
+            "catno": "00602478558191",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 2311,
+            "resource_url": "https://api.discogs.com/labels/2311"
+          },
+          {
+            "name": "Darkroom (4)",
+            "catno": "00602478558191",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1175230,
+            "resource_url": "https://api.discogs.com/labels/1175230"
+          }
+        ],
+        "thumb": "https://i.discogs.com/vWzmel1-XhAjPPLyLvzZbZK4v0hBpXGJCm3RnBFCdB0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1Nzgy/MzY5LTE3NjQ0MzY1/ODEtMjg4My5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/YCVehwgd1e1L6wzytXvC5T9zZWreD88xe-m88CPvX_Q/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1Nzgy/MzY5LTE3NjQ0MzY1/ODEtMjg4My5qcGVn.jpeg",
+        "genres": [
+          "Pop"
+        ],
+        "styles": [
+          "Indie Pop"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
       "id": 30779241,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/30779241",
       "date_added": "2025-11-14T01:16:43-08:00",
@@ -523,6 +588,79 @@
         "styles": [
           "Post-Punk",
           "Shoegaze"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 35765224,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/35765224",
+      "date_added": "2025-12-02T14:12:38-08:00",
+      "basic_information": {
+        "id": 35765224,
+        "master_id": 3800412,
+        "master_url": "https://api.discogs.com/masters/3800412",
+        "resource_url": "https://api.discogs.com/releases/35765224",
+        "title": "F*ck U Skrillex You Think Ur Andy Warhol But Ur Not!! <3",
+        "year": 2025,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "2",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Mixed",
+              "Picture Disc"
+            ],
+            "text": "Gatefold"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Skrillex",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1472585,
+            "resource_url": "https://api.discogs.com/artists/1472585"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Owsla",
+            "catno": "075678601019",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 262554,
+            "resource_url": "https://api.discogs.com/labels/262554"
+          },
+          {
+            "name": "Atlantic",
+            "catno": "075678601019",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 681,
+            "resource_url": "https://api.discogs.com/labels/681"
+          }
+        ],
+        "thumb": "https://i.discogs.com/azGDbTVMBdfXZKE5jBcpM0Zlqw-HdbPFiEc3y-2wXvk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NzY1/MjI0LTE3NjQzNjgy/NjktNjExOS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/82o8OcXedMXY0yCtNpj1ExjURKdJ1sjDDKRvP9o3gv4/rs:fit/g:sm/q:90/h:593/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NzY1/MjI0LTE3NjQzNjgy/NjktNjExOS5qcGVn.jpeg",
+        "genres": [
+          "Electronic"
+        ],
+        "styles": [
+          "Dubstep",
+          "Drum n Bass",
+          "Electro",
+          "Hyperpop",
+          "Experimental",
+          "Phonk",
+          "Trap",
+          "Future Bass",
+          "Breakbeat"
         ]
       },
       "rating": 0,
