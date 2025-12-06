@@ -82,13 +82,25 @@ Visit `http://localhost:4000` to preview locally.
 
 **Adding Photos:**
 
-Create a file in `_posts/` with format `YYYY-MM-DD-title.md`:
+Use the new post generator script:
+
+```bash
+./scripts/new-post.sh
+```
+
+This creates a new post file in `_posts/` with:
+- Filename: `YYYY-MM-DD.md` (auto-increments to `-1`, `-2` if file exists)
+- Pre-filled frontmatter with current datetime
+- Auto-generated image path following convention
+- Default dimensions (5350x3602)
+
+Alternatively, create a file manually in `_posts/` with format `YYYY-MM-DD.md`:
 
 ```yaml
 ---
 layout: post
 date: 2025-01-15 14:30:00 +0100
-image: /assets/images/photo.jpg
+image: /assets/images/2025/01/2025-01-15.jpg
 width: 4000
 height: 2667
 tags:
