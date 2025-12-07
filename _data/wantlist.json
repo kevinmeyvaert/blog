@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 16,
+    "items": 20,
     "urls": {}
   },
   "wants": [
@@ -113,6 +113,61 @@
         ],
         "styles": [
           "Nu Metal"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 31022560,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/31022560",
+      "date_added": "2025-12-06T07:19:32-08:00",
+      "basic_information": {
+        "id": 31022560,
+        "master_id": 3521704,
+        "master_url": "https://api.discogs.com/masters/3521704",
+        "resource_url": "https://api.discogs.com/releases/31022560",
+        "title": "Scream From New York, NY",
+        "year": 2024,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Been Stellar",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 6488592,
+            "resource_url": "https://api.discogs.com/artists/6488592"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Dirty Hit",
+            "catno": "DH01905",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 231304,
+            "resource_url": "https://api.discogs.com/labels/231304"
+          }
+        ],
+        "thumb": "https://i.discogs.com/QoaRUWXt5QrbMEAYcvP28cETXgfHMbTdtpMzhmaOQuo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxMDIy/NTYwLTE3MTg5OTU0/MzctNzgxMi5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/gxZLcMwO_J7sEOmMlFyQjlaJTmactLuQL8XPbGJe7K4/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxMDIy/NTYwLTE3MTg5OTU0/MzctNzgxMi5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock",
+          "Indie Rock"
         ]
       },
       "rating": 0,
@@ -296,6 +351,64 @@
       "notes": ""
     },
     {
+      "id": 29607481,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/29607481",
+      "date_added": "2025-12-06T07:21:28-08:00",
+      "basic_information": {
+        "id": 29607481,
+        "master_id": 3377428,
+        "master_url": "https://api.discogs.com/masters/3377428",
+        "resource_url": "https://api.discogs.com/releases/29607481",
+        "title": "Madra",
+        "year": 2024,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Stereo"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "NewDad",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 9136810,
+            "resource_url": "https://api.discogs.com/artists/9136810"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Fair Youth",
+            "catno": "5054197703690",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 2166724,
+            "resource_url": "https://api.discogs.com/labels/2166724"
+          }
+        ],
+        "thumb": "https://i.discogs.com/lBSKK2mxJiYXwxbY9sgKQ7bT9XAElbu-xGNvCgsFyHI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5NjA3/NDgxLTE3MDYzNTI3/MjEtNjUyNy5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/2BJX5D9C_KQXu4AM0moNzUwsxtDckDmgCEQlDqcR-FU/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5NjA3/NDgxLTE3MDYzNTI3/MjEtNjUyNy5qcGVn.jpeg",
+        "genres": [
+          "Rock",
+          "Pop"
+        ],
+        "styles": [
+          "Alternative Rock",
+          "Dream Pop",
+          "Indie Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
       "id": 1613301,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/1613301",
       "date_added": "2025-11-10T06:33:30-08:00",
@@ -466,6 +579,80 @@
         ],
         "styles": [
           "Indie Pop"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 1961094,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/1961094",
+      "date_added": "2025-12-06T01:27:54-08:00",
+      "basic_information": {
+        "id": 1961094,
+        "master_id": 187137,
+        "master_url": "https://api.discogs.com/masters/187137",
+        "resource_url": "https://api.discogs.com/releases/1961094",
+        "title": "In This Light And On This Evening",
+        "year": 2009,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ],
+            "text": "Gatefold"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Editors",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 332911,
+            "resource_url": "https://api.discogs.com/artists/332911"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Kitchenware Records",
+            "catno": "KWX43",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 17819,
+            "resource_url": "https://api.discogs.com/labels/17819"
+          },
+          {
+            "name": "[PIAS] Recordings",
+            "catno": "945.0185.010",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 61218,
+            "resource_url": "https://api.discogs.com/labels/61218"
+          },
+          {
+            "name": "[PIAS] Recordings",
+            "catno": "PIASR 185 LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 61218,
+            "resource_url": "https://api.discogs.com/labels/61218"
+          }
+        ],
+        "thumb": "https://i.discogs.com/bvw5gBDrYvdCxsk1abmV31b-Fa2d5tNnkdnTOi3jhTw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE5NjEw/OTQtMTI1NzAxNjA1/NC5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/OksVrB6uIgRQM0AXOoWwanQUL6Pttanc0fdPCRib0Ns/rs:fit/g:sm/q:90/h:587/w:565/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE5NjEw/OTQtMTI1NzAxNjA1/NC5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Rock"
+        ],
+        "styles": [
+          "Synth-pop",
+          "Indie Rock"
         ]
       },
       "rating": 0,
@@ -719,6 +906,62 @@
         "styles": [
           "Contemporary R&B",
           "House"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 3079538,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/3079538",
+      "date_added": "2025-12-06T01:28:24-08:00",
+      "basic_information": {
+        "id": 3079538,
+        "master_id": 193221,
+        "master_url": "https://api.discogs.com/masters/193221",
+        "resource_url": "https://api.discogs.com/releases/3079538",
+        "title": "And So I Watch You From Afar",
+        "year": 2009,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "2",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "And So I Watch You From Afar",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1438638,
+            "resource_url": "https://api.discogs.com/artists/1438638"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Smalltown America",
+            "catno": "2760125",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 59380,
+            "resource_url": "https://api.discogs.com/labels/59380"
+          }
+        ],
+        "thumb": "https://i.discogs.com/Tg9IwBHlmwBhDHRAvrSA1FrWqW1HrFqpwC6rsI_OUlA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNzk1/MzgtMTMyMTk2NzA2/OC5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/CKFVjItAgbgctnreT5NBO-CTGleamT3Y4PJhHTmbch4/rs:fit/g:sm/q:90/h:463/w:480/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwNzk1/MzgtMTMyMTk2NzA2/OC5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Math Rock",
+          "Post Rock"
         ]
       },
       "rating": 0,
