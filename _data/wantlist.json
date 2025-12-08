@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 20,
+    "items": 24,
     "urls": {}
   },
   "wants": [
@@ -231,6 +231,68 @@
         "styles": [
           "Alternative Rock"
         ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 30961510,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/30961510",
+      "date_added": "2025-12-07T02:12:24-08:00",
+      "basic_information": {
+        "id": 30961510,
+        "master_id": 3514933,
+        "master_url": "https://api.discogs.com/masters/3514933",
+        "resource_url": "https://api.discogs.com/releases/30961510",
+        "title": "Sonido Cósmico",
+        "year": 2024,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Stereo"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Hermanos Gutiérrez (2)",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 7128718,
+            "resource_url": "https://api.discogs.com/artists/7128718"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Easy Eye Sound",
+            "catno": "EES-036",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 318323,
+            "resource_url": "https://api.discogs.com/labels/318323"
+          },
+          {
+            "name": "Easy Eye Sound",
+            "catno": "00888072592841",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 318323,
+            "resource_url": "https://api.discogs.com/labels/318323"
+          }
+        ],
+        "thumb": "https://i.discogs.com/KvaqAxX0vMGqLL3zPIJ3vT4tFOPFiNzwYrVrc87qZks/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwOTYx/NTEwLTE3MjIyNzU5/MzktNjEyNS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/F-Pln0ou40hals7GsxZGZhYJhXDlQRGEM0E8eV5j36w/rs:fit/g:sm/q:90/h:589/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMwOTYx/NTEwLTE3MjIyNzU5/MzktNjEyNS5qcGVn.jpeg",
+        "genres": [
+          "Latin",
+          "Folk, World, & Country"
+        ],
+        "styles": []
       },
       "rating": 0,
       "notes": ""
@@ -659,6 +721,138 @@
       "notes": ""
     },
     {
+      "id": 34038046,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/34038046",
+      "date_added": "2025-12-07T07:43:07-08:00",
+      "basic_information": {
+        "id": 34038046,
+        "master_id": 3853495,
+        "master_url": "https://api.discogs.com/masters/3853495",
+        "resource_url": "https://api.discogs.com/releases/34038046",
+        "title": "Under A Familiar Sun",
+        "year": 2025,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ],
+            "text": "Oisín = Yellow, Blue & Green"
+          }
+        ],
+        "artists": [
+          {
+            "name": "The Vernon Spring",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 9037981,
+            "resource_url": "https://api.discogs.com/artists/9037981"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Lanugo Fur",
+            "catno": "LF006LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 4117806,
+            "resource_url": "https://api.discogs.com/labels/4117806"
+          },
+          {
+            "name": "OPIA Community",
+            "catno": "OPIA004",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 3737512,
+            "resource_url": "https://api.discogs.com/labels/3737512"
+          },
+          {
+            "name": "Rvng Intl.",
+            "catno": "RVNGNL123",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 52921,
+            "resource_url": "https://api.discogs.com/labels/52921"
+          }
+        ],
+        "thumb": "https://i.discogs.com/GvUSSbvftzWuAdsd567BxEUxXOra1tSlXOui-InQirU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0MDM4/MDQ2LTE3NDc5NzAw/NzUtMzYyNi5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/7DVT_RRlOesHRy6XKwz62q96hW6_roC7OZmewBP0OHA/rs:fit/g:sm/q:90/h:591/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0MDM4/MDQ2LTE3NDc5NzAw/NzUtMzYyNi5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Classical"
+        ],
+        "styles": [
+          "Ambient",
+          "Classical"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 31664906,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/31664906",
+      "date_added": "2025-12-07T07:41:11-08:00",
+      "basic_information": {
+        "id": 31664906,
+        "master_id": 2048491,
+        "master_url": "https://api.discogs.com/masters/2048491",
+        "resource_url": "https://api.discogs.com/releases/31664906",
+        "title": "A Plane Over Woods",
+        "year": 2024,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition",
+              "Repress"
+            ],
+            "text": "120 copies"
+          }
+        ],
+        "artists": [
+          {
+            "name": "The Vernon Spring",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 9037981,
+            "resource_url": "https://api.discogs.com/artists/9037981"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Lima Limo",
+            "catno": "LIM28LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1163963,
+            "resource_url": "https://api.discogs.com/labels/1163963"
+          }
+        ],
+        "thumb": "",
+        "cover_image": "",
+        "genres": [
+          "Electronic",
+          "Jazz"
+        ],
+        "styles": [
+          "Ambient"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
       "id": 30779241,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/30779241",
       "date_added": "2025-11-14T01:16:43-08:00",
@@ -1022,6 +1216,65 @@
         "styles": [
           "Indie Pop",
           "Folk Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 33206499,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/33206499",
+      "date_added": "2025-12-07T08:54:13-08:00",
+      "basic_information": {
+        "id": 33206499,
+        "master_id": 0,
+        "master_url": null,
+        "resource_url": "https://api.discogs.com/releases/33206499",
+        "title": "Après Coup",
+        "year": 2025,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Laurie Torres",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 4569581,
+            "resource_url": "https://api.discogs.com/artists/4569581"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Tonal Union",
+            "catno": "TU009LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 2834093,
+            "resource_url": "https://api.discogs.com/labels/2834093"
+          }
+        ],
+        "thumb": "https://i.discogs.com/lgejYy5CL_uzYhER4gODD-V4RTXDRAdgKBZbYdWZO3c/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMjA2/NDk5LTE3NDAxNTEx/NzYtMTUxNi5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/eydg_5OUvMSJqJR1mMGKit1i0EAWfdwlbYqa9dJyxLQ/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMjA2/NDk5LTE3NDAxNTEx/NzYtMTUxNi5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Jazz",
+          "Classical"
+        ],
+        "styles": [
+          "Modern Classical",
+          "Experimental",
+          "Ambient"
         ]
       },
       "rating": 0,
