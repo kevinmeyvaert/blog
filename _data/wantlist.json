@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 24,
+    "items": 25,
     "urls": {}
   },
   "wants": [
@@ -113,6 +113,62 @@
         ],
         "styles": [
           "Nu Metal"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 2693232,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/2693232",
+      "date_added": "2025-12-08T22:56:25-08:00",
+      "basic_information": {
+        "id": 2693232,
+        "master_id": 307676,
+        "master_url": "https://api.discogs.com/masters/307676",
+        "resource_url": "https://api.discogs.com/releases/2693232",
+        "title": "James Blake",
+        "year": 2011,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "2",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "James Blake",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1500084,
+            "resource_url": "https://api.discogs.com/artists/1500084"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Atlas Recordings (2)",
+            "catno": "ATLAS02LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 219390,
+            "resource_url": "https://api.discogs.com/labels/219390"
+          }
+        ],
+        "thumb": "https://i.discogs.com/wrwsPDlcxaf5OJdELhBBvkbEU3h2fPfPOxEiNpxnh0Y/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2OTMy/MzItMTMwMTQzNzA1/My5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/jAUpeItWlPZuFphk0FXFgHT2Si82nWXpQagdJ1EtBk0/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2OTMy/MzItMTMwMTQzNzA1/My5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Funk / Soul"
+        ],
+        "styles": [
+          "Leftfield",
+          "Dubstep"
         ]
       },
       "rating": 0,
