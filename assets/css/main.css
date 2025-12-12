@@ -1157,6 +1157,26 @@ button {
   overflow: hidden;
 }
 
+/* ============================================
+   SNOW EFFECT (Dark Mode Only)
+   ============================================ */
+
+#snow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] #snow-canvas {
+  opacity: 1;
+}
+
 
 /* ============================================
    WANTLIST PAGE

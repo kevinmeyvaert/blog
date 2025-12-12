@@ -37,6 +37,7 @@
     initModalViewer();
     initKeyboardNavigation();
     initSidebarMenu();
+    initSnowEffect();
   });
 
   // ============================================
@@ -81,6 +82,127 @@
 
   function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  // ============================================
+  // SNOW EFFECT
+  // ============================================
+
+  let snowCanvas = null;
+  let snowCtx = null;
+  let snowflakes = [];
+  let snowAnimationId = null;
+  let isSnowing = false;
+
+  function initSnowEffect() {
+    // Create canvas element
+    snowCanvas = document.createElement('canvas');
+    snowCanvas.id = 'snow-canvas';
+    document.body.appendChild(snowCanvas);
+    
+    snowCtx = snowCanvas.getContext('2d');
+    
+    // Set canvas size
+    resizeSnowCanvas();
+    window.addEventListener('resize', resizeSnowCanvas);
+    
+    // Create initial snowflakes
+    createSnowflakes();
+    
+    // Start animation if in dark mode
+    checkSnowVisibility();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkSnowVisibility);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+  }
+
+  function resizeSnowCanvas() {
+    if (!snowCanvas) return;
+    snowCanvas.width = window.innerWidth;
+    snowCanvas.height = window.innerHeight;
+    createSnowflakes();
+  }
+
+  function createSnowflakes() {
+    snowflakes = [];
+    const flakeCount = Math.floor((window.innerWidth * window.innerHeight) / 15000);
+    
+    for (let i = 0; i < flakeCount; i++) {
+      snowflakes.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        radius: Math.random() * 2.5 + 0.5,
+        speed: Math.random() * 0.8 + 0.2,
+        wind: Math.random() * 0.3 - 0.15,
+        opacity: Math.random() * 0.6 + 0.4,
+        swing: Math.random() * Math.PI * 2,
+        swingSpeed: Math.random() * 0.02 + 0.01
+      });
+    }
+  }
+
+  function checkSnowVisibility() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    
+    if (isDark && !isSnowing) {
+      startSnow();
+    } else if (!isDark && isSnowing) {
+      stopSnow();
+    }
+  }
+
+  function startSnow() {
+    if (isSnowing) return;
+    isSnowing = true;
+    animateSnow();
+  }
+
+  function stopSnow() {
+    isSnowing = false;
+    if (snowAnimationId) {
+      cancelAnimationFrame(snowAnimationId);
+      snowAnimationId = null;
+    }
+    if (snowCtx && snowCanvas) {
+      snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+    }
+  }
+
+  function animateSnow() {
+    if (!isSnowing || !snowCtx || !snowCanvas) return;
+    
+    snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+    
+    snowflakes.forEach(flake => {
+      // Update position
+      flake.y += flake.speed;
+      flake.swing += flake.swingSpeed;
+      flake.x += flake.wind + Math.sin(flake.swing) * 0.3;
+      
+      // Reset if off screen
+      if (flake.y > snowCanvas.height) {
+        flake.y = -5;
+        flake.x = Math.random() * snowCanvas.width;
+      }
+      if (flake.x > snowCanvas.width) {
+        flake.x = 0;
+      }
+      if (flake.x < 0) {
+        flake.x = snowCanvas.width;
+      }
+      
+      // Draw snowflake
+      snowCtx.beginPath();
+      snowCtx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      snowCtx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+      snowCtx.fill();
+    });
+    
+    snowAnimationId = requestAnimationFrame(animateSnow);
   }
 
   // ============================================
