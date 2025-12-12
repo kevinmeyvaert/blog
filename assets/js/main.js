@@ -38,6 +38,7 @@
     initKeyboardNavigation();
     initSidebarMenu();
     initSnowEffect();
+    initChristmasLights();
   });
 
   // ============================================
@@ -53,6 +54,12 @@
     // Apply theme immediately to prevent flash
     setTheme(theme);
 
+    // Get saved winter preference (default is on)
+    const savedWinter = localStorage.getItem('winter');
+    if (savedWinter === 'off') {
+      document.documentElement.setAttribute('data-winter', 'off');
+    }
+
     // Theme toggle buttons
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleMobile = document.getElementById('theme-toggle-mobile');
@@ -63,6 +70,18 @@
 
     if (themeToggleMobile) {
       themeToggleMobile.addEventListener('click', toggleTheme);
+    }
+
+    // Winter toggle buttons
+    const winterToggle = document.getElementById('winter-toggle');
+    const winterToggleMobile = document.getElementById('winter-toggle-mobile');
+
+    if (winterToggle) {
+      winterToggle.addEventListener('click', toggleWinter);
+    }
+
+    if (winterToggleMobile) {
+      winterToggleMobile.addEventListener('click', toggleWinter);
     }
 
     // Listen for system theme changes
@@ -82,6 +101,19 @@
 
   function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  function toggleWinter() {
+    const currentWinter = document.documentElement.getAttribute('data-winter');
+    const newWinter = currentWinter === 'off' ? 'on' : 'off';
+    
+    if (newWinter === 'off') {
+      document.documentElement.setAttribute('data-winter', 'off');
+      localStorage.setItem('winter', 'off');
+    } else {
+      document.documentElement.removeAttribute('data-winter');
+      localStorage.removeItem('winter');
+    }
   }
 
   // ============================================
@@ -112,11 +144,11 @@
     // Start animation if in dark mode
     checkSnowVisibility();
     
-    // Watch for theme changes
+    // Watch for theme and winter changes
     const observer = new MutationObserver(checkSnowVisibility);
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-theme']
+      attributeFilter: ['data-theme', 'data-winter']
     });
   }
 
@@ -147,10 +179,11 @@
 
   function checkSnowVisibility() {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const isWinterOff = document.documentElement.getAttribute('data-winter') === 'off';
     
-    if (isDark && !isSnowing) {
+    if (isDark && !isWinterOff && !isSnowing) {
       startSnow();
-    } else if (!isDark && isSnowing) {
+    } else if ((!isDark || isWinterOff) && isSnowing) {
       stopSnow();
     }
   }
@@ -203,6 +236,88 @@
     });
     
     snowAnimationId = requestAnimationFrame(animateSnow);
+  }
+
+  // ============================================
+  // CHRISTMAS LIGHTS
+  // ============================================
+
+  function initChristmasLights() {
+    const sidebar = document.querySelector('.sidebar-desktop');
+    if (!sidebar) return;
+
+    // Create the lights container
+    const lightsContainer = document.createElement('div');
+    lightsContainer.className = 'christmas-lights';
+    
+    // Add the wire
+    const wire = document.createElement('div');
+    wire.className = 'christmas-wire';
+    lightsContainer.appendChild(wire);
+    
+    // Color sequence for the bulbs
+    const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'pink'];
+    
+    // Calculate number of bulbs based on viewport height
+    const bulbSpacing = 45; // pixels between bulbs
+    const viewportHeight = window.innerHeight;
+    const numBulbs = Math.floor(viewportHeight / bulbSpacing);
+    
+    // Create bulbs
+    for (let i = 0; i < numBulbs; i++) {
+      const bulb = document.createElement('div');
+      bulb.className = `christmas-bulb ${colors[i % colors.length]}`;
+      bulb.style.top = `${(i * bulbSpacing) + 20}px`;
+      
+      // Add slight random offset for natural look
+      const randomDelay = (Math.random() * 0.5).toFixed(2);
+      bulb.style.animationDelay = `${randomDelay}s`;
+      
+      lightsContainer.appendChild(bulb);
+    }
+    
+    document.body.appendChild(lightsContainer);
+    
+    // Update on resize
+    window.addEventListener('resize', debounce(updateChristmasLights, 250));
+  }
+
+  function updateChristmasLights() {
+    const lightsContainer = document.querySelector('.christmas-lights');
+    if (!lightsContainer) return;
+    
+    const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'pink'];
+    const bulbSpacing = 45;
+    const viewportHeight = window.innerHeight;
+    const numBulbs = Math.floor(viewportHeight / bulbSpacing);
+    
+    // Remove existing bulbs (keep wire)
+    const existingBulbs = lightsContainer.querySelectorAll('.christmas-bulb');
+    existingBulbs.forEach(bulb => bulb.remove());
+    
+    // Create new bulbs
+    for (let i = 0; i < numBulbs; i++) {
+      const bulb = document.createElement('div');
+      bulb.className = `christmas-bulb ${colors[i % colors.length]}`;
+      bulb.style.top = `${(i * bulbSpacing) + 20}px`;
+      
+      const randomDelay = (Math.random() * 0.5).toFixed(2);
+      bulb.style.animationDelay = `${randomDelay}s`;
+      
+      lightsContainer.appendChild(bulb);
+    }
+  }
+
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 
   // ============================================

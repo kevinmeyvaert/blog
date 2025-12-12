@@ -214,6 +214,49 @@ button {
   display: block;
 }
 
+/* Winter Toggle */
+.winter-toggle {
+  position: relative;
+  color: var(--color-text-primary);
+  display: none;
+}
+
+[data-theme="dark"] .winter-toggle {
+  display: flex;
+}
+
+.winter-icon-on,
+.winter-icon-off {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.winter-icon-off {
+  display: none;
+}
+
+[data-winter="off"] .winter-icon-on {
+  display: none;
+}
+
+[data-winter="off"] .winter-icon-off {
+  display: block;
+}
+
+.winter-toggle-mobile {
+  width: 30px;
+  height: 30px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .winter-toggle-mobile {
+  display: flex;
+}
+
 
 /* ============================================
    MOBILE HEADER
@@ -1173,8 +1216,153 @@ button {
   transition: opacity 0.5s ease;
 }
 
-[data-theme="dark"] #snow-canvas {
+[data-theme="dark"]:not([data-winter="off"]) #snow-canvas {
   opacity: 1;
+}
+
+/* ============================================
+   CHRISTMAS LIGHTS (Dark Mode Only)
+   ============================================ */
+
+.christmas-lights {
+  position: fixed;
+  top: 0;
+  left: 279px;
+  width: 3px;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 101;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"]:not([data-winter="off"]) .christmas-lights {
+  opacity: 1;
+}
+
+.christmas-wire {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: #1a1a1a;
+  transform: translateX(-50%);
+}
+
+.christmas-bulb {
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 12px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: twinkle 1.5s ease-in-out infinite;
+  box-shadow: 0 0 8px 2px currentColor;
+}
+
+.christmas-bulb::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #333;
+  border-radius: 1px;
+}
+
+/* Rotate bulbs for natural look */
+.christmas-bulb:nth-child(odd) {
+  transform: translateX(-50%) rotate(-15deg);
+}
+
+.christmas-bulb:nth-child(even) {
+  transform: translateX(-50%) rotate(12deg);
+}
+
+.christmas-bulb:nth-child(3n) {
+  transform: translateX(-50%) rotate(-8deg);
+}
+
+.christmas-bulb:nth-child(4n) {
+  transform: translateX(-50%) rotate(18deg);
+}
+
+.christmas-bulb:nth-child(5n) {
+  transform: translateX(-50%) rotate(-20deg);
+}
+
+.christmas-bulb:nth-child(6n) {
+  transform: translateX(-50%) rotate(10deg);
+}
+
+.christmas-bulb.red {
+  background: linear-gradient(180deg, #ff6b6b 0%, #ee0000 100%);
+  color: #ff0000;
+  animation-delay: 0s;
+}
+
+.christmas-bulb.green {
+  background: linear-gradient(180deg, #69db7c 0%, #00aa00 100%);
+  color: #00ff00;
+  animation-delay: 0.3s;
+}
+
+.christmas-bulb.blue {
+  background: linear-gradient(180deg, #74c0fc 0%, #0066ff 100%);
+  color: #0088ff;
+  animation-delay: 0.6s;
+}
+
+.christmas-bulb.yellow {
+  background: linear-gradient(180deg, #ffe066 0%, #ffcc00 100%);
+  color: #ffcc00;
+  animation-delay: 0.9s;
+}
+
+.christmas-bulb.purple {
+  background: linear-gradient(180deg, #da77f2 0%, #aa00ff 100%);
+  color: #cc44ff;
+  animation-delay: 1.2s;
+}
+
+.christmas-bulb.orange {
+  background: linear-gradient(180deg, #ffa94d 0%, #ff6600 100%);
+  color: #ff6600;
+  animation-delay: 0.15s;
+}
+
+.christmas-bulb.cyan {
+  background: linear-gradient(180deg, #66d9e8 0%, #00cccc 100%);
+  color: #00dddd;
+  animation-delay: 0.45s;
+}
+
+.christmas-bulb.pink {
+  background: linear-gradient(180deg, #f783ac 0%, #ff0066 100%);
+  color: #ff4488;
+  animation-delay: 0.75s;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+    box-shadow: 0 0 8px 2px currentColor;
+  }
+  50% {
+    opacity: 0.6;
+    filter: brightness(0.7);
+    box-shadow: 0 0 4px 1px currentColor;
+  }
+}
+
+/* Hide lights on mobile */
+@media screen and (max-width: 768px) {
+  .christmas-lights {
+    display: none;
+  }
 }
 
 
