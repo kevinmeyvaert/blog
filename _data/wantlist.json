@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 25,
+    "items": 26,
     "urls": {}
   },
   "wants": [
@@ -170,6 +170,68 @@
           "Leftfield",
           "Dubstep"
         ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 2203093,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/2203093",
+      "date_added": "2025-12-13T05:14:12-08:00",
+      "basic_information": {
+        "id": 2203093,
+        "master_id": 257640,
+        "master_url": "https://api.discogs.com/masters/257640",
+        "resource_url": "https://api.discogs.com/releases/2203093",
+        "title": "Cat Fit Fury!",
+        "year": 2010,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition",
+              "Numbered"
+            ],
+            "text": "White"
+          },
+          {
+            "name": "CD",
+            "qty": "1",
+            "descriptions": [
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "The Van Jets",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 315492,
+            "resource_url": "https://api.discogs.com/artists/315492"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Belvédère Records",
+            "catno": "BC 0548",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 97620,
+            "resource_url": "https://api.discogs.com/labels/97620"
+          }
+        ],
+        "thumb": "https://i.discogs.com/DJeDp3Iv83jHNCdT7LaFYEVg7_i8M0NMQpFi9T9ki7o/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyMDMw/OTMtMTI2OTYxMzI1/NS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/AuRt5uyQyEqFiPHJulC8tfmTt-zLlU8zLOSKJJxcQAE/rs:fit/g:sm/q:90/h:310/w:311/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyMDMw/OTMtMTI2OTYxMzI1/NS5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": []
       },
       "rating": 0,
       "notes": ""
