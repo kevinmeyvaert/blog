@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 26,
+    "items": 28,
     "urls": {}
   },
   "wants": [
@@ -59,6 +59,66 @@
         "styles": [
           "Alternative Rock",
           "Post Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 35915272,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/35915272",
+      "date_added": "2025-12-16T10:31:40-08:00",
+      "basic_information": {
+        "id": 35915272,
+        "master_id": 4066780,
+        "master_url": "https://api.discogs.com/masters/4066780",
+        "resource_url": "https://api.discogs.com/releases/35915272",
+        "title": "USB002",
+        "year": 2025,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "2",
+            "descriptions": [
+              "LP",
+              "Album"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Fred again..",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 8664813,
+            "resource_url": "https://api.discogs.com/artists/8664813"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Atlantic",
+            "catno": "5021732774712",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 681,
+            "resource_url": "https://api.discogs.com/labels/681"
+          }
+        ],
+        "thumb": "https://i.discogs.com/O047mm49qpTCijYxbc1xJPcVNApNAfrKZJRAlrPOR4U/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1OTE1/MjcyLTE3NjU2MzAy/NjEtMzc1OS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/oESu3jjj0SyJJsCcY8NId3PjsS_NNPVUf1CDxETnYww/rs:fit/g:sm/q:90/h:600/w:599/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1OTE1/MjcyLTE3NjU2MzAy/NjEtMzc1OS5qcGVn.jpeg",
+        "genres": [
+          "Electronic",
+          "Hip Hop"
+        ],
+        "styles": [
+          "UK Garage",
+          "House",
+          "Dubstep",
+          "Techno",
+          "Breakbeat",
+          "Grime"
         ]
       },
       "rating": 0,
@@ -694,6 +754,62 @@
         "styles": [
           "Alternative Rock",
           "Indie Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 13625662,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/13625662",
+      "date_added": "2025-12-16T04:28:35-08:00",
+      "basic_information": {
+        "id": 13625662,
+        "master_id": 1548733,
+        "master_url": "https://api.discogs.com/masters/1548733",
+        "resource_url": "https://api.discogs.com/releases/13625662",
+        "title": "Persuasion System",
+        "year": 2019,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Limited Edition"
+            ],
+            "text": "Sky Blue"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Com Truise",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1974918,
+            "resource_url": "https://api.discogs.com/artists/1974918"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Ghostly International",
+            "catno": "GI-337",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 3020,
+            "resource_url": "https://api.discogs.com/labels/3020"
+          }
+        ],
+        "thumb": "https://i.discogs.com/HWRIysa-h_xa4CZ5bs5UdlfDl7_GaHuDRT3w7-qlElw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNjI1/NjYyLTE1NTgxMzY3/NTctMzc2MS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/yV5OJg3cAE7rNy81ROvafJDid8T8ED-JuummS0W0ZCw/rs:fit/g:sm/q:90/h:599/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzNjI1/NjYyLTE1NTgxMzY3/NTctMzc2MS5qcGVn.jpeg",
+        "genres": [
+          "Electronic"
+        ],
+        "styles": [
+          "Downtempo"
         ]
       },
       "rating": 0,
