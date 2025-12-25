@@ -3,67 +3,10 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 28,
+    "items": 25,
     "urls": {}
   },
   "wants": [
-    {
-      "id": 34740591,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/34740591",
-      "date_added": "2025-11-03T06:23:28-08:00",
-      "basic_information": {
-        "id": 34740591,
-        "master_id": 3945833,
-        "master_url": "https://api.discogs.com/masters/3945833",
-        "resource_url": "https://api.discogs.com/releases/34740591",
-        "title": "Rihla ",
-        "year": 2025,
-        "formats": [
-          {
-            "name": "Vinyl",
-            "qty": "1",
-            "descriptions": [
-              "LP",
-              "Album",
-              "Stereo"
-            ]
-          }
-        ],
-        "artists": [
-          {
-            "name": "Mansur Brown",
-            "anv": "",
-            "join": "",
-            "role": "",
-            "tracks": "",
-            "id": 5354931,
-            "resource_url": "https://api.discogs.com/artists/5354931"
-          }
-        ],
-        "labels": [
-          {
-            "name": "Amai Records",
-            "catno": "AMAI004LP",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 2382775,
-            "resource_url": "https://api.discogs.com/labels/2382775"
-          }
-        ],
-        "thumb": "https://i.discogs.com/mEqBkKjJk9PNB3tVDQH2iZvXd9xgWjTmby46l47DWyo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0NzQw/NTkxLTE3NTQ0MDM4/MjEtMTQ4MS5qcGVn.jpeg",
-        "cover_image": "https://i.discogs.com/uXkJ13H_wmZx3zG56QjC_pIUpksnR46QuRC52_y79NI/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0NzQw/NTkxLTE3NTQ0MDM4/MjEtMTQ4MS5qcGVn.jpeg",
-        "genres": [
-          "Electronic",
-          "Rock"
-        ],
-        "styles": [
-          "Alternative Rock",
-          "Post Rock"
-        ]
-      },
-      "rating": 0,
-      "notes": ""
-    },
     {
       "id": 35915272,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/35915272",
@@ -1515,75 +1458,6 @@
       "notes": ""
     },
     {
-      "id": 15514831,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/15514831",
-      "date_added": "2025-11-22T06:04:56-08:00",
-      "basic_information": {
-        "id": 15514831,
-        "master_id": 505265,
-        "master_url": "https://api.discogs.com/masters/505265",
-        "resource_url": "https://api.discogs.com/releases/15514831",
-        "title": "Flume",
-        "year": 2020,
-        "formats": [
-          {
-            "name": "Vinyl",
-            "qty": "1",
-            "descriptions": [
-              "LP",
-              "Album",
-              "Limited Edition",
-              "Reissue"
-            ],
-            "text": "Purple"
-          }
-        ],
-        "artists": [
-          {
-            "name": "Flume",
-            "anv": "",
-            "join": "",
-            "role": "",
-            "tracks": "",
-            "id": 2384511,
-            "resource_url": "https://api.discogs.com/artists/2384511"
-          }
-        ],
-        "labels": [
-          {
-            "name": "Transgressive Records",
-            "catno": "TRANS151XC",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 58970,
-            "resource_url": "https://api.discogs.com/labels/58970"
-          },
-          {
-            "name": "Transgressive Records",
-            "catno": "TRANS151X-LRS",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 58970,
-            "resource_url": "https://api.discogs.com/labels/58970"
-          }
-        ],
-        "thumb": "https://i.discogs.com/Utv828MGUhysuc1l70pqV2fq0Yww7mJzXfD921JTmg8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NTE0/ODMxLTE1OTQwMTkw/NDMtNTM4NC5qcGVn.jpeg",
-        "cover_image": "https://i.discogs.com/bQN36TpNP5U1tc6IzvuC2hdQe0gUp43eoIX-g71Kv14/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1NTE0/ODMxLTE1OTQwMTkw/NDMtNTM4NC5qcGVn.jpeg",
-        "genres": [
-          "Electronic"
-        ],
-        "styles": [
-          "Future Bass",
-          "Glitch Hop",
-          "Chillwave",
-          "Downtempo",
-          "Bass Music"
-        ]
-      },
-      "rating": 0,
-      "notes": ""
-    },
-    {
       "id": 19501540,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/19501540",
       "date_added": "2025-11-22T09:33:35-08:00",
@@ -1638,60 +1512,6 @@
         "styles": [
           "Fusion",
           "Jazz-Funk"
-        ]
-      },
-      "rating": 0,
-      "notes": ""
-    },
-    {
-      "id": 4858772,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/4858772",
-      "date_added": "2025-11-03T06:23:13-08:00",
-      "basic_information": {
-        "id": 4858772,
-        "master_id": 589122,
-        "master_url": "https://api.discogs.com/masters/589122",
-        "resource_url": "https://api.discogs.com/releases/4858772",
-        "title": "6 Feet Beneath The Moon",
-        "year": 2013,
-        "formats": [
-          {
-            "name": "Vinyl",
-            "qty": "2",
-            "descriptions": [
-              "LP",
-              "Album"
-            ]
-          }
-        ],
-        "artists": [
-          {
-            "name": "King Krule",
-            "anv": "",
-            "join": "",
-            "role": "",
-            "tracks": "",
-            "id": 2177938,
-            "resource_url": "https://api.discogs.com/artists/2177938"
-          }
-        ],
-        "labels": [
-          {
-            "name": "XL Recordings",
-            "catno": "XLLP618",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 160,
-            "resource_url": "https://api.discogs.com/labels/160"
-          }
-        ],
-        "thumb": "https://i.discogs.com/Ly13bstagIbJCDex3zXyV0BOTTdyXHr-PEAKeLte3tQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ4NTg3/NzItMTM3NzY5NzA0/MC05ODc1LmpwZWc.jpeg",
-        "cover_image": "https://i.discogs.com/9CDzt34fSneERZ0Es_Wrj4E7_MS9zCLDi3drTOrLhqA/rs:fit/g:sm/q:90/h:480/w:480/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ4NTg3/NzItMTM3NzY5NzA0/MC05ODc1LmpwZWc.jpeg",
-        "genres": [
-          "Rock"
-        ],
-        "styles": [
-          "Alternative Rock"
         ]
       },
       "rating": 0,
