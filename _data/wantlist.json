@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 25,
+    "items": 24,
     "urls": {}
   },
   "wants": [
@@ -640,62 +640,6 @@
         ],
         "styles": [
           "New Wave",
-          "Indie Rock"
-        ]
-      },
-      "rating": 0,
-      "notes": ""
-    },
-    {
-      "id": 26900510,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/26900510",
-      "date_added": "2025-11-10T06:34:06-08:00",
-      "basic_information": {
-        "id": 26900510,
-        "master_id": 302316,
-        "master_url": "https://api.discogs.com/masters/302316",
-        "resource_url": "https://api.discogs.com/releases/26900510",
-        "title": "Ritual",
-        "year": 2023,
-        "formats": [
-          {
-            "name": "Vinyl",
-            "qty": "1",
-            "descriptions": [
-              "LP",
-              "Album",
-              "Reissue"
-            ]
-          }
-        ],
-        "artists": [
-          {
-            "name": "White Lies (2)",
-            "anv": "",
-            "join": "",
-            "role": "",
-            "tracks": "",
-            "id": 1103608,
-            "resource_url": "https://api.discogs.com/artists/1103608"
-          }
-        ],
-        "labels": [
-          {
-            "name": "Fiction Records",
-            "catno": "2756839",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 5810,
-            "resource_url": "https://api.discogs.com/labels/5810"
-          }
-        ],
-        "thumb": "https://i.discogs.com/b06NxAVQVMx1pByTD6amHmuBNUUzKw7Mf72pAsT99PQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2OTAw/NTEwLTE2ODI2MDc0/MjctMzgxMS5qcGVn.jpeg",
-        "cover_image": "https://i.discogs.com/ctEKubNZnGRa0tpPmRZQxroYQwl6jtRxCYQP8oduHlk/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2OTAw/NTEwLTE2ODI2MDc0/MjctMzgxMS5qcGVn.jpeg",
-        "genres": [
-          "Rock"
-        ],
-        "styles": [
-          "Alternative Rock",
           "Indie Rock"
         ]
       },
