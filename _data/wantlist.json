@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 24,
+    "items": 25,
     "urls": {}
   },
   "wants": [
@@ -641,6 +641,73 @@
         "styles": [
           "New Wave",
           "Indie Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 23138342,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/23138342",
+      "date_added": "2025-12-30T00:45:17-08:00",
+      "basic_information": {
+        "id": 23138342,
+        "master_id": 298355,
+        "master_url": "https://api.discogs.com/masters/298355",
+        "resource_url": "https://api.discogs.com/releases/23138342",
+        "title": "All We Know Is Falling",
+        "year": 2022,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Reissue"
+            ],
+            "text": "Silver"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Paramore",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 609563,
+            "resource_url": "https://api.discogs.com/artists/609563"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Fueled By Ramen",
+            "catno": "549637-1",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 42701,
+            "resource_url": "https://api.discogs.com/labels/42701"
+          },
+          {
+            "name": "Fueled By Ramen",
+            "catno": "517117-1",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 42701,
+            "resource_url": "https://api.discogs.com/labels/42701"
+          }
+        ],
+        "thumb": "https://i.discogs.com/6Cty1D0kbjxg8OzM8SF6UvnKoz1ixi8FhWWAyg997RI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzMTM4/MzQyLTE3NjQ1MzMz/NjgtMjk2MS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/hHcpGtWpmtGRgwyNHSq3g-CNI9g4aXO-nQW1pobB8Ao/rs:fit/g:sm/q:90/h:600/w:596/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzMTM4/MzQyLTE3NjQ1MzMz/NjgtMjk2MS5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Emo",
+          "Alternative Rock",
+          "Pop Rock",
+          "Pop Punk"
         ]
       },
       "rating": 0,
