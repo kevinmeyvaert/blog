@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-01-12T03:40:53Z",
+  "last_updated": "2026-01-13T03:37:42Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -41,11 +41,11 @@
       "elevation_gain": 660.4000000000001
     },
     "recent_run_totals": {
-      "count": 20,
-      "distance": 220985.10000000003,
-      "moving_time": 63929,
-      "elapsed_time": 64050,
-      "elevation_gain": 703.0,
+      "count": 19,
+      "distance": 208265.10000000003,
+      "moving_time": 60504,
+      "elapsed_time": 60625,
+      "elevation_gain": 654.0,
       "achievement_count": 0
     },
     "all_run_totals": {
@@ -117,7 +117,7 @@
       "location_state": null,
       "location_country": null,
       "achievement_count": 0,
-      "kudos_count": 12,
+      "kudos_count": 13,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -189,7 +189,7 @@
       "location_state": null,
       "location_country": null,
       "achievement_count": 0,
-      "kudos_count": 8,
+      "kudos_count": 9,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -261,7 +261,7 @@
       "location_state": null,
       "location_country": null,
       "achievement_count": 0,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
