@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 25,
+    "items": 26,
     "urls": {}
   },
   "wants": [
@@ -1035,6 +1035,69 @@
         ],
         "styles": [
           "Ambient"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 16210640,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/16210640",
+      "date_added": "2026-01-12T06:13:12-08:00",
+      "basic_information": {
+        "id": 16210640,
+        "master_id": 119732,
+        "master_url": "https://api.discogs.com/masters/119732",
+        "resource_url": "https://api.discogs.com/releases/16210640",
+        "title": "Be True / Satellite Type 2",
+        "year": 2020,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "12\"",
+              "45 RPM",
+              "Repress"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Commix",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 119661,
+            "resource_url": "https://api.discogs.com/artists/119661"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Metalheadz",
+            "catno": "METH075",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 128,
+            "resource_url": "https://api.discogs.com/labels/128"
+          },
+          {
+            "name": "Metalheadz",
+            "catno": "METH75",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 128,
+            "resource_url": "https://api.discogs.com/labels/128"
+          }
+        ],
+        "thumb": "https://i.discogs.com/g_r6Ft9NtOBR0-yvctIqUQM-_M7udFbS2XY-X3ZoTo8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MjEw/NjQwLTE2MTI0Mzk0/MTYtNjE0My5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/C4e1wHdIGdNBDdEkRq92y67IImzdzK1Ax4jE1k6SVu4/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MjEw/NjQwLTE2MTI0Mzk0/MTYtNjE0My5qcGVn.jpeg",
+        "genres": [
+          "Electronic"
+        ],
+        "styles": [
+          "Drum n Bass"
         ]
       },
       "rating": 0,
