@@ -37,8 +37,10 @@
     initModalViewer();
     initKeyboardNavigation();
     initSidebarMenu();
-    initSnowEffect();
-    initChristmasLights();
+    if (window.WINTER_MODE) {
+      initSnowEffect();
+      initChristmasLights();
+    }
   });
 
   // ============================================

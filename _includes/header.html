@@ -62,6 +62,7 @@
         </svg>
       </button>
 
+      {% if site.winter_mode %}
       <button id="winter-toggle" class="social-link winter-toggle" aria-label="Toggle winter effects">
         <svg class="icon winter-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="2" x2="12" y2="22"></line>
@@ -78,6 +79,7 @@
           <line x1="1" y1="1" x2="23" y2="23"></line>
         </svg>
       </button>
+      {% endif %}
     </div>
 
     {% if site.tagline %}
@@ -88,6 +90,7 @@
 
 <!-- Mobile Header -->
 <header class="mobile-header">
+  {% if site.winter_mode %}
   <button id="winter-toggle-mobile" class="winter-toggle-mobile" aria-label="Toggle winter effects">
     <svg class="icon winter-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="12" y1="2" x2="12" y2="22"></line>
@@ -104,6 +107,7 @@
       <line x1="1" y1="1" x2="23" y2="23"></line>
     </svg>
   </button>
+  {% endif %}
   <button id="theme-toggle-mobile" class="theme-toggle-mobile" aria-label="Toggle dark mode">
     <svg class="icon theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="5"></circle>

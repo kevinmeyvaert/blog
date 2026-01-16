@@ -117,3 +117,6 @@ collections:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Winter/Christmas decorations (snow + lights)
+winter_mode: false

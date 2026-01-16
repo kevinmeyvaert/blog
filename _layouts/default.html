@@ -22,6 +22,7 @@
       const theme = savedTheme || (prefersDark ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
     })();
+    window.WINTER_MODE = {{ site.winter_mode | default: false }};
   </script>
 
   <!-- Scripts -->
