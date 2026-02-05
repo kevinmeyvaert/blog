@@ -6,6 +6,52 @@
 // Store chart instances for re-rendering on theme change
 const chartInstances = {};
 
+// Locale helpers
+const DATE_LOCALE = 'nl-BE';
+const DATE_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric'
+});
+const MONTH_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
+  month: 'short',
+  year: 'numeric'
+});
+const MONTH_LONG_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
+  month: 'long',
+  year: 'numeric'
+});
+
+function getTooltipTheme() {
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+}
+
+function getLocalDateKey(dateObj) {
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function parseLocalDateKey(dateKey) {
+  if (!dateKey) return null;
+  const [year, month, day] = dateKey.split('-').map(Number);
+  if (!year || !month || !day) return null;
+  return new Date(year, month - 1, day);
+}
+
+function formatDateFromISO(dateStr) {
+  if (!dateStr) return '';
+  const dateKey = dateStr.split('T')[0];
+  const date = parseLocalDateKey(dateKey);
+  return date ? DATE_FORMATTER.format(date) : '';
+}
+
+function formatDateFromTimestamp(ms) {
+  if (ms === null || ms === undefined) return '';
+  return DATE_FORMATTER.format(new Date(ms));
+}
+
 /**
  * Get theme-aware colors from CSS variables
  */
@@ -125,6 +171,13 @@ function initializeDistanceChart(data) {
     colors: [colors.textPrimary],
     xaxis: {
       type: 'category',
+      title: {
+        text: 'Month',
+        style: {
+          color: colors.textPrimary,
+          fontSize: '12px'
+        }
+      },
       labels: {
         style: {
           colors: colors.textPrimary,
@@ -151,6 +204,7 @@ function initializeDistanceChart(data) {
       borderColor: colors.borderPrimary
     },
     tooltip: {
+      theme: getTooltipTheme(),
       y: {
         formatter: function(val) {
           return val + ' km';
@@ -194,7 +248,7 @@ function initializePaceChart(data) {
   const monthlyPace = {};
 
   runs.forEach(run => {
-    const month = run.start_date.substring(0, 7); // YYYY-MM
+    const month = run.start_date_local.substring(0, 7); // YYYY-MM
     const paceMinPerKm = (run.moving_time / 60) / (run.distance / 1000);
 
     if (!monthlyPace[month]) {
@@ -239,6 +293,13 @@ function initializePaceChart(data) {
     colors: [colors.textPrimary],
     xaxis: {
       type: 'category',
+      title: {
+        text: 'Month',
+        style: {
+          color: colors.textPrimary,
+          fontSize: '12px'
+        }
+      },
       labels: {
         style: {
           colors: colors.textPrimary,
@@ -271,6 +332,7 @@ function initializePaceChart(data) {
       borderColor: colors.borderPrimary
     },
     tooltip: {
+      theme: getTooltipTheme(),
       y: {
         formatter: function(val) {
           const minutes = Math.floor(val);
@@ -363,6 +425,13 @@ function initializeHRZonesChart(data) {
     },
     xaxis: {
       categories: activeZones.map(z => `${z.name} (${z.min}-${z.max} bpm)`),
+      title: {
+        text: 'Runs',
+        style: {
+          color: colors.textPrimary,
+          fontSize: '12px'
+        }
+      },
       labels: {
         style: {
           colors: colors.textPrimary,
@@ -385,6 +454,7 @@ function initializeHRZonesChart(data) {
       show: false
     },
     tooltip: {
+      theme: getTooltipTheme(),
       y: {
         formatter: function(val) {
           return val + ' runs';
@@ -438,7 +508,8 @@ function initializeEfficiencyChart(data) {
     const paceMinPerKm = (run.moving_time / 60) / (run.distance / 1000);
     const speedKmPerMin = 1 / paceMinPerKm; // km/min
     const ef = speedKmPerMin / run.average_heartrate * 1000; // Scale for readability
-    const timestamp = new Date(run.start_date_local).getTime();
+    const dateKey = run.start_date_local.split('T')[0];
+    const timestamp = parseLocalDateKey(dateKey)?.getTime() || new Date(run.start_date_local).getTime();
     const dateProgress = (timestamp - minDate) / dateRange;
 
     // Color gradient: light gray (old) to dark blue (recent)
@@ -448,7 +519,8 @@ function initializeEfficiencyChart(data) {
     return {
       x: run.average_heartrate,
       y: paceMinPerKm,
-      date: new Date(run.start_date_local).toLocaleDateString(),
+      date: formatDateFromISO(dateKey),
+      dateKey: dateKey,
       timestamp: timestamp,
       name: run.name,
       distance: (run.distance / 1000).toFixed(2),
@@ -872,7 +944,7 @@ function initializeActivityMap(data) {
     line.bindPopup(`
       <strong>${activity.name}</strong><br>
       ${(activity.distance / 1000).toFixed(2)} km<br>
-      ${new Date(activity.start_date_local).toLocaleDateString()}
+      ${formatDateFromISO(activity.start_date_local)}
     `);
   });
 
@@ -936,8 +1008,8 @@ function decodePolyline(encoded) {
  */
 function formatMonth(monthStr) {
   const [year, month] = monthStr.split('-');
-  const date = new Date(year, parseInt(month) - 1);
-  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+  return MONTH_FORMATTER.format(date);
 }
 
 /**
@@ -954,22 +1026,25 @@ function initializeActivityCalendar(data) {
   }
 
   const colors = getThemeColors();
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
   // Initialize metrics calculator
   const metrics = new StravaMetrics(data);
 
   // Get dates for last 4 months
   const today = new Date();
-  const fourMonthsAgo = new Date(today);
-  fourMonthsAgo.setMonth(today.getMonth() - 4);
+  const todayKey = getLocalDateKey(today);
+  const todayDate = parseLocalDateKey(todayKey);
+  const fourMonthsAgo = new Date(todayDate);
+  fourMonthsAgo.setMonth(todayDate.getMonth() - 4);
 
   // Create map of dates with activities and TSS
   const activityDates = new Map();
   data.activities.forEach(activity => {
     if (activity.type === 'Run') {
-      const activityDate = new Date(activity.start_date_local);
-      if (activityDate >= fourMonthsAgo) {
-        const dateKey = activityDate.toISOString().split('T')[0];
+      const dateKey = activity.start_date_local.split('T')[0];
+      const activityDate = parseLocalDateKey(dateKey);
+      if (activityDate && activityDate >= fourMonthsAgo) {
         if (!activityDates.has(dateKey)) {
           activityDates.set(dateKey, { activities: [], tss: 0 });
         }
@@ -991,8 +1066,8 @@ function initializeActivityCalendar(data) {
 
   // Generate for current month and previous month only
   for (let i = 1; i >= 0; i--) {
-    const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
-    const monthName = monthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const monthDate = new Date(todayDate.getFullYear(), todayDate.getMonth() - i, 1);
+    const monthName = MONTH_LONG_FORMATTER.format(monthDate);
 
     calendarHTML += `<div class="calendar-month">`;
     calendarHTML += `<h3 class="calendar-month-title">${monthName}</h3>`;
@@ -1020,13 +1095,16 @@ function initializeActivityCalendar(data) {
     // Add days of month
     for (let day = 1; day <= daysInMonth; day++) {
       const currentDate = new Date(monthDate.getFullYear(), monthDate.getMonth(), day);
-      const dateKey = currentDate.toISOString().split('T')[0];
+      const dateKey = getLocalDateKey(currentDate);
       const dayData = activityDates.get(dateKey);
-      const isFuture = currentDate > today;
+      const isFuture = currentDate > todayDate;
       const hasActivity = !isFuture && dayData && dayData.activities.length > 0;
 
       let dayClass = 'calendar-day';
       let dayStyle = '';
+      let detailsText = '';
+      let ariaLabel = '';
+      let tabIndex = '';
 
       if (hasActivity) {
         dayClass += ' calendar-day-active';
@@ -1035,16 +1113,25 @@ function initializeActivityCalendar(data) {
         const intensity = Math.min(dayData.tss / Math.max(maxTSS, 100), 1);
         // Use grayscale from light to dark gray
         const grayValue = Math.round(255 - (intensity * 180)); // 255 (light) to 75 (dark)
-        dayStyle = `background-color: rgb(${grayValue}, ${grayValue}, ${grayValue});`;
+        const textColor = grayValue < 140 ? '#ffffff' : '#0a0a0a';
+        const borderColor = isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.15)';
+        dayStyle = `background-color: rgb(${grayValue}, ${grayValue}, ${grayValue}); color: ${textColor}; border-color: ${borderColor};`;
       }
 
       let title = '';
       if (hasActivity) {
         const totalDistance = dayData.activities.reduce((sum, a) => sum + a.distance, 0) / 1000;
-        title = `${dayData.activities.length} run${dayData.activities.length > 1 ? 's' : ''} - ${totalDistance.toFixed(1)} km - TSS: ${Math.round(dayData.tss)}`;
+        detailsText = `${dayData.activities.length} run${dayData.activities.length > 1 ? 's' : ''} | ${totalDistance.toFixed(1)} km | TSS ${Math.round(dayData.tss)}`;
+        title = detailsText;
+        ariaLabel = `${formatDateFromISO(dateKey)}: ${detailsText}`;
+        tabIndex = ' tabindex="0"';
       }
 
-      calendarHTML += `<div class="${dayClass}" style="${dayStyle}" title="${title}">`;
+      const safeTitle = title.replace(/"/g, '&quot;');
+      const safeDetails = detailsText.replace(/"/g, '&quot;');
+      const safeAria = ariaLabel.replace(/"/g, '&quot;');
+
+      calendarHTML += `<div class="${dayClass}" style="${dayStyle}" title="${safeTitle}" data-date="${dateKey}" data-details="${safeDetails}" aria-label="${safeAria}"${tabIndex}>`;
       calendarHTML += `<span class="calendar-day-number">${day}</span>`;
       calendarHTML += `</div>`;
     }
@@ -1060,12 +1147,37 @@ function initializeActivityCalendar(data) {
   calendarHTML += '<span class="legend-label">Training Load:</span>';
   calendarHTML += '<div class="legend-gradient"></div>';
   calendarHTML += '<div class="legend-labels">';
-  calendarHTML += '<span class="legend-text">Low</span>';
-  calendarHTML += '<span class="legend-text">High</span>';
+  calendarHTML += '<span class="legend-text">0 TSS</span>';
+  calendarHTML += `<span class="legend-text">${Math.round(maxTSS || 0)} TSS</span>`;
   calendarHTML += '</div>';
+  calendarHTML += '</div>';
+  calendarHTML += '<div class="calendar-details" aria-live="polite">';
+  calendarHTML += '<span class="calendar-details-label">Selected day:</span>';
+  calendarHTML += '<span class="calendar-details-value">Hover a day to see details.</span>';
   calendarHTML += '</div>';
 
   calendarElement.innerHTML = calendarHTML;
+
+  const detailsValue = calendarElement.querySelector('.calendar-details-value');
+  const activeDays = calendarElement.querySelectorAll('.calendar-day-active');
+  activeDays.forEach(dayEl => {
+    const dateKey = dayEl.getAttribute('data-date');
+    const details = dayEl.getAttribute('data-details');
+    if (!dateKey || !details) return;
+    const detailText = `${formatDateFromISO(dateKey)} - ${details}`;
+
+    const setDetails = () => {
+      if (detailsValue) detailsValue.textContent = detailText;
+    };
+    const resetDetails = () => {
+      if (detailsValue) detailsValue.textContent = 'Hover a day to see details.';
+    };
+
+    dayEl.addEventListener('mouseenter', setDetails);
+    dayEl.addEventListener('focus', setDetails);
+    dayEl.addEventListener('mouseleave', resetDetails);
+    dayEl.addEventListener('blur', resetDetails);
+  });
 }
 
 /**
@@ -1091,7 +1203,7 @@ function initializeVO2maxChart(data) {
     series: [{
       name: 'VO2max',
       data: vo2History.map(h => ({
-        x: new Date(h.date).getTime(),
+        x: parseLocalDateKey(h.date)?.getTime(),
         y: h.vo2max
       }))
     }],
@@ -1110,10 +1222,21 @@ function initializeVO2maxChart(data) {
     colors: [colors.textPrimary],
     xaxis: {
       type: 'datetime',
+      title: {
+        text: 'Date',
+        style: {
+          color: colors.textPrimary,
+          fontSize: '12px'
+        }
+      },
       labels: {
         style: {
           colors: colors.textPrimary,
           fontSize: '12px'
+        },
+        formatter: function(val) {
+          const parsed = typeof val === 'number' ? val : parseInt(val, 10);
+          return Number.isFinite(parsed) ? formatDateFromTimestamp(parsed) : val;
         }
       }
     },
@@ -1138,15 +1261,13 @@ function initializeVO2maxChart(data) {
       borderColor: colors.borderPrimary
     },
     tooltip: {
-      x: {
-        format: 'MMM dd, yyyy'
-      },
+      theme: getTooltipTheme(),
       custom: function({ seriesIndex, dataPointIndex, w }) {
         const colors = getThemeColors();
         const point = vo2History[dataPointIndex];
         return `<div style="padding: 10px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 4px;">
           <strong>${point.activityName}</strong><br>
-          ${new Date(point.date).toLocaleDateString()}<br>
+          ${formatDateFromISO(point.date)}<br>
           <strong>VO2max:</strong> ${point.vo2max.toFixed(1)} ml/kg/min<br>
           <strong>Distance:</strong> ${(point.distance / 1000).toFixed(2)} km
         </div>`;
@@ -1233,11 +1354,13 @@ function initializeTrainingLoadChart(data) {
 
   // Calculate warm-up period (first 42 days)
   const WARMUP_DAYS = 42;
-  const firstDate = new Date(history[0].date).getTime();
-  const warmupEndDate = new Date(history[0].date);
+  const firstDateObj = parseLocalDateKey(history[0].date);
+  const firstDate = firstDateObj ? firstDateObj.getTime() : new Date(history[0].date).getTime();
+  const warmupEndDate = firstDateObj ? new Date(firstDateObj) : new Date(history[0].date);
   warmupEndDate.setDate(warmupEndDate.getDate() + WARMUP_DAYS);
   const warmupEndTime = warmupEndDate.getTime();
-  const lastDate = new Date(history[history.length - 1].date).getTime();
+  const lastDateObj = parseLocalDateKey(history[history.length - 1].date);
+  const lastDate = lastDateObj ? lastDateObj.getTime() : new Date(history[history.length - 1].date).getTime();
 
   // Check if entire dataset is within warm-up period
   const entirelyWarmup = history.length <= WARMUP_DAYS;
@@ -1246,15 +1369,15 @@ function initializeTrainingLoadChart(data) {
     series: [
       {
         name: 'CTL (Fitness)',
-        data: history.map(h => ({ x: new Date(h.date).getTime(), y: h.ctl }))
+        data: history.map(h => ({ x: parseLocalDateKey(h.date)?.getTime(), y: h.ctl }))
       },
       {
         name: 'ATL (Fatigue)',
-        data: history.map(h => ({ x: new Date(h.date).getTime(), y: h.atl }))
+        data: history.map(h => ({ x: parseLocalDateKey(h.date)?.getTime(), y: h.atl }))
       },
       {
         name: 'TSB (Form)',
-        data: history.map(h => ({ x: new Date(h.date).getTime(), y: h.tsb }))
+        data: history.map(h => ({ x: parseLocalDateKey(h.date)?.getTime(), y: h.tsb }))
       }
     ],
     chart: {
@@ -1305,8 +1428,11 @@ function initializeTrainingLoadChart(data) {
       }
     },
     tooltip: {
+      theme: getTooltipTheme(),
       x: {
-        format: 'MMM dd, yyyy'
+        formatter: function(val) {
+          return formatDateFromTimestamp(val);
+        }
       }
     },
     annotations: {
@@ -1440,6 +1566,7 @@ function initializePowerCurveChart(data) {
       }
     },
     tooltip: {
+      theme: getTooltipTheme(),
       custom: function({ seriesIndex, dataPointIndex, w }) {
         const colors = getThemeColors();
         const point = powerData.curve[dataPointIndex];
@@ -1450,7 +1577,7 @@ function initializePowerCurveChart(data) {
 
         return `<div style="padding: 10px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 4px;">
           <strong>${point.activityName}</strong><br>
-          ${new Date(point.date).toLocaleDateString()}<br>
+          ${formatDateFromISO(point.date)}<br>
           <strong>Duration:</strong> ${durationStr}<br>
           <strong>Power:</strong> ${point.power}W
         </div>`;
@@ -1522,7 +1649,7 @@ function initializeIntervalScorecard(data) {
   for (const workout of recentIntervals) {
     html += `
       <tr>
-        <td>${new Date(workout.date).toLocaleDateString()}</td>
+        <td>${formatDateFromISO(workout.date)}</td>
         <td class="workout-name">${workout.name}</td>
         <td>${workout.distance} km</td>
         <td>${workout.avgPace}</td>

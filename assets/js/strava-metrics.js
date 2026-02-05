@@ -19,6 +19,24 @@ class StravaMetrics {
   }
 
   /**
+   * Get local date key (YYYY-MM-DD) from an activity
+   */
+  getLocalDateKey(activity) {
+    if (!activity || !activity.start_date_local) return null;
+    return activity.start_date_local.split('T')[0];
+  }
+
+  /**
+   * Get local date key (YYYY-MM-DD) from a Date object
+   */
+  getLocalDateKeyFromDate(dateObj) {
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  /**
    * Calculate athlete age from Strava account creation (approximation)
    */
   calculateAge(createdAt) {
@@ -89,8 +107,9 @@ class StravaMetrics {
    * 42-day exponentially weighted moving average
    */
   calculateCTL(activities, date, previousCTL = 0) {
+    const dateKey = this.getLocalDateKeyFromDate(date);
     const tssToday = activities
-      .filter(a => new Date(a.start_date_local).toDateString() === date.toDateString())
+      .filter(a => this.getLocalDateKey(a) === dateKey)
       .reduce((sum, a) => sum + this.calculateTSS(a), 0);
 
     const ctl = previousCTL + (tssToday - previousCTL) * (1 - Math.exp(-1/42));
@@ -102,8 +121,9 @@ class StravaMetrics {
    * 7-day exponentially weighted moving average
    */
   calculateATL(activities, date, previousATL = 0) {
+    const dateKey = this.getLocalDateKeyFromDate(date);
     const tssToday = activities
-      .filter(a => new Date(a.start_date_local).toDateString() === date.toDateString())
+      .filter(a => this.getLocalDateKey(a) === dateKey)
       .reduce((sum, a) => sum + this.calculateTSS(a), 0);
 
     const atl = previousATL + (tssToday - previousATL) * (1 - Math.exp(-1/7));
@@ -136,14 +156,12 @@ class StravaMetrics {
     let atl = 0;
 
     for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
-      const dateStr = new Date(d).toDateString();
-
       ctl = this.calculateCTL(sorted, new Date(d), ctl);
       atl = this.calculateATL(sorted, new Date(d), atl);
       const tsb = this.calculateTSB(ctl, atl);
 
       history.push({
-        date: new Date(d).toISOString().split('T')[0],
+        date: this.getLocalDateKeyFromDate(new Date(d)),
         ctl: Math.round(ctl * 10) / 10,
         atl: Math.round(atl * 10) / 10,
         tsb: Math.round(tsb * 10) / 10

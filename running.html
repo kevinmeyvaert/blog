@@ -24,7 +24,7 @@ title: Running
 
   <!-- Summary Stats Cards -->
   <section class="running-stats-summary">
-    <p class="stats-since">All-time stats since {{ site.data.strava.athlete.created_at | date: "%B %Y" }}. Last updated: {{ site.data.strava.last_updated | date: "%d %B %Y at %H:%M" }}.</p>
+    <p class="stats-since">All-time stats since {{ site.data.strava.athlete.created_at | date: "%m/%Y" }}. Last updated: {{ site.data.strava.last_updated | date: "%d/%m/%Y %H:%M" }}.</p>
     <div class="stat-cards-grid">
       <div class="stat-card">
         <div class="stat-value">{{ site.data.strava.stats.all_run_totals.count }}</div>
@@ -75,24 +75,28 @@ title: Running
         <div class="activity-item">
           <div class="activity-header">
             <h3 class="activity-name">{{ activity.name }}</h3>
-            <time class="activity-date">{{ activity.start_date_local | date: "%d %B %Y" }}</time>
+            <time class="activity-date">{{ activity.start_date_local | date: "%d/%m/%Y" }}</time>
           </div>
           <div class="activity-stats">
             <span class="activity-stat">
-              <strong>{{ activity.distance | divided_by: 1000.0 | round: 2 }} km</strong>
+              <span class="activity-stat-label">Distance</span>
+              <span class="activity-stat-value">{{ activity.distance | divided_by: 1000.0 | round: 2 }} km</span>
             </span>
             <span class="activity-stat">
               {% assign pace_seconds = activity.moving_time | divided_by: activity.distance | times: 1000 %}
               {% assign pace_minutes = pace_seconds | divided_by: 60 | floor %}
               {% assign pace_secs = pace_seconds | modulo: 60 | round: 0 %}
-              <strong>{{ pace_minutes }}:{% if pace_secs < 10 %}0{% endif %}{{ pace_secs }} /km</strong>
+              <span class="activity-stat-label">Pace</span>
+              <span class="activity-stat-value">{{ pace_minutes }}:{% if pace_secs < 10 %}0{% endif %}{{ pace_secs }} /km</span>
             </span>
             <span class="activity-stat">
-              <strong>{{ activity.total_elevation_gain | round: 0 }}m</strong> elevation
+              <span class="activity-stat-label">Elevation</span>
+              <span class="activity-stat-value">{{ activity.total_elevation_gain | round: 0 }} m</span>
             </span>
             {% if activity.average_heartrate %}
             <span class="activity-stat">
-              <strong>{{ activity.average_heartrate | round: 0 }} bpm</strong> avg HR
+              <span class="activity-stat-label">Avg HR</span>
+              <span class="activity-stat-value">{{ activity.average_heartrate | round: 0 }} bpm</span>
             </span>
             {% endif %}
           </div>
@@ -112,7 +116,7 @@ title: Running
     <h2>Trends</h2>
     {% if site.data.strava.activities.size > 0 %}
     {% assign oldest_activity = site.data.strava.activities | last %}
-    <p class="charts-note">Charts based on last 100 activities (since {{ oldest_activity.start_date_local | date: "%d %B %Y" }})</p>
+    <p class="charts-note">Charts based on last 100 activities (since {{ oldest_activity.start_date_local | date: "%d/%m/%Y" }})</p>
     {% endif %}
 
     <div class="chart-container">

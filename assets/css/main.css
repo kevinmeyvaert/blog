@@ -1876,7 +1876,7 @@ button {
 
 .legend-gradient {
   height: 20px;
-  background: linear-gradient(to right, rgb(255, 255, 255), rgb(75, 75, 75));
+  background: linear-gradient(to right, var(--color-bg-primary), var(--color-text-primary));
   max-width: 300px;
   margin: 0 auto 8px;
 }
@@ -1940,6 +1940,7 @@ button {
   position: relative;
   cursor: default;
   transition: all 0.2s ease;
+  color: var(--color-text-secondary);
 }
 
 .calendar-day-empty {
@@ -1959,11 +1960,10 @@ button {
 .calendar-day-number {
   font-size: 12px;
   font-weight: 500;
-  color: var(--color-text-secondary);
+  color: inherit;
 }
 
 .calendar-day-active .calendar-day-number {
-  color: var(--color-bg-primary);
   font-weight: 600;
 }
 
@@ -1974,6 +1974,29 @@ button {
   height: 4px;
   background-color: var(--color-bg-primary);
   border-radius: 50%;
+}
+
+/* Calendar Details */
+.calendar-details {
+  margin-top: 16px;
+  padding: 10px 12px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.calendar-details-label {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.calendar-details-value {
+  color: var(--color-text-primary);
 }
 
 /* Recent Activities Feed */
@@ -2036,7 +2059,20 @@ button {
   color: var(--color-text-muted);
 }
 
-.activity-stat strong {
+.activity-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activity-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--color-text-light);
+}
+
+.activity-stat-value {
   color: var(--color-text-primary);
   font-weight: 600;
 }
