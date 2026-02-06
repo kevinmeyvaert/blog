@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-05T03:52:13Z",
+  "last_updated": "2026-02-06T03:52:14Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -41,19 +41,19 @@
       "elevation_gain": 660.4000000000001
     },
     "recent_run_totals": {
-      "count": 24,
-      "distance": 251379.4,
-      "moving_time": 72294,
-      "elapsed_time": 73112,
-      "elevation_gain": 640.0,
+      "count": 25,
+      "distance": 265226.49999999994,
+      "moving_time": 75983,
+      "elapsed_time": 76801,
+      "elevation_gain": 679.0,
       "achievement_count": 0
     },
     "all_run_totals": {
-      "count": 1767,
-      "distance": 18040115.399999995,
-      "moving_time": 5049036,
-      "elapsed_time": 5215150,
-      "elevation_gain": 23877.300000000014
+      "count": 1768,
+      "distance": 18053962.499999996,
+      "moving_time": 5052725,
+      "elapsed_time": 5218839,
+      "elevation_gain": 23916.300000000014
     },
     "recent_swim_totals": {
       "count": 0,
@@ -78,11 +78,11 @@
       "elevation_gain": 0
     },
     "ytd_run_totals": {
-      "count": 28,
-      "distance": 296301,
-      "moving_time": 85172.0,
-      "elapsed_time": 86032.0,
-      "elevation_gain": 829.0
+      "count": 29,
+      "distance": 310148,
+      "moving_time": 88861.0,
+      "elapsed_time": 89721.0,
+      "elevation_gain": 868.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -93,6 +93,78 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "resource_state": 1
+      },
+      "name": "5 x 1200m extensief",
+      "distance": 13847.1,
+      "moving_time": 3689,
+      "elapsed_time": 3689,
+      "total_elevation_gain": 39.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": 0,
+      "device_name": "Garmin Forerunner 570",
+      "id": 17297034873,
+      "start_date": "2026-02-05T15:50:10Z",
+      "start_date_local": "2026-02-05T16:50:10Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 3600.0,
+      "location_city": null,
+      "location_state": null,
+      "location_country": null,
+      "achievement_count": 0,
+      "kudos_count": 4,
+      "comment_count": 0,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "map": {
+        "id": "a17297034873",
+        "summary_polyline": "odpvHwkyUS[kBcBSOOAUPe@v@eAfAYP_AdA_@PsGb@aEP}ANsBXcB\\i@VaAp@k@XKL_CdB_B|@_DvBm@\\q@f@w@x@yBvBsDxAG?EECIKoA?KDKDCr@QhBo@vAuA^i@p@s@rAu@rCiBdBoAjAeAZQd@_@NBDHR|@BVAFKNyCtBWLsGjEsDrDq@ZaC|@O?IUGiAFW\\IbC{@v@u@fBqBfG{DbCkBPSb@W^]FALJTz@@RCRCDYX{AhAWNODaAr@iBhAcC`BmDpD}Ap@wAd@G?MMEKCeAD[FEv@OfBk@fAiAv@cAZ[\\Wp@_@nD{BhBuA^c@z@i@ZWN@FFRz@@f@GLoAx@uAbA_@PkEvCWR]Rk@b@cBlBe@^oDvAK@ECCGIuA@SdDgAn@s@n@i@Xg@|@w@~E{ChFaEHAFDJVNt@?ZAFEDmAr@_BjA]PgDbCwAx@mAlAkAnAa@ZiDpAGBGAEGIwA?MDIdDgAbBgBPYj@k@rBsAh@UhAw@dBmAbAcAf@Yd@]D?LNTbA@RELgAz@kBnA]NuBzA}@h@gAt@wDtDmDvAOAEGCKGsABMBGl@IvBu@lAqAhAuA|AcAlBgAxGgFFAFFFFBLP~@CXABm@d@aEfCc@\\uA~@yAz@i@d@W^QLiBjBqDvAI@EEM{ABQBEjA]vAi@xA{Af@s@d@a@xBwAr@]`Aq@`Aq@hDoCNHT|@@LC\\EFwBzAMFq@b@eBlAaDtBaE~DoDrAG?KOGmABYr@QtBu@vA{A\\e@h@m@r@g@j@Y\\Ub@Ux@g@`BkAlBcBn@a@THBDPv@@\\KR}B|Aa@\\yA~@iCfB_Af@}C~C]ZmBx@cA\\G?GEGU@[Ek@@MDIFEl@KlBo@|AcBr@_ATSd@WnAy@lBiA`CgBh@i@hAy@NBDHV~@@NALILyAdAg@TyDnCcCzAYVmCtCWPm@XyBx@ODGACEK_B@IBEb@MbC{@^c@bAcAv@gAvAw@\\WpAq@dCiBdAcAZSPG^]D?LNX`A?TENs@h@{ClBSRsCnBgAn@eB`Bs@v@g@b@}@^qBv@K@EGOyABUf@MdCaAX_@dAcANYf@m@dC}Ab@Qx@e@|AkAbByA\\O\\[D@JL\\bBHFP]zAeATOr@SxDg@nD[lAE~CWzCQPG`@]pA{An@m@l@u@TMPB`BzAV\\",
+        "resource_state": 2
+      },
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": "g28521646",
+      "start_latlng": [
+        51.042161,
+        3.739641
+      ],
+      "end_latlng": [
+        51.042296,
+        3.73969
+      ],
+      "average_speed": 3.754,
+      "max_speed": 5.48,
+      "average_cadence": 82.6,
+      "average_watts": 357.8,
+      "max_watts": 552,
+      "weighted_average_watts": 370,
+      "device_watts": true,
+      "kilojoules": 1320.1,
+      "has_heartrate": true,
+      "average_heartrate": 150.5,
+      "max_heartrate": 178.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 9.4,
+      "elev_low": 2.0,
+      "upload_id": 18393255798,
+      "upload_id_str": "18393255798",
+      "external_id": "garmin_ping_531920796336",
+      "from_accepted_tag": false,
+      "pr_count": 0,
+      "total_photo_count": 0,
+      "has_kudoed": false,
+      "suffer_score": 53.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -117,7 +189,7 @@
       "location_state": null,
       "location_country": null,
       "achievement_count": 0,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -189,7 +261,7 @@
       "location_state": null,
       "location_country": null,
       "achievement_count": 0,
-      "kudos_count": 7,
+      "kudos_count": 8,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -7181,78 +7253,16 @@
       "pr_count": 0,
       "total_photo_count": 0,
       "has_kudoed": false
-    },
-    {
-      "resource_state": 2,
-      "athlete": {
-        "id": 37171291,
-        "resource_state": 1
-      },
-      "name": "🇳🇴 Dagtrip Undredal",
-      "distance": 5011.3,
-      "moving_time": 5417,
-      "elapsed_time": 7525,
-      "total_elevation_gain": 114.2,
-      "type": "Walk",
-      "sport_type": "Walk",
-      "device_name": "Garmin vívoactive 5",
-      "id": 15987353303,
-      "start_date": "2025-09-30T11:39:49Z",
-      "start_date_local": "2025-09-30T13:39:49Z",
-      "timezone": "(GMT+01:00) Europe/Oslo",
-      "utc_offset": 7200.0,
-      "location_city": null,
-      "location_state": null,
-      "location_country": null,
-      "achievement_count": 0,
-      "kudos_count": 6,
-      "comment_count": 0,
-      "athlete_count": 2,
-      "photo_count": 0,
-      "map": {
-        "id": "a15987353303",
-        "summary_polyline": "mb_sJcoij@Dd@MVOHUq@DLAMUk@WeABCEIO{ACg@Oy@?OYqAWy@Io@[mAKQaAk@?CO?QMCBi@LEDUy@MOSEaANs@EUFMNSFk@CD?i@N_@Tk@~@g@j@g@z@AADF?AGAQJY^W`AUd@@BEFBGIF@D[VU`@a@h@H?E?FICCODPACLAA?OKBLHE?Sj@Uv@KT[\\Qh@]r@G^A`@CF@SKf@OZEb@MTm@~B?GA@ACBFQv@Kr@On@?BEJ?JDFALM\\GTAb@a@v@?@]LQZQd@IHUh@EREh@AC@HCD?ABACCEFETKTIFCv@EBCFBJAHCLEFIb@BDECDAKFKPQ`AIJCPICB?@C?DCC?D@??CCDSDILMDC^EHE??AD?CDCE?BLJ@FIOC\\MZIHMV?LKRI?IHAQE??OE?CJ@CGDKICBCLACADK?GTG?WOOA?BAI?DOZGJG?KP?DMFg@E@FAJAAB@CA@DMLEAHCHM@BKLGAPOE@F@@GAWCB@@?E?BCABA?D?AA?DCCH@K?@C@@@@G?FE?DCAb@KHWj@EVGR_@`@KRQn@Ub@UT[dACG@KFMJc@h@s@Pi@Xi@TUX{@Pa@LKR[X@BIr@w@N@XPL]P@NMDFBMFJ@LBAEBBJFG?HBINW?GPe@NMBFGEJUBUFQFKAWDGJC?DJONCFGDe@DKB??OFI?GDNGGCFFYJEHOAGD?Lk@?UBI?M@H?QDg@RSTs@@B?[D]Ve@LMZy@XQP]FQXqABBDGF]AD@@CAB?C?B?@KVsBRs@Ba@L]P[V_A^}AVyATa@Ts@LI\\s@\\qALKpAcB\\_APo@b@i@JC@DC?D?@OT_@PMJQLMJUVc@d@a@f@QbAITSbCKPJLNN^LFr@@DDXB?BL?j@\\JRNt@CZId@Ud@i@RME[g@UWYKGRFd@FNb@n@AFUa@WYGWCSBQRGRFNTB?C?^d@V?b@UHMPg@HYAQKe@Aq@c@gGEYSiAUu@OgBGeAWmCISKOWBKJOAGXEJQFMWc@m@?IVb@P^@^St@UdB@V~AtAnADJL\\n@HZFTZ|CHpAF`@@DBp@ADE?WQRTRx@Nx@@AEIDCBBdAbGBfAFd@j@vBX|@Hd@JPNBAJCQMAMS?ID?DGXe@J_@C@CFG`@IFOB?E\\IASI[",
-        "resource_state": 2
-      },
-      "trainer": false,
-      "commute": false,
-      "manual": false,
-      "private": false,
-      "visibility": "everyone",
-      "flagged": false,
-      "gear_id": null,
-      "start_latlng": [
-        60.949033,
-        7.098904
-      ],
-      "end_latlng": [
-        60.94901,
-        7.098892
-      ],
-      "average_speed": 0.925,
-      "max_speed": 1.829,
-      "has_heartrate": false,
-      "heartrate_opt_out": false,
-      "display_hide_heartrate_option": false,
-      "elev_high": 34.0,
-      "elev_low": 4.5,
-      "upload_id": 17068944698,
-      "upload_id_str": "17068944698",
-      "external_id": "stripped_accepted_tag_from_17068886920.fit",
-      "from_accepted_tag": true,
-      "pr_count": 0,
-      "total_photo_count": 0,
-      "has_kudoed": false
     }
   ],
   "aggregated": {
     "weekly": [
       {
         "week": "2025-W39",
-        "total_distance": 60160.70000000001,
-        "total_time": 30433,
-        "total_elevation": 917.7,
-        "activity_count": 6
+        "total_distance": 55149.40000000001,
+        "total_time": 25016,
+        "total_elevation": 803.5,
+        "activity_count": 5
       },
       {
         "week": "2025-W40",
@@ -7382,20 +7392,13 @@
       },
       {
         "week": "2026-W05",
-        "total_distance": 42091,
-        "total_time": 12179,
-        "total_elevation": 103,
-        "activity_count": 3
+        "total_distance": 55938.100000000006,
+        "total_time": 15868,
+        "total_elevation": 142,
+        "activity_count": 4
       }
     ],
     "monthly": [
-      {
-        "month": "2025-09",
-        "total_distance": 5011.3,
-        "total_time": 5417,
-        "total_elevation": 114.2,
-        "activity_count": 1
-      },
       {
         "month": "2025-10",
         "total_distance": 267585.8,
@@ -7426,10 +7429,10 @@
       },
       {
         "month": "2026-02",
-        "total_distance": 42091,
-        "total_time": 12179,
-        "total_elevation": 103,
-        "activity_count": 3
+        "total_distance": 55938.100000000006,
+        "total_time": 15868,
+        "total_elevation": 142,
+        "activity_count": 4
       }
     ]
   }
