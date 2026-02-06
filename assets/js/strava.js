@@ -5,6 +5,10 @@
 
 // Store chart instances for re-rendering on theme change
 const chartInstances = {};
+let stravaThemeObserver = null;
+let responsiveListenerRegistered = false;
+let lastCompactMode = null;
+let activityMapInstance = null;
 
 // Locale helpers
 const DATE_LOCALE = 'nl-BE';
@@ -52,6 +56,40 @@ function formatDateFromTimestamp(ms) {
   return DATE_FORMATTER.format(new Date(ms));
 }
 
+function isCompactMobileView() {
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+
+function supportsHoverInteractions() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
+function shouldUseCompactVisuals() {
+  return isCompactMobileView() || !supportsHoverInteractions();
+}
+
+function formatPaceValue(minutesPerKm) {
+  const minutes = Math.floor(minutesPerKm);
+  const seconds = Math.round((minutesPerKm - minutes) * 60);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+function formatSignedOneDecimal(value) {
+  const rounded = Math.round(value * 10) / 10;
+  const sign = rounded > 0 ? '+' : '';
+  return `${sign}${rounded.toFixed(1)}`;
+}
+
+function destroyAllCharts() {
+  Object.keys(chartInstances).forEach(key => {
+    const chart = chartInstances[key];
+    if (chart && chart.destroy) {
+      chart.destroy();
+    }
+    chartInstances[key] = null;
+  });
+}
+
 /**
  * Get theme-aware colors from CSS variables
  */
@@ -76,41 +114,57 @@ function initializeStravaCharts(data) {
     return;
   }
 
+  const compactVisuals = shouldUseCompactVisuals();
+  lastCompactMode = compactVisuals;
+
   // Initialize all charts
-  initializeDistanceChart(data);
-  initializePaceChart(data);
+  initializeDistanceChart(data, compactVisuals);
+  initializePaceChart(data, compactVisuals);
   initializeHRZonesChart(data);
-  initializeEfficiencyChart(data);
-  initializeTrainingLoadChart(data);
+  if (compactVisuals) {
+    renderCompactEfficiencySummary(data);
+    renderCompactTrainingLoadSummary(data);
+  } else {
+    initializeEfficiencyChart(data);
+    initializeTrainingLoadChart(data);
+  }
   initializeIntervalScorecard(data);
   initializeActivityMap(data);
   initializeActivityCalendar(data);
 
   // Re-render charts on theme change
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-        // Re-render all charts with new theme
-        Object.values(chartInstances).forEach(chart => {
-          if (chart && chart.destroy) {
-            chart.destroy();
-          }
-        });
+  if (!stravaThemeObserver) {
+    stravaThemeObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          destroyAllCharts();
+          initializeStravaCharts(data);
+        }
+      });
+    });
+
+    stravaThemeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+  }
+
+  if (!responsiveListenerRegistered) {
+    responsiveListenerRegistered = true;
+    window.addEventListener('resize', () => {
+      const nextMode = shouldUseCompactVisuals();
+      if (nextMode !== lastCompactMode) {
+        destroyAllCharts();
         initializeStravaCharts(data);
       }
     });
-  });
-
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-theme']
-  });
+  }
 }
 
 /**
  * Distance Over Time Chart
  */
-function initializeDistanceChart(data) {
+function initializeDistanceChart(data, compactVisuals = false) {
   // CHART TYPE CONFIG: Change 'line' to 'bar' to switch visualization style
   const CHART_TYPE = 'bar'; // Options: 'line' or 'bar'
 
@@ -147,22 +201,22 @@ function initializeDistanceChart(data) {
     }
   }
 
-  // Take last 12 months
-  const last12Months = filteredMonthlyData.slice(-12);
+  // Keep mobile view compact
+  const selectedMonths = filteredMonthlyData.slice(compactVisuals ? -6 : -12);
 
   const colors = getThemeColors();
 
   const options = {
     series: [{
       name: 'Distance (km)',
-      data: last12Months.map(m => ({
+      data: selectedMonths.map(m => ({
         x: formatMonth(m.month),
-        y: (m.total_distance / 1000).toFixed(1)
+        y: parseFloat((m.total_distance / 1000).toFixed(1))
       }))
     }],
     chart: {
       type: CHART_TYPE,
-      height: 350,
+      height: compactVisuals ? 280 : 350,
       toolbar: {
         show: false
       },
@@ -223,7 +277,20 @@ function initializeDistanceChart(data) {
     options.plotOptions = {
       bar: {
         borderRadius: 4,
-        columnWidth: '60%'
+        columnWidth: compactVisuals ? '52%' : '60%'
+      }
+    };
+  }
+
+  if (compactVisuals) {
+    options.dataLabels = {
+      enabled: true,
+      formatter: function(val) {
+        return `${val} km`;
+      },
+      style: {
+        colors: [colors.textPrimary],
+        fontSize: '11px'
       }
     };
   }
@@ -236,7 +303,7 @@ function initializeDistanceChart(data) {
 /**
  * Average Pace Chart
  */
-function initializePaceChart(data) {
+function initializePaceChart(data, compactVisuals = false) {
   if (!data.activities) {
     return;
   }
@@ -266,29 +333,26 @@ function initializePaceChart(data) {
       avgPace: monthlyPace[month].total / monthlyPace[month].count
     }))
     .sort((a, b) => a.month.localeCompare(b.month))
-    .slice(-12); // Last 12 months
+    .slice(compactVisuals ? -6 : -12);
 
   const colors = getThemeColors();
+  const chartType = compactVisuals ? 'bar' : 'line';
 
   const options = {
     series: [{
       name: 'Avg Pace (min/km)',
       data: paceData.map(p => ({
         x: formatMonth(p.month),
-        y: p.avgPace.toFixed(2)
+        y: parseFloat(p.avgPace.toFixed(2))
       }))
     }],
     chart: {
-      type: 'line',
-      height: 350,
+      type: chartType,
+      height: compactVisuals ? 280 : 350,
       toolbar: {
         show: false
       },
       fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    stroke: {
-      curve: 'smooth',
-      width: 2
     },
     colors: [colors.textPrimary],
     xaxis: {
@@ -321,9 +385,7 @@ function initializePaceChart(data) {
           fontSize: '12px'
         },
         formatter: function(val) {
-          const minutes = Math.floor(val);
-          const seconds = Math.round((val - minutes) * 60);
-          return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+          return formatPaceValue(val);
         }
       },
       reversed: true // Lower pace is better
@@ -335,13 +397,35 @@ function initializePaceChart(data) {
       theme: getTooltipTheme(),
       y: {
         formatter: function(val) {
-          const minutes = Math.floor(val);
-          const seconds = Math.round((val - minutes) * 60);
-          return minutes + ':' + (seconds < 10 ? '0' : '') + seconds + ' /km';
+          return formatPaceValue(val) + ' /km';
         }
       }
     }
   };
+
+  if (chartType === 'line') {
+    options.stroke = {
+      curve: 'smooth',
+      width: 2
+    };
+  } else {
+    options.plotOptions = {
+      bar: {
+        borderRadius: 4,
+        columnWidth: '52%'
+      }
+    };
+    options.dataLabels = {
+      enabled: true,
+      formatter: function(val) {
+        return formatPaceValue(val);
+      },
+      style: {
+        colors: [colors.textPrimary],
+        fontSize: '11px'
+      }
+    };
+  }
 
   const chart = new ApexCharts(document.querySelector('#pace-chart'), options);
   chart.render();
@@ -466,6 +550,112 @@ function initializeHRZonesChart(data) {
   const chart = new ApexCharts(document.querySelector('#hr-zones-chart'), options);
   chart.render();
   chartInstances.hrZones = chart;
+}
+
+function renderCompactEfficiencySummary(data) {
+  const target = document.querySelector('#efficiency-chart');
+  if (!target) return;
+
+  const container = target.parentElement;
+  const existingStats = container.querySelector('.efficiency-stats');
+  if (existingStats) {
+    existingStats.remove();
+  }
+  chartInstances.efficiency = null;
+
+  const runs = data.activities
+    .filter(a => a.type === 'Run' && a.has_heartrate && a.average_heartrate && a.distance > 1000)
+    .sort((a, b) => new Date(b.start_date_local) - new Date(a.start_date_local))
+    .slice(0, 4);
+
+  if (runs.length === 0) {
+    const colors = getThemeColors();
+    target.innerHTML = `<p style="text-align: center; color: ${colors.textLight}; padding: 24px;">Not enough heart rate data available for compact view.</p>`;
+    return;
+  }
+
+  const averagePace = runs.reduce((sum, run) => sum + ((run.moving_time / 60) / (run.distance / 1000)), 0) / runs.length;
+  const averageHR = Math.round(runs.reduce((sum, run) => sum + run.average_heartrate, 0) / runs.length);
+
+  let rowsHtml = '';
+  runs.forEach(run => {
+    const pace = (run.moving_time / 60) / (run.distance / 1000);
+    rowsHtml += `
+      <div class="compact-summary-row">
+        <span class="compact-summary-date">${formatDateFromISO(run.start_date_local)}</span>
+        <span class="compact-summary-value">${formatPaceValue(pace)} /km</span>
+        <span class="compact-summary-muted">${Math.round(run.average_heartrate)} bpm</span>
+      </div>
+    `;
+  });
+
+  target.innerHTML = `
+    <div class="compact-summary">
+      <div class="compact-summary-grid">
+        <div class="compact-summary-item">
+          <span class="compact-summary-label">Recent avg pace</span>
+          <span class="compact-summary-emphasis">${formatPaceValue(averagePace)} /km</span>
+        </div>
+        <div class="compact-summary-item">
+          <span class="compact-summary-label">Recent avg HR</span>
+          <span class="compact-summary-emphasis">${averageHR} bpm</span>
+        </div>
+      </div>
+      <div class="compact-summary-list">
+        ${rowsHtml}
+      </div>
+      <p class="compact-summary-note">Compact view lists recent pace and heart-rate values directly so no hover is required.</p>
+    </div>
+  `;
+}
+
+function renderCompactTrainingLoadSummary(data) {
+  const target = document.querySelector('#training-load-chart');
+  if (!target) return;
+
+  const container = target.parentElement;
+  const existingCaption = container.querySelector('.warmup-caption');
+  if (existingCaption) {
+    existingCaption.remove();
+  }
+  chartInstances.trainingLoad = null;
+
+  const metrics = new StravaMetrics(data);
+  const history = metrics.generateTrainingLoadHistory(30);
+  if (history.length === 0) {
+    const colors = getThemeColors();
+    target.innerHTML = `<p style="text-align: center; color: ${colors.textLight}; padding: 24px;">Not enough activity data available for compact view.</p>`;
+    return;
+  }
+
+  const latest = history[history.length - 1];
+  const weekBack = history[Math.max(0, history.length - 8)];
+  const ctlDelta = latest.ctl - weekBack.ctl;
+  const atlDelta = latest.atl - weekBack.atl;
+  const tsbDelta = latest.tsb - weekBack.tsb;
+
+  target.innerHTML = `
+    <div class="compact-summary">
+      <div class="compact-summary-grid compact-summary-grid-3">
+        <div class="compact-summary-item">
+          <span class="compact-summary-label">CTL (fitness)</span>
+          <span class="compact-summary-emphasis">${latest.ctl.toFixed(1)}</span>
+          <span class="compact-summary-delta">${formatSignedOneDecimal(ctlDelta)} vs 7d</span>
+        </div>
+        <div class="compact-summary-item">
+          <span class="compact-summary-label">ATL (fatigue)</span>
+          <span class="compact-summary-emphasis">${latest.atl.toFixed(1)}</span>
+          <span class="compact-summary-delta">${formatSignedOneDecimal(atlDelta)} vs 7d</span>
+        </div>
+        <div class="compact-summary-item">
+          <span class="compact-summary-label">TSB (form)</span>
+          <span class="compact-summary-emphasis">${latest.tsb.toFixed(1)}</span>
+          <span class="compact-summary-delta">${formatSignedOneDecimal(tsbDelta)} vs 7d</span>
+        </div>
+      </div>
+      <p class="compact-summary-note">Compact view surfaces current training load values and 7-day movement with explicit labels.</p>
+    </div>
+  `;
 }
 
 /**
@@ -895,7 +1085,12 @@ function initializeActivityMap(data) {
   }
 
   // Initialize map with calculated center
+  if (activityMapInstance) {
+    activityMapInstance.remove();
+    activityMapInstance = null;
+  }
   const map = L.map('activity-map').setView([centerLat, centerLng], zoom);
+  activityMapInstance = map;
 
   // Add OpenStreetMap tiles
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1105,6 +1300,8 @@ function initializeActivityCalendar(data) {
       let detailsText = '';
       let ariaLabel = '';
       let tabIndex = '';
+      let role = '';
+      let pressed = '';
 
       if (hasActivity) {
         dayClass += ' calendar-day-active';
@@ -1125,13 +1322,15 @@ function initializeActivityCalendar(data) {
         title = detailsText;
         ariaLabel = `${formatDateFromISO(dateKey)}: ${detailsText}`;
         tabIndex = ' tabindex="0"';
+        role = ' role="button"';
+        pressed = ' aria-pressed="false"';
       }
 
       const safeTitle = title.replace(/"/g, '&quot;');
       const safeDetails = detailsText.replace(/"/g, '&quot;');
       const safeAria = ariaLabel.replace(/"/g, '&quot;');
 
-      calendarHTML += `<div class="${dayClass}" style="${dayStyle}" title="${safeTitle}" data-date="${dateKey}" data-details="${safeDetails}" aria-label="${safeAria}"${tabIndex}>`;
+      calendarHTML += `<div class="${dayClass}" style="${dayStyle}" title="${safeTitle}" data-date="${dateKey}" data-details="${safeDetails}" aria-label="${safeAria}"${tabIndex}${role}${pressed}>`;
       calendarHTML += `<span class="calendar-day-number">${day}</span>`;
       calendarHTML += `</div>`;
     }
@@ -1153,31 +1352,88 @@ function initializeActivityCalendar(data) {
   calendarHTML += '</div>';
   calendarHTML += '<div class="calendar-details" aria-live="polite">';
   calendarHTML += '<span class="calendar-details-label">Selected day:</span>';
-  calendarHTML += '<span class="calendar-details-value">Hover a day to see details.</span>';
+  calendarHTML += '<span class="calendar-details-value">Tap a day to see details.</span>';
   calendarHTML += '</div>';
 
   calendarElement.innerHTML = calendarHTML;
 
+  const defaultDetailsText = shouldUseCompactVisuals()
+    ? 'Tap a day to see details.'
+    : 'Hover, focus, or click a day to see details.';
+
   const detailsValue = calendarElement.querySelector('.calendar-details-value');
-  const activeDays = calendarElement.querySelectorAll('.calendar-day-active');
-  activeDays.forEach(dayEl => {
+  const activeDays = Array.from(calendarElement.querySelectorAll('.calendar-day-active'));
+  let selectedDay = null;
+
+  const detailTextForDay = (dayEl) => {
     const dateKey = dayEl.getAttribute('data-date');
     const details = dayEl.getAttribute('data-details');
-    if (!dateKey || !details) return;
-    const detailText = `${formatDateFromISO(dateKey)} - ${details}`;
+    if (!dateKey || !details) return null;
+    return `${formatDateFromISO(dateKey)} - ${details}`;
+  };
 
-    const setDetails = () => {
-      if (detailsValue) detailsValue.textContent = detailText;
-    };
-    const resetDetails = () => {
-      if (detailsValue) detailsValue.textContent = 'Hover a day to see details.';
-    };
+  const applySelection = (dayEl) => {
+    if (!dayEl) return;
+    if (selectedDay && selectedDay !== dayEl) {
+      selectedDay.classList.remove('calendar-day-selected');
+      selectedDay.setAttribute('aria-pressed', 'false');
+    }
+    selectedDay = dayEl;
+    selectedDay.classList.add('calendar-day-selected');
+    selectedDay.setAttribute('aria-pressed', 'true');
+    const selectedDetails = detailTextForDay(dayEl);
+    if (detailsValue && selectedDetails) {
+      detailsValue.textContent = selectedDetails;
+    }
+  };
 
-    dayEl.addEventListener('mouseenter', setDetails);
-    dayEl.addEventListener('focus', setDetails);
-    dayEl.addEventListener('mouseleave', resetDetails);
-    dayEl.addEventListener('blur', resetDetails);
+  const updateDetails = (dayEl) => {
+    const text = detailTextForDay(dayEl);
+    if (detailsValue && text) {
+      detailsValue.textContent = text;
+    }
+  };
+
+  if (detailsValue) {
+    detailsValue.textContent = defaultDetailsText;
+  }
+
+  activeDays.forEach(dayEl => {
+    dayEl.addEventListener('mouseenter', () => updateDetails(dayEl));
+    dayEl.addEventListener('focus', () => updateDetails(dayEl));
+    dayEl.addEventListener('mouseleave', () => {
+      if (selectedDay) {
+        updateDetails(selectedDay);
+      } else if (detailsValue) {
+        detailsValue.textContent = defaultDetailsText;
+      }
+    });
+    dayEl.addEventListener('blur', () => {
+      if (selectedDay) {
+        updateDetails(selectedDay);
+      } else if (detailsValue) {
+        detailsValue.textContent = defaultDetailsText;
+      }
+    });
+    dayEl.addEventListener('click', () => applySelection(dayEl));
+    dayEl.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        applySelection(dayEl);
+      }
+    });
   });
+
+  if (activeDays.length > 0) {
+    const mostRecentActiveDay = activeDays.reduce((latest, current) => {
+      const latestDate = latest.getAttribute('data-date') || '';
+      const currentDate = current.getAttribute('data-date') || '';
+      return currentDate > latestDate ? current : latest;
+    }, activeDays[0]);
+    applySelection(mostRecentActiveDay);
+  } else if (detailsValue) {
+    detailsValue.textContent = 'No runs in the displayed months.';
+  }
 }
 
 /**
@@ -1395,10 +1651,21 @@ function initializeTrainingLoadChart(data) {
     colors: ['#4169E1', '#DC143C', '#32CD32'],
     xaxis: {
       type: 'datetime',
+      title: {
+        text: 'Date',
+        style: {
+          color: colors.textPrimary,
+          fontSize: '12px'
+        }
+      },
       labels: {
         style: {
           colors: colors.textPrimary,
           fontSize: '12px'
+        },
+        formatter: function(val) {
+          const parsed = typeof val === 'number' ? val : parseInt(val, 10);
+          return Number.isFinite(parsed) ? formatDateFromTimestamp(parsed) : val;
         }
       }
     },

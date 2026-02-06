@@ -1653,6 +1653,86 @@ button {
   padding: 20px;
 }
 
+.compact-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.compact-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.compact-summary-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.compact-summary-item {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compact-summary-label {
+  color: var(--color-text-light);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.compact-summary-emphasis {
+  color: var(--color-text-primary);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.compact-summary-delta {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.compact-summary-list {
+  display: grid;
+  gap: 6px;
+}
+
+.compact-summary-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-primary);
+  padding-bottom: 6px;
+}
+
+.compact-summary-date {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.compact-summary-value {
+  font-size: 13px;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.compact-summary-muted {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.compact-summary-note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 /* Training Load Warm-up Caption */
 .warmup-caption {
   font-size: 13px;
@@ -1957,6 +2037,11 @@ button {
   transform: scale(1.05);
 }
 
+.calendar-day-selected {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: -2px;
+}
+
 .calendar-day-number {
   font-size: 12px;
   font-weight: 500;
@@ -2211,6 +2296,28 @@ button {
     font-size: 16px;
   }
 
+  .chart-container {
+    margin-bottom: 28px;
+  }
+
+  .chart-container > div {
+    padding: 14px;
+  }
+
+  .compact-summary-grid,
+  .compact-summary-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .compact-summary-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .compact-summary-muted {
+    margin-top: 2px;
+  }
+
   .activity-map {
     height: 350px;
   }
@@ -2262,6 +2369,15 @@ button {
   .activity-stats {
     flex-direction: column;
     gap: 8px;
+  }
+
+  .interval-table th:nth-child(5),
+  .interval-table td:nth-child(5),
+  .interval-table th:nth-child(6),
+  .interval-table td:nth-child(6),
+  .interval-table th:nth-child(7),
+  .interval-table td:nth-child(7) {
+    display: none;
   }
 }
 
