@@ -453,15 +453,23 @@
         "labels": [
           {
             "name": "EMI",
-            "catno": "EMIV2093",
+            "catno": "EMIV 2093",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 26126,
+            "resource_url": "https://api.discogs.com/labels/26126"
+          },
+          {
+            "name": "EMI",
+            "catno": "00602455215895",
             "entity_type": "1",
             "entity_type_name": "Label",
             "id": 26126,
             "resource_url": "https://api.discogs.com/labels/26126"
           }
         ],
-        "thumb": "https://i.discogs.com/bNB6i1RGZ6PyPuX_iUDNHvmwBQ_ktrQG4AfeO9qXC_k/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE2ODgxMTU5/NjYtMzYzOC5wbmc.jpeg",
-        "cover_image": "https://i.discogs.com/CqIm9g_rpxKqEy3S6CpI0_zfqkiysIvde9oL14gFHKc/rs:fit/g:sm/q:90/h:591/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE2ODgxMTU5/NjYtMzYzOC5wbmc.jpeg",
+        "thumb": "https://i.discogs.com/KIHqqxx8wCBFgrIwfJMbrsHM3U7hCQjqRnz7dqEckww/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE3NzEyNzA2/ODctMjg5Ni5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/TLdAwXBgrxUJ3lyBYwTmngBtdbceq5OnNW-g8Fpmh3k/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE3NzEyNzA2/ODctMjg5Ni5qcGVn.jpeg",
         "genres": [
           "Funk / Soul",
           "Pop"
