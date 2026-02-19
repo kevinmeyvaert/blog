@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-18T03:54:49Z",
+  "last_updated": "2026-02-19T03:54:00Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -42,18 +42,18 @@
     },
     "recent_run_totals": {
       "count": 25,
-      "distance": 277773.19999999995,
-      "moving_time": 77872,
-      "elapsed_time": 78488,
-      "elevation_gain": 798.0,
+      "distance": 274640.6,
+      "moving_time": 77133,
+      "elapsed_time": 77749,
+      "elevation_gain": 786.0,
       "achievement_count": 0
     },
     "all_run_totals": {
-      "count": 1778,
-      "distance": 18183080.599999998,
-      "moving_time": 5088667,
-      "elapsed_time": 5254821,
-      "elevation_gain": 24346.30000000002
+      "count": 1779,
+      "distance": 18189290.299999997,
+      "moving_time": 5090507,
+      "elapsed_time": 5256661,
+      "elevation_gain": 24366.30000000002
     },
     "recent_swim_totals": {
       "count": 0,
@@ -78,11 +78,11 @@
       "elevation_gain": 0
     },
     "ytd_run_totals": {
-      "count": 39,
-      "distance": 439266,
-      "moving_time": 124803.0,
-      "elapsed_time": 125703.0,
-      "elevation_gain": 1298.0
+      "count": 40,
+      "distance": 445476,
+      "moving_time": 126643.0,
+      "elapsed_time": 127543.0,
+      "elevation_gain": 1318.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -93,6 +93,78 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "resource_state": 1
+      },
+      "name": "rdl z1",
+      "distance": 6209.7,
+      "moving_time": 1840,
+      "elapsed_time": 1840,
+      "total_elevation_gain": 20.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": null,
+      "device_name": "Garmin Forerunner 570",
+      "id": 17440925681,
+      "start_date": "2026-02-18T16:07:55Z",
+      "start_date_local": "2026-02-18T17:07:55Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 3600.0,
+      "location_city": null,
+      "location_state": null,
+      "location_country": null,
+      "achievement_count": 1,
+      "kudos_count": 2,
+      "comment_count": 0,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "map": {
+        "id": "a17440925681",
+        "summary_polyline": "gepvHwlyUkBeBOIOEI?IEIUGs@?MLWPOJ@DAZc@Zw@Xe@`@aA@GASEQGIQIKW]qBCEOEs@Ns@E]MWWWIKCO@WFW?SCWU_A_BoAeCo@uAWs@e@mEAa@Ko@k@aBe@c@Uc@Oi@Gk@Dm@ASS{@_@qAQcAG_AAkA@e@HiAb@mBZgBVaCF}DKmEEo@YkBUkC[}Ba@{Bu@{ESw@c@iCWqBu@eDyAmHWiAmB}I?UHO~A_Af@SfBc@V@VJPAh@UBCBQAOMk@m@kDkB}KWmFGaC]cG?S@SHORElCFh@CP@VA`@KTMTQvAmCRWJGPJ^z@d@r@t@zAVv@`@pBb@|@rA|BDRC^gE|HsBjEm@fAuAzCW^Yv@e@v@ENCRGNUPSHe@KSAk@H_Bd@eB|@IN?RjCxMxBfKv@bFJj@ZjARnAJjAv@nEPnAVfCR~ALfBJxDI`EOxBKj@_@zAYvAI~@Az@@vAHz@bAnDE`AFn@FVPf@LRNLNHDFn@rBVpCLhBFXL`@v@hBrAhCv@vANJ^B`AGRDd@`@PHx@HP?VIL?L@HL`@nBFJXPBH@d@Mf@Wd@Od@c@`A]h@]nABHJN~@~@~@v@V\\",
+        "resource_state": 2
+      },
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": "g28521646",
+      "start_latlng": [
+        51.042281,
+        3.739807
+      ],
+      "end_latlng": [
+        51.042265,
+        3.739675
+      ],
+      "average_speed": 3.375,
+      "max_speed": 6.02,
+      "average_cadence": 82.9,
+      "average_watts": 321.6,
+      "max_watts": 431,
+      "weighted_average_watts": 321,
+      "device_watts": true,
+      "kilojoules": 592.1,
+      "has_heartrate": true,
+      "average_heartrate": 126.9,
+      "max_heartrate": 147.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 10.8,
+      "elev_low": 5.2,
+      "upload_id": 18538040395,
+      "upload_id_str": "18538040395",
+      "external_id": "garmin_ping_536867955615",
+      "from_accepted_tag": false,
+      "pr_count": 1,
+      "total_photo_count": 0,
+      "has_kudoed": false,
+      "suffer_score": 6.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -7211,88 +7283,16 @@
       "total_photo_count": 0,
       "has_kudoed": false,
       "suffer_score": 35.0
-    },
-    {
-      "resource_state": 2,
-      "athlete": {
-        "id": 37171291,
-        "resource_state": 1
-      },
-      "name": "rdl + 7 x 100m",
-      "distance": 11519.5,
-      "moving_time": 3445,
-      "elapsed_time": 3459,
-      "total_elevation_gain": 37.0,
-      "type": "Run",
-      "sport_type": "Run",
-      "workout_type": 0,
-      "device_name": "Garmin Forerunner 570",
-      "id": 16125695970,
-      "start_date": "2025-10-13T10:07:56Z",
-      "start_date_local": "2025-10-13T12:07:56Z",
-      "timezone": "(GMT+01:00) Europe/Brussels",
-      "utc_offset": 7200.0,
-      "location_city": null,
-      "location_state": null,
-      "location_country": null,
-      "achievement_count": 0,
-      "kudos_count": 5,
-      "comment_count": 0,
-      "athlete_count": 1,
-      "photo_count": 0,
-      "map": {
-        "id": "a16125695970",
-        "summary_polyline": "ebuvHmcxUbA_@x@_@t@W~@c@rBo@hBy@`@KX@Be@Ps@DY_@oD[}B@SBGXKnAi@|@WzAm@r@QTMbEuATOL?BDDPBd@VhCZvB@TGROL_@LcAPsA^u@NiA^iAf@sC`AK@ECCGMkAm@}E@UDEbBs@n@Sr@Y^KhDkAPITGpBu@D?FLDr@Ht@j@jE@TGREDg@L_ALeAXwC`AwAj@sAb@m@ZK?IMMwAm@sE?UDEjEaB^IdBq@~@WXOh@Mr@W`@UD@FLPnBj@jEA\\KJQHaC`@o@LmCbAUHMLUJgBj@_@PS@GCGGK{@Q}BYoB?S@IzD{Ax@SnAc@`Ac@PCnAa@dAe@DADBDNXdDL~@Pr@B^E\\YNu@JWLyA^}Aj@c@DwEdBOHKACG_AoH?IDQfAe@tEwAv@]fDgAr@[B@DPDz@NnAd@bD@REROHa@HU@c@FkBj@MJkCx@y@^q@RcAb@IBGAOMGiASqB[sBBQ|B}@t@UZOtC_AdAe@ZEx@]n@YHFJlAh@xDFz@?LCTKHi@HY@OBuA^sC`AuB|@gAZ]PMACCGYU{Bc@uC?UBIfHcCbCaAf@Mn@Un@[DB@DFv@x@lG?HERoFzAu@ZkBf@}CjAGAGK[cD_@mCBQDEVEnBy@z@[f@MtBy@vBq@rAi@HFBf@P~@L|AZtB?TGPSFaAPa@NoBf@_ItCM?CEc@_E[sBBSDE^GxB_AxAc@HG~B{@`Bg@jAi@D@BDHb@PpBd@lD?TEFKHYBk@J_Bd@aCt@oCfAgBn@G?EACIMiAMu@SqBM_ABQ~@_@ZIjBw@|C_AbDmAf@WDBFLR`Cd@dDB`@ENMFqARiBj@gDhAwDxAM?IMKsASeBWmB?WBERGj@Yb@IdBq@dA[TKp@SlAg@jA]|@c@F@DNHjAVpBXlB?^AJKH]J{@LsBh@}Bt@wClA_AZE?EACGQ_Bi@iE?SDQLEXEt@WpAm@VG`@I`Bm@\\KTMnBo@~@a@HJBPPxBd@dDBRATEDMFk@La@DUFkAd@]JqAd@W@QDaBp@{Br@KNKb@MR]Jq@\\q@Ps@VmAl@g@RIHGP",
-        "resource_state": 2
-      },
-      "trainer": false,
-      "commute": false,
-      "manual": false,
-      "private": false,
-      "visibility": "everyone",
-      "flagged": false,
-      "gear_id": "g24518989",
-      "start_latlng": [
-        51.067395,
-        3.733193
-      ],
-      "end_latlng": [
-        51.066376,
-        3.733671
-      ],
-      "average_speed": 3.344,
-      "max_speed": 6.7,
-      "average_cadence": 81.5,
-      "average_watts": 340.5,
-      "max_watts": 572,
-      "weighted_average_watts": 340,
-      "device_watts": true,
-      "kilojoules": 1172.9,
-      "has_heartrate": true,
-      "average_heartrate": 139.3,
-      "max_heartrate": 170.0,
-      "heartrate_opt_out": false,
-      "display_hide_heartrate_option": true,
-      "elev_high": 11.6,
-      "elev_low": 5.4,
-      "upload_id": 17208983267,
-      "upload_id_str": "17208983267",
-      "external_id": "garmin_ping_490423767661",
-      "from_accepted_tag": false,
-      "pr_count": 0,
-      "total_photo_count": 0,
-      "has_kudoed": false,
-      "suffer_score": 20.0
     }
   ],
   "aggregated": {
     "weekly": [
       {
         "week": "2025-W41",
-        "total_distance": 56009.6,
-        "total_time": 15611,
-        "total_elevation": 93,
-        "activity_count": 5
+        "total_distance": 44490.1,
+        "total_time": 12166,
+        "total_elevation": 56,
+        "activity_count": 4
       },
       {
         "week": "2025-W42",
@@ -7422,19 +7422,19 @@
       },
       {
         "week": "2026-W07",
-        "total_distance": 30541.6,
-        "total_time": 8688,
-        "total_elevation": 161,
-        "activity_count": 2
+        "total_distance": 36751.3,
+        "total_time": 10528,
+        "total_elevation": 181,
+        "activity_count": 3
       }
     ],
     "monthly": [
       {
         "month": "2025-10",
-        "total_distance": 166735.80000000002,
-        "total_time": 46360,
-        "total_elevation": 498,
-        "activity_count": 14
+        "total_distance": 155216.30000000002,
+        "total_time": 42915,
+        "total_elevation": 461,
+        "activity_count": 13
       },
       {
         "month": "2025-11",
@@ -7459,10 +7459,10 @@
       },
       {
         "month": "2026-02",
-        "total_distance": 185056.19999999998,
-        "total_time": 51810,
-        "total_elevation": 572,
-        "activity_count": 14
+        "total_distance": 191265.90000000002,
+        "total_time": 53650,
+        "total_elevation": 592,
+        "activity_count": 15
       }
     ]
   }
