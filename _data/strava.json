@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-09T03:54:00Z",
+  "last_updated": "2026-03-10T03:50:43Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -117,9 +117,9 @@
       "location_state": null,
       "location_country": null,
       "achievement_count": 9,
-      "kudos_count": 24,
+      "kudos_count": 32,
       "comment_count": 1,
-      "athlete_count": 93,
+      "athlete_count": 94,
       "photo_count": 0,
       "map": {
         "id": "a17648908472",
