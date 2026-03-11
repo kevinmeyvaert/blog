@@ -1182,6 +1182,13 @@ button {
 .article-ai-buttons {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .running-container .article-ai-buttons {
+    flex-direction: column;
+  }
 }
 
 .article-ai-button {
