@@ -1167,6 +1167,60 @@ button {
   font-size: 13px;
 }
 
+.article-ai-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.article-ai-label {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.article-ai-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.article-ai-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.article-ai-button svg {
+  flex-shrink: 0;
+}
+
+.article-ai-button--claude {
+  color: #d97757;
+  border: 1px solid #d97757;
+  background: rgba(217, 119, 87, 0.08);
+}
+
+.article-ai-button--claude:hover {
+  background: #d97757;
+  color: #fff;
+}
+
+.article-ai-button--chatgpt {
+  color: #10a37f;
+  border: 1px solid #10a37f;
+  background: rgba(16, 163, 127, 0.08);
+}
+
+.article-ai-button--chatgpt:hover {
+  background: #10a37f;
+  color: #fff;
+}
+
 .article-navigation {
   display: flex;
   justify-content: space-between;
