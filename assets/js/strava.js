@@ -121,8 +121,6 @@ function initializeStravaCharts(data) {
   initializeYoYDistanceChart(data, compactVisuals);
   initializeDistanceChart(data, compactVisuals);
   initializePaceChart(data, compactVisuals);
-  initializeVO2maxChart(data);
-  initializeRacePredictions(data);
   initializeHRZonesChart(data);
   if (compactVisuals) {
     renderCompactEfficiencySummary(data);
