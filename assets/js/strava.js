@@ -117,8 +117,12 @@ function initializeStravaCharts(data) {
   lastCompactMode = compactVisuals;
 
   // Initialize all charts
+  initializeYearlyTotals(data);
+  initializeYoYDistanceChart(data, compactVisuals);
   initializeDistanceChart(data, compactVisuals);
   initializePaceChart(data, compactVisuals);
+  initializeVO2maxChart(data);
+  initializeRacePredictions(data);
   initializeHRZonesChart(data);
   if (compactVisuals) {
     renderCompactEfficiencySummary(data);
@@ -157,6 +161,150 @@ function initializeStravaCharts(data) {
       }
     });
   }
+}
+
+/**
+ * Yearly Totals Cards
+ */
+function initializeYearlyTotals(data) {
+  const container = document.getElementById('yearly-totals');
+  if (!container || !data.activities) return;
+
+  const runs = data.activities.filter(a => a.type === 'Run');
+  const yearMap = {};
+
+  runs.forEach(run => {
+    const year = run.start_date_local.substring(0, 4);
+    if (!yearMap[year]) {
+      yearMap[year] = { distance: 0, time: 0, elevation: 0, count: 0 };
+    }
+    yearMap[year].distance += run.distance;
+    yearMap[year].time += run.moving_time;
+    yearMap[year].elevation += run.total_elevation_gain || 0;
+    yearMap[year].count += 1;
+  });
+
+  const years = Object.keys(yearMap).sort();
+
+  let html = '';
+  years.forEach(year => {
+    const y = yearMap[year];
+    const distKm = (y.distance / 1000).toFixed(0);
+    const hours = Math.floor(y.time / 3600);
+    const elevKm = (y.elevation / 1000).toFixed(1);
+
+    html += `
+      <div class="yearly-card">
+        <div class="yearly-year">${year}</div>
+        <div class="yearly-stats">
+          <div class="yearly-stat">
+            <span class="yearly-stat-value">${distKm}</span>
+            <span class="yearly-stat-label">km</span>
+          </div>
+          <div class="yearly-stat">
+            <span class="yearly-stat-value">${y.count}</span>
+            <span class="yearly-stat-label">runs</span>
+          </div>
+          <div class="yearly-stat">
+            <span class="yearly-stat-value">${hours}</span>
+            <span class="yearly-stat-label">hours</span>
+          </div>
+          <div class="yearly-stat">
+            <span class="yearly-stat-value">${elevKm}</span>
+            <span class="yearly-stat-label">km ↑</span>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+/**
+ * Year-over-Year Monthly Distance Chart
+ */
+function initializeYoYDistanceChart(data, compactVisuals = false) {
+  if (!data.activities) return;
+
+  const runs = data.activities.filter(a => a.type === 'Run');
+  const yearMonthMap = {};
+
+  runs.forEach(run => {
+    const year = run.start_date_local.substring(0, 4);
+    const month = parseInt(run.start_date_local.substring(5, 7));
+    if (!yearMonthMap[year]) yearMonthMap[year] = {};
+    if (!yearMonthMap[year][month]) yearMonthMap[year][month] = 0;
+    yearMonthMap[year][month] += run.distance / 1000;
+  });
+
+  const years = Object.keys(yearMonthMap).sort();
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const colors = getThemeColors();
+
+  const yearColors = [
+    '#6366f1', '#ec4899', '#14b8a6', '#f59e0b', '#ef4444',
+    '#8b5cf6', '#06b6d4', '#84cc16', '#f97316', '#64748b'
+  ];
+
+  const series = years.map((year, i) => ({
+    name: year,
+    data: monthNames.map((_, monthIdx) => {
+      const val = yearMonthMap[year][monthIdx + 1] || 0;
+      return parseFloat(val.toFixed(1));
+    })
+  }));
+
+  const options = {
+    series: series,
+    chart: {
+      type: 'bar',
+      height: compactVisuals ? 320 : 400,
+      toolbar: { show: false },
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 2,
+        columnWidth: '80%'
+      }
+    },
+    colors: yearColors.slice(0, years.length),
+    xaxis: {
+      categories: monthNames,
+      labels: {
+        style: { colors: colors.textPrimary, fontSize: '12px' }
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Distance (km)',
+        style: { color: colors.textPrimary, fontSize: '12px' }
+      },
+      labels: {
+        style: { colors: colors.textPrimary, fontSize: '12px' }
+      }
+    },
+    grid: { borderColor: colors.borderPrimary },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'center',
+      labels: { colors: colors.textPrimary }
+    },
+    dataLabels: { enabled: false },
+    tooltip: {
+      theme: getTooltipTheme(),
+      y: {
+        formatter: function(val) {
+          return val + ' km';
+        }
+      }
+    }
+  };
+
+  const chart = new ApexCharts(document.querySelector('#yoy-distance-chart'), options);
+  chart.render();
+  chartInstances.yoyDistance = chart;
 }
 
 /**
@@ -200,7 +348,7 @@ function initializeDistanceChart(data, compactVisuals = false) {
   }
 
   // Keep mobile view compact
-  const selectedMonths = filteredMonthlyData.slice(compactVisuals ? -6 : -12);
+  const selectedMonths = filteredMonthlyData.slice(compactVisuals ? -6 : -24);
 
   const colors = getThemeColors();
 
@@ -331,7 +479,7 @@ function initializePaceChart(data, compactVisuals = false) {
       avgPace: monthlyPace[month].total / monthlyPace[month].count
     }))
     .sort((a, b) => a.month.localeCompare(b.month))
-    .slice(compactVisuals ? -6 : -12);
+    .slice(compactVisuals ? -6 : -24);
 
   const colors = getThemeColors();
   const chartType = compactVisuals ? 'bar' : 'line';

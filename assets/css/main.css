@@ -1671,6 +1671,63 @@ button {
   gap: 15px;
 }
 
+/* Yearly Totals */
+.running-yearly-totals {
+  margin-bottom: 60px;
+}
+
+.running-yearly-totals h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.yearly-totals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.yearly-card {
+  background-color: var(--color-bg-secondary);
+  padding: 16px;
+  border: 1px solid var(--color-border-primary);
+  transition: transform 0.2s ease;
+}
+
+.yearly-card:hover {
+  transform: translateY(-2px);
+}
+
+.yearly-year {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-text-primary);
+}
+
+.yearly-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.yearly-stat-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: block;
+}
+
+.yearly-stat-label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* Charts Section */
 .running-charts {
   margin-bottom: 60px;
@@ -2277,6 +2334,38 @@ button {
   color: var(--color-bg-primary);
 }
 
+/* Race Predictions */
+.predictions-header {
+  margin-bottom: 16px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.predictions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.predictions-table th,
+.predictions-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.predictions-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.predictions-table td:last-child {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Empty State */
 .running-empty {
   text-align: center;
@@ -2323,8 +2412,27 @@ button {
 
   .running-charts h2,
   .running-calendar-section h2,
-  .running-activities h2 {
+  .running-activities h2,
+  .running-yearly-totals h2 {
     font-size: 20px;
+  }
+
+  .yearly-totals-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+
+  .yearly-card {
+    padding: 12px;
+  }
+
+  .yearly-year {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .yearly-stat-value {
+    font-size: 14px;
   }
 
   .chart-container h3 {
