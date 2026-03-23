@@ -3,10 +3,8 @@ layout: default
 title: Running
 ---
 
-<!-- Include ApexCharts and Leaflet.js -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Include ApexCharts -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.1/dist/apexcharts.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <div class="running-container">
   <header class="running-header">
@@ -150,12 +148,6 @@ title: Running
       <p class="chart-description">Recent quality workouts and training sessions</p>
       <div id="interval-scorecard" class="interval-scorecard"></div>
     </div>
-  </section>
-
-  <!-- Activity Map -->
-  <section class="running-map-section">
-    <h2>Activity map</h2>
-    <div id="activity-map" class="activity-map"></div>
   </section>
 
   {% else %}

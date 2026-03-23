@@ -96,9 +96,9 @@ jobs:
             --slurpfile activities _data/activities_raw.json \
             '{
               last_updated: $timestamp,
-              athlete: $athlete[0],
+              athlete: ($athlete[0] | del(.city, .state, .country)),
               stats: $stats[0],
-              activities: $activities[0],
+              activities: [$activities[0][] | del(.start_latlng, .end_latlng, .map, .location_city, .location_state, .location_country)],
               aggregated: {
                 weekly: (
                   $activities[0]

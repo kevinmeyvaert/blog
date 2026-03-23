@@ -1958,25 +1958,6 @@ button {
   }
 }
 
-/* Activity Map */
-.running-map-section {
-  margin-bottom: 60px;
-}
-
-.running-map-section h2 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--color-border-primary);
-}
-
-.activity-map {
-  width: 100%;
-  height: 500px;
-  border: 1px solid var(--color-border-primary);
-  overflow: hidden;
-}
 
 /* Activity Calendar */
 .running-calendar-section {
@@ -2341,7 +2322,6 @@ button {
   }
 
   .running-charts h2,
-  .running-map-section h2,
   .running-calendar-section h2,
   .running-activities h2 {
     font-size: 20px;
@@ -2371,10 +2351,6 @@ button {
 
   .compact-summary-muted {
     margin-top: 2px;
-  }
-
-  .activity-map {
-    height: 350px;
   }
 
   .calendar-legend {
@@ -2444,9 +2420,5 @@ button {
 
   .stat-value {
     font-size: 22px;
-  }
-
-  .activity-map {
-    height: 300px;
   }
 }

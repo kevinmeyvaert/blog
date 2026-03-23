@@ -8,7 +8,6 @@ const chartInstances = {};
 let stravaThemeObserver = null;
 let responsiveListenerRegistered = false;
 let lastCompactMode = null;
-let activityMapInstance = null;
 
 // Locale helpers
 const DATE_LOCALE = 'nl-BE';
@@ -129,7 +128,6 @@ function initializeStravaCharts(data) {
     initializeTrainingLoadChart(data);
   }
   initializeIntervalScorecard(data);
-  initializeActivityMap(data);
   initializeActivityCalendar(data);
 
   // Re-render charts on theme change
@@ -1020,183 +1018,6 @@ function initializeEfficiencyChart(data) {
   `;
 }
 
-/**
- * Activity Map with Leaflet.js
- */
-function initializeActivityMap(data) {
-  if (!data.activities) {
-    return;
-  }
-
-  const mapElement = document.getElementById('activity-map');
-  if (!mapElement) {
-    return;
-  }
-
-  const colors = getThemeColors();
-
-  // Collect activity data first before initializing map
-  const activityCenters = [];
-  const allPolylines = [];
-  let routeCount = 0;
-
-  // Use last 10 activities to focus on current/local training area
-  const recentActivities = data.activities.slice(0, 10);
-
-  // First pass: decode polylines and collect centers
-  recentActivities.forEach((activity, index) => {
-    if (activity.type === 'Run' && activity.map && activity.map.summary_polyline) {
-      try {
-        const polyline = decodePolyline(activity.map.summary_polyline);
-
-        if (polyline.length > 0) {
-          allPolylines.push({ polyline, activity });
-
-          // Calculate center of this activity
-          const centerLat = polyline.reduce((sum, p) => sum + p[0], 0) / polyline.length;
-          const centerLng = polyline.reduce((sum, p) => sum + p[1], 0) / polyline.length;
-          activityCenters.push([centerLat, centerLng]);
-
-          routeCount++;
-        }
-      } catch (e) {
-        console.warn('Could not decode polyline for activity:', activity.id, e);
-      }
-    }
-  });
-
-  // Calculate center point using median (more robust to outliers)
-  let centerLat = 51.05; // Gent default
-  let centerLng = 3.72;
-  let zoom = 12;
-
-  if (activityCenters.length > 0) {
-    // Sort and find median
-    const lats = activityCenters.map(p => p[0]).sort((a, b) => a - b);
-    const lngs = activityCenters.map(p => p[1]).sort((a, b) => a - b);
-
-    const midIndex = Math.floor(lats.length / 2);
-    centerLat = lats.length % 2 === 0
-      ? (lats[midIndex - 1] + lats[midIndex]) / 2
-      : lats[midIndex];
-    centerLng = lngs.length % 2 === 0
-      ? (lngs[midIndex - 1] + lngs[midIndex]) / 2
-      : lngs[midIndex];
-  }
-
-  // Initialize map with calculated center
-  if (activityMapInstance) {
-    activityMapInstance.remove();
-    activityMapInstance = null;
-  }
-  const map = L.map('activity-map').setView([centerLat, centerLng], zoom);
-  activityMapInstance = map;
-
-  // Add OpenStreetMap tiles
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 19
-  }).addTo(map);
-
-  // Calculate tile coverage for explorer view
-  const visitedTiles = new Set();
-  const tileZoom = 14; // Tile zoom level for coverage calculation
-
-  allPolylines.forEach(({ polyline }) => {
-    polyline.forEach(([lat, lng]) => {
-      const tileX = Math.floor((lng + 180) / 360 * Math.pow(2, tileZoom));
-      const tileY = Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, tileZoom));
-      visitedTiles.add(`${tileX},${tileY}`);
-    });
-  });
-
-  // Add coverage overlay
-  visitedTiles.forEach(tileKey => {
-    const [tileX, tileY] = tileKey.split(',').map(Number);
-    const n = Math.pow(2, tileZoom);
-    const lng1 = tileX / n * 360 - 180;
-    const lng2 = (tileX + 1) / n * 360 - 180;
-    const lat1 = Math.atan(Math.sinh(Math.PI * (1 - 2 * tileY / n))) * 180 / Math.PI;
-    const lat2 = Math.atan(Math.sinh(Math.PI * (1 - 2 * (tileY + 1) / n))) * 180 / Math.PI;
-
-    L.rectangle([[lat1, lng1], [lat2, lng2]], {
-      color: '#4169E1',
-      weight: 1,
-      fillColor: '#4169E1',
-      fillOpacity: 0.05
-    }).addTo(map);
-  });
-
-  // Second pass: add polylines to map
-  allPolylines.forEach(({ polyline, activity }) => {
-    const line = L.polyline(polyline, {
-      color: '#4169E1',  // Royal blue - visible in both light and dark modes
-      weight: 2,
-      opacity: 0.7
-    }).addTo(map);
-
-    // Add popup with activity info
-    line.bindPopup(`
-      <strong>${activity.name}</strong><br>
-      ${(activity.distance / 1000).toFixed(2)} km<br>
-      ${formatDateFromISO(activity.start_date_local)}
-    `);
-  });
-
-  // Fit bounds to activity centers if we have multiple activities
-  if (activityCenters.length > 1) {
-    const centerBounds = L.latLngBounds(activityCenters);
-    map.fitBounds(centerBounds, {
-      padding: [50, 50],
-      maxZoom: 13
-    });
-  }
-
-  console.log(`Loaded ${routeCount} activity routes on map with ${visitedTiles.size} explored tiles, centered at [${centerLat.toFixed(4)}, ${centerLng.toFixed(4)}]`);
-}
-
-/**
- * Decode polyline encoded string to array of [lat, lng] coordinates
- * Based on Google's polyline encoding algorithm
- */
-function decodePolyline(encoded) {
-  const points = [];
-  let index = 0;
-  const len = encoded.length;
-  let lat = 0;
-  let lng = 0;
-
-  while (index < len) {
-    let b;
-    let shift = 0;
-    let result = 0;
-
-    do {
-      b = encoded.charCodeAt(index++) - 63;
-      result |= (b & 0x1f) << shift;
-      shift += 5;
-    } while (b >= 0x20);
-
-    const dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
-    lat += dlat;
-
-    shift = 0;
-    result = 0;
-
-    do {
-      b = encoded.charCodeAt(index++) - 63;
-      result |= (b & 0x1f) << shift;
-      shift += 5;
-    } while (b >= 0x20);
-
-    const dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
-    lng += dlng;
-
-    points.push([lat / 1e5, lng / 1e5]);
-  }
-
-  return points;
-}
 
 /**
  * Format month string (YYYY-MM) to readable format
