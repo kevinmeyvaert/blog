@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 27,
+    "items": 28,
     "urls": {}
   },
   "wants": [
@@ -1474,6 +1474,61 @@
         "styles": [
           "Math Rock",
           "Post Rock"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 6959047,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/6959047",
+      "date_added": "2026-03-23T03:03:00-07:00",
+      "basic_information": {
+        "id": 6959047,
+        "master_id": 833675,
+        "master_url": "https://api.discogs.com/masters/833675",
+        "resource_url": "https://api.discogs.com/releases/6959047",
+        "title": "Welcome To Strange Paradise",
+        "year": 2015,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Stereo"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "The Van Jets",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 315492,
+            "resource_url": "https://api.discogs.com/artists/315492"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Sony Music",
+            "catno": "888750895813",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 25487,
+            "resource_url": "https://api.discogs.com/labels/25487"
+          }
+        ],
+        "thumb": "https://i.discogs.com/gi5M3lHlg4iv_mJfqfn7AiP3GKl1wGyE4xLGtrQ8G18/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY5NTkw/NDctMTQzMDQyMTM3/OS01NTA1LmpwZWc.jpeg",
+        "cover_image": "https://i.discogs.com/a8FsFXGPutO1WdH8uXYyiIL11d2cHyAA37AM4lNC58k/rs:fit/g:sm/q:90/h:400/w:400/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY5NTkw/NDctMTQzMDQyMTM3/OS01NTA1LmpwZWc.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock"
         ]
       },
       "rating": 0,
