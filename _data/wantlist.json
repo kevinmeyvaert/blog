@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 28,
+    "items": 29,
     "urls": {}
   },
   "wants": [
@@ -1360,6 +1360,61 @@
           "Trap",
           "Future Bass",
           "Breakbeat"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 6268223,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/6268223",
+      "date_added": "2026-03-25T04:13:20-07:00",
+      "basic_information": {
+        "id": 6268223,
+        "master_id": 754580,
+        "master_url": "https://api.discogs.com/masters/754580",
+        "resource_url": "https://api.discogs.com/releases/6268223",
+        "title": "I Love You EP",
+        "year": 2014,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "12\"",
+              "EP"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Lido",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1989736,
+            "resource_url": "https://api.discogs.com/artists/1989736"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Pelican Fly",
+            "catno": "FLY015",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 247377,
+            "resource_url": "https://api.discogs.com/labels/247377"
+          }
+        ],
+        "thumb": "https://i.discogs.com/pW_OwbBpqGiIQoKSop9PPlpJPXjJSJOiSK9I0j3TZLo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYyNjgy/MjMtMTQxNTIwMTkx/OC02MDc1LmpwZWc.jpeg",
+        "cover_image": "https://i.discogs.com/hFBuGuVg-jsxPjwbciqPeGB5SrTxwK0ZB6ZUiKCRd1w/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTYyNjgy/MjMtMTQxNTIwMTkx/OC02MDc1LmpwZWc.jpeg",
+        "genres": [
+          "Electronic"
+        ],
+        "styles": [
+          "Bass Music",
+          "Electro"
         ]
       },
       "rating": 0,
