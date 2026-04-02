@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-01T04:09:35Z",
+  "last_updated": "2026-04-02T04:00:48Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -38,18 +38,18 @@
     },
     "recent_run_totals": {
       "count": 22,
-      "distance": 248551.70000000004,
-      "moving_time": 69769,
-      "elapsed_time": 69851,
-      "elevation_gain": 587.0,
+      "distance": 248500.00000000006,
+      "moving_time": 69897,
+      "elapsed_time": 69979,
+      "elevation_gain": 582.0,
       "achievement_count": 0
     },
     "all_run_totals": {
-      "count": 1811,
-      "distance": 18557722.19999999,
-      "moving_time": 5194341,
-      "elapsed_time": 5360588,
-      "elevation_gain": 25305.300000000014
+      "count": 1812,
+      "distance": 18564789.39999999,
+      "moving_time": 5196528,
+      "elapsed_time": 5362775,
+      "elevation_gain": 25320.300000000014
     },
     "recent_swim_totals": {
       "count": 0,
@@ -74,11 +74,11 @@
       "elevation_gain": 0
     },
     "ytd_run_totals": {
-      "count": 72,
-      "distance": 813908,
-      "moving_time": 230477.0,
-      "elapsed_time": 231470.0,
-      "elevation_gain": 2257.0
+      "count": 73,
+      "distance": 820975,
+      "moving_time": 232664.0,
+      "elapsed_time": 233657.0,
+      "elevation_gain": 2272.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -89,6 +89,62 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "resource_state": 1
+      },
+      "name": "z1 jog",
+      "distance": 7067.2,
+      "moving_time": 2187,
+      "elapsed_time": 2187,
+      "total_elevation_gain": 15.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": null,
+      "device_name": "Garmin Forerunner 570",
+      "id": 17939441596,
+      "start_date": "2026-04-01T15:25:06Z",
+      "start_date_local": "2026-04-01T17:25:06Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 7200.0,
+      "achievement_count": 0,
+      "kudos_count": 7,
+      "comment_count": 0,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": "g28521646",
+      "average_speed": 3.231,
+      "max_speed": 5.38,
+      "average_cadence": 80.2,
+      "average_watts": 294.6,
+      "max_watts": 383,
+      "weighted_average_watts": 293,
+      "device_watts": true,
+      "kilojoules": 644.6,
+      "has_heartrate": true,
+      "average_heartrate": 123.5,
+      "max_heartrate": 140.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 9.2,
+      "elev_low": 3.4,
+      "upload_id": 19039531734,
+      "upload_id_str": "19039531734",
+      "external_id": "garmin_ping_553249588910",
+      "from_accepted_tag": false,
+      "pr_count": 0,
+      "total_photo_count": 0,
+      "has_kudoed": false,
+      "suffer_score": 7.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -110,7 +166,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 1,
-      "kudos_count": 6,
+      "kudos_count": 8,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -21487,7 +21543,7 @@
       "start_date_local": "2024-09-19T19:23:01Z",
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
-      "achievement_count": 3,
+      "achievement_count": 4,
       "kudos_count": 29,
       "comment_count": 0,
       "athlete_count": 31,
@@ -28135,7 +28191,7 @@
       "start_date_local": "2024-04-17T19:33:12Z",
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
-      "achievement_count": 6,
+      "achievement_count": 7,
       "kudos_count": 30,
       "comment_count": 1,
       "athlete_count": 37,
@@ -28161,7 +28217,7 @@
       "upload_id_str": "11973178496",
       "external_id": "garmin_ping_334291659395",
       "from_accepted_tag": false,
-      "pr_count": 0,
+      "pr_count": 1,
       "total_photo_count": 0,
       "has_kudoed": false,
       "suffer_score": 152.0
@@ -50311,7 +50367,7 @@
       "start_date_local": "2022-10-15T13:17:07Z",
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
-      "achievement_count": 8,
+      "achievement_count": 9,
       "kudos_count": 7,
       "comment_count": 0,
       "athlete_count": 1,
@@ -50337,7 +50393,7 @@
       "upload_id_str": "8519009050",
       "external_id": "garmin_ping_243075349771",
       "from_accepted_tag": false,
-      "pr_count": 5,
+      "pr_count": 6,
       "total_photo_count": 0,
       "has_kudoed": false,
       "suffer_score": 71.0
@@ -56890,7 +56946,7 @@
       "start_date_local": "2022-05-21T14:12:30Z",
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
-      "achievement_count": 1,
+      "achievement_count": 2,
       "kudos_count": 9,
       "comment_count": 0,
       "athlete_count": 1,
@@ -92981,7 +93037,7 @@
       "start_date_local": "2019-05-19T15:00:57Z",
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
-      "achievement_count": 6,
+      "achievement_count": 7,
       "kudos_count": 1,
       "comment_count": 0,
       "athlete_count": 45,
@@ -98836,10 +98892,10 @@
       },
       {
         "week": "2026-W13",
-        "total_distance": 31654.8,
-        "total_time": 9152,
-        "total_elevation": 63,
-        "activity_count": 2
+        "total_distance": 38722,
+        "total_time": 11339,
+        "total_elevation": 78,
+        "activity_count": 3
       }
     ],
     "monthly": [
@@ -99458,6 +99514,13 @@
         "total_time": 78528,
         "total_elevation": 673,
         "activity_count": 24
+      },
+      {
+        "month": "2026-04",
+        "total_distance": 7067.2,
+        "total_time": 2187,
+        "total_elevation": 15.0,
+        "activity_count": 1
       }
     ]
   }
