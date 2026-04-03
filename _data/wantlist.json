@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 29,
+    "items": 30,
     "urls": {}
   },
   "wants": [
@@ -414,6 +414,87 @@
           "Folk, World, & Country"
         ],
         "styles": []
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 7545919,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/7545919",
+      "date_added": "2026-04-02T06:47:37-07:00",
+      "basic_information": {
+        "id": 7545919,
+        "master_id": 893037,
+        "master_url": "https://api.discogs.com/masters/893037",
+        "resource_url": "https://api.discogs.com/releases/7545919",
+        "title": "Dark Night Sweet Light",
+        "year": 2015,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP"
+            ],
+            "text": "Translucent Orange"
+          },
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP"
+            ],
+            "text": "Clear"
+          },
+          {
+            "name": "All Media",
+            "qty": "1",
+            "descriptions": [
+              "Album",
+              "Deluxe Edition"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Hermitude",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 169298,
+            "resource_url": "https://api.discogs.com/artists/169298"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Elefant Traks",
+            "catno": "ACE121",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 18992,
+            "resource_url": "https://api.discogs.com/labels/18992"
+          },
+          {
+            "name": "Nettwerk",
+            "catno": "0 6700 31076 1 7",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1263,
+            "resource_url": "https://api.discogs.com/labels/1263"
+          }
+        ],
+        "thumb": "https://i.discogs.com/qbhY-eDu1q4QWpw1h0_VSqD2bf5y0EGG4YBccKA1YsI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc1NDU5/MTktMTQ0MzcyMzcw/OS03NDQ0LmpwZWc.jpeg",
+        "cover_image": "https://i.discogs.com/K5f3TUAAi5VqWOxidc6EOOStrY8OeISPom5uUGMJDl0/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc1NDU5/MTktMTQ0MzcyMzcw/OS03NDQ0LmpwZWc.jpeg",
+        "genres": [
+          "Electronic",
+          "Hip Hop"
+        ],
+        "styles": [
+          "Hip Hop",
+          "Trap",
+          "Synth-pop"
+        ]
       },
       "rating": 0,
       "notes": ""
