@@ -2498,3 +2498,133 @@ button {
     font-size: 22px;
   }
 }
+
+/* Ward Kudo Loyalty Dashboard */
+.ward-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.ward-header {
+  margin-bottom: 60px;
+}
+
+.ward-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ward-description {
+  color: var(--color-text-muted);
+  font-size: 16px;
+}
+
+.ward-claim {
+  width: 100%;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.ward-claim img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--color-border-primary);
+}
+
+.ward-verdict {
+  margin-bottom: 60px;
+}
+
+.verdict-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  margin-bottom: 30px;
+  border: 2px solid;
+  text-align: center;
+}
+
+.verdict-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.verdict-value {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.verdict-loyal {
+  border-color: #22c55e;
+}
+
+.verdict-loyal .verdict-value {
+  color: #22c55e;
+}
+
+.verdict-questionable {
+  border-color: #eab308;
+}
+
+.verdict-questionable .verdict-value {
+  color: #eab308;
+}
+
+.verdict-cap {
+  border-color: #ef4444;
+}
+
+.verdict-cap .verdict-value {
+  color: #ef4444;
+}
+
+.ward-activities {
+  margin-bottom: 60px;
+}
+
+.ward-activities h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.kudo-icon {
+  margin-right: 6px;
+}
+
+.ward-yes {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.ward-no {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.ward-footer {
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border-primary);
+}
+
+.ward-footer p {
+  font-size: 13px;
+  color: var(--color-text-light);
+  font-style: italic;
+}
+
+.ward-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-muted);
+}

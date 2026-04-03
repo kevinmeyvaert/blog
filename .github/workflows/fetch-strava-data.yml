@@ -157,17 +157,81 @@ jobs:
 
           echo "Strava data processed successfully"
 
+      - name: Fetch Ward kudo data
+        env:
+          ACCESS_TOKEN: ${{ steps.refresh_token.outputs.ACCESS_TOKEN }}
+        run: |
+          echo "Fetching kudos for recent activities to check Ward's loyalty..."
+          WARD_FIRSTNAME="Ward"
+          PERIOD_START="2026-03-24"
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          # Get recent run activity IDs from the strava data (last 4 weeks)
+          CUTOFF=$(date -u -d "4 weeks ago" +"%Y-%m-%dT00:00:00Z" 2>/dev/null || date -u -v-4w +"%Y-%m-%dT00:00:00Z")
+          ACTIVITY_IDS=$(jq -r --arg cutoff "$PERIOD_START" \
+            '[.activities[] | select(.type == "Run" and .start_date >= ($cutoff + "T00:00:00Z"))] | .[].id' \
+            _data/strava.json)
+
+          echo '[]' > /tmp/ward_activities.json
+
+          for AID in $ACTIVITY_IDS; do
+            echo "Checking kudos for activity $AID..."
+            curl -s -H "Authorization: Bearer $ACCESS_TOKEN" \
+              "https://www.strava.com/api/v3/activities/$AID/kudos?per_page=200" \
+              -o /tmp/kudos_response.json
+
+            WARD_KUDOED=$(jq --arg name "$WARD_FIRSTNAME" \
+              '[.[] | select(.firstname == $name)] | length > 0' \
+              /tmp/kudos_response.json)
+
+            ACTIVITY_DATA=$(jq --arg aid "$AID" --argjson ward "$WARD_KUDOED" \
+              '.activities[] | select(.id == ($aid | tonumber)) | {activity_id: .id, name: .name, date: .start_date_local, distance: .distance, moving_time: .moving_time, kudos_count: .kudos_count, ward_kudoed: $ward}' \
+              _data/strava.json)
+
+            jq --argjson item "$ACTIVITY_DATA" '. + [$item]' /tmp/ward_activities.json > /tmp/ward_activities_tmp.json
+            mv /tmp/ward_activities_tmp.json /tmp/ward_activities.json
+
+            sleep 0.5
+          done
+
+          TOTAL=$(jq 'length' /tmp/ward_activities.json)
+          WARD_COUNT=$(jq '[.[] | select(.ward_kudoed == true)] | length' /tmp/ward_activities.json)
+          PCT=$(echo "scale=1; $WARD_COUNT * 100 / $TOTAL" | bc 2>/dev/null || echo "0.0")
+
+          jq -n \
+            --arg timestamp "$TIMESTAMP" \
+            --arg period_start "$PERIOD_START" \
+            --arg ward_name "$WARD_FIRSTNAME" \
+            --argjson activities "$(cat /tmp/ward_activities.json)" \
+            --argjson total "$TOTAL" \
+            --argjson ward_count "$WARD_COUNT" \
+            --arg pct "$PCT" \
+            '{
+              last_updated: $timestamp,
+              ward_name: $ward_name,
+              period_start: $period_start,
+              activities: $activities,
+              summary: {
+                total_runs: $total,
+                ward_kudos: $ward_count,
+                loyalty_pct: ($pct | tonumber)
+              }
+            }' > _data/ward_kudos.json
+
+          echo "Ward kudoed $WARD_COUNT/$TOTAL runs ($PCT%)"
+          rm -f /tmp/kudos_response.json /tmp/ward_activities.json
+
       - name: Check for changes
         id: check_changes
         run: |
-          git status --porcelain _data/strava.json | grep -q . && echo "changed=true" >> $GITHUB_OUTPUT || true
+          git status --porcelain _data/ | grep -q . && echo "changed=true" >> $GITHUB_OUTPUT || true
 
       - name: Commit and push if changed
         if: steps.check_changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add _data/strava.json
+          git add _data/strava.json _data/ward_kudos.json
           git commit -m "chore: update strava data"
           git push
 

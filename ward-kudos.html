@@ -1,0 +1,114 @@
+---
+layout: default
+title: Ward's Kudo Loyalty Dashboard
+permalink: /ward-kudos/
+---
+
+<div class="ward-container">
+  <header class="ward-header">
+    <h1>Is Ward a loyal kudo giver?</h1>
+    <p class="ward-description">
+      Ward claims to be a "loyal kudo'er". Let's verify that.
+    </p>
+  </header>
+
+  {% if site.data.ward_kudos %}
+
+  <!-- Ward's claim -->
+  <section class="ward-claim">
+    <img src="/assets/images/pages/ward-loyal-kudoer.png" alt="Ward claiming to be a loyal kudo giver" />
+  </section>
+
+  <!-- Verdict -->
+  <section class="ward-verdict">
+    {% assign pct = site.data.ward_kudos.summary.loyalty_pct %}
+    {% assign total = site.data.ward_kudos.summary.total_runs %}
+    {% assign kudos = site.data.ward_kudos.summary.ward_kudos %}
+
+    {% if pct >= 80 %}
+      {% assign verdict = "Loyal" %}
+      {% assign verdict_class = "loyal" %}
+    {% elsif pct >= 50 %}
+      {% assign verdict = "Questionable" %}
+      {% assign verdict_class = "questionable" %}
+    {% else %}
+      {% assign verdict = "Cap" %}
+      {% assign verdict_class = "cap" %}
+    {% endif %}
+
+    <div class="verdict-badge verdict-{{ verdict_class }}">
+      <span class="verdict-label">Verdict</span>
+      <span class="verdict-value">{{ verdict }}</span>
+    </div>
+
+    <div class="stat-cards-grid">
+      <div class="stat-card">
+        <div class="stat-value">{{ kudos }}/{{ total }}</div>
+        <div class="stat-label">Runs kudoed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ pct }}%</div>
+        <div class="stat-label">Loyalty rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ site.data.ward_kudos.period_start | date: "%d/%m" }} — now</div>
+        <div class="stat-label">Period tracked</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activity breakdown -->
+  <section class="ward-activities">
+    <h2>The receipts</h2>
+    <div class="activities-list">
+      {% for activity in site.data.ward_kudos.activities %}
+      <div class="activity-item">
+        <div class="activity-header">
+          <h3 class="activity-name">
+            {% if activity.ward_kudoed %}
+              <span class="kudo-icon kudo-yes" title="Ward gave kudos">👍</span>
+            {% else %}
+              <span class="kudo-icon kudo-no" title="No kudos from Ward">👎</span>
+            {% endif %}
+            {{ activity.name }}
+          </h3>
+          <time class="activity-date">{{ activity.date | date: "%d/%m/%Y" }}</time>
+        </div>
+        <div class="activity-stats">
+          <span class="activity-stat">
+            <span class="activity-stat-label">Distance</span>
+            <span class="activity-stat-value">{{ activity.distance | divided_by: 1000.0 | round: 2 }} km</span>
+          </span>
+          <span class="activity-stat">
+            {% assign pace_seconds = activity.moving_time | divided_by: activity.distance | times: 1000 %}
+            {% assign pace_minutes = pace_seconds | divided_by: 60 | floor %}
+            {% assign pace_secs = pace_seconds | modulo: 60 | round: 0 %}
+            <span class="activity-stat-label">Pace</span>
+            <span class="activity-stat-value">{{ pace_minutes }}:{% if pace_secs < 10 %}0{% endif %}{{ pace_secs }} /km</span>
+          </span>
+          <span class="activity-stat">
+            <span class="activity-stat-label">Total kudos</span>
+            <span class="activity-stat-value">{{ activity.kudos_count }}</span>
+          </span>
+          <span class="activity-stat">
+            <span class="activity-stat-label">Ward</span>
+            <span class="activity-stat-value {% if activity.ward_kudoed %}ward-yes{% else %}ward-no{% endif %}">
+              {% if activity.ward_kudoed %}Yes{% else %}No{% endif %}
+            </span>
+          </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <footer class="ward-footer">
+    <p>Last updated: {{ site.data.ward_kudos.last_updated | date: "%d/%m/%Y %H:%M" }}. Data sourced from Strava API.</p>
+  </footer>
+
+  {% else %}
+  <div class="ward-empty">
+    <p>No kudo data available yet. Check back soon!</p>
+  </div>
+  {% endif %}
+</div>
