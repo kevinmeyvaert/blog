@@ -1,16 +1,25 @@
 {
-  "last_updated": "2026-04-03T08:32:50Z",
+  "last_updated": "2026-04-04T03:53:38Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 17965193023,
+      "name": "3 x 3000m tempo",
+      "date": "2026-04-03T18:08:15Z",
+      "distance": 14032.2,
+      "moving_time": 3683,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 17952380115,
       "name": "snelste z2 duurloop ooit 😭",
       "date": "2026-04-02T18:02:59Z",
       "distance": 13092.7,
       "moving_time": 3418,
-      "kudos_count": 8,
-      "ward_kudoed": false
+      "kudos_count": 10,
+      "ward_kudoed": true
     },
     {
       "activity_id": 17939441596,
@@ -86,8 +95,8 @@
     }
   ],
   "summary": {
-    "total_runs": 9,
-    "ward_kudos": 4,
-    "loyalty_pct": 44.4
+    "total_runs": 10,
+    "ward_kudos": 6,
+    "loyalty_pct": 60.0
   }
 }
