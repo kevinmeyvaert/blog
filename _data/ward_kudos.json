@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-04-05T04:05:15Z",
+  "last_updated": "2026-04-06T04:07:42Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 17984992457,
+      "name": "Ronde van het Meetjesland (z1)",
+      "date": "2026-04-05T10:18:08Z",
+      "distance": 20386.2,
+      "moving_time": 6081,
+      "kudos_count": 10,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 17974973701,
       "name": "z1 herstel",
       "date": "2026-04-04T14:47:07Z",
       "distance": 7099.4,
       "moving_time": 2214,
-      "kudos_count": 7,
+      "kudos_count": 8,
       "ward_kudoed": true
     },
     {
@@ -27,7 +36,7 @@
       "date": "2026-04-02T18:02:59Z",
       "distance": 13092.7,
       "moving_time": 3418,
-      "kudos_count": 10,
+      "kudos_count": 11,
       "ward_kudoed": true
     },
     {
@@ -104,8 +113,8 @@
     }
   ],
   "summary": {
-    "total_runs": 11,
-    "ward_kudos": 7,
-    "loyalty_pct": 63.6
+    "total_runs": 12,
+    "ward_kudos": 8,
+    "loyalty_pct": 66.6
   }
 }
