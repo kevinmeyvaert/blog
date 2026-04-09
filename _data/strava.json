@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-08T04:03:53Z",
+  "last_updated": "2026-04-09T04:02:27Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -38,18 +38,18 @@
     },
     "recent_run_totals": {
       "count": 23,
-      "distance": 256819.2000000001,
-      "moving_time": 71745,
-      "elapsed_time": 71822,
-      "elevation_gain": 682.0,
+      "distance": 256774.20000000007,
+      "moving_time": 71783,
+      "elapsed_time": 71881,
+      "elevation_gain": 677.0,
       "achievement_count": 0
     },
     "all_run_totals": {
-      "count": 1817,
-      "distance": 18626480.699999988,
-      "moving_time": 5214005,
-      "elapsed_time": 5380285,
-      "elevation_gain": 25491.300000000017
+      "count": 1818,
+      "distance": 18640482.699999988,
+      "moving_time": 5217691,
+      "elapsed_time": 5383992,
+      "elevation_gain": 25509.300000000025
     },
     "recent_swim_totals": {
       "count": 0,
@@ -74,11 +74,11 @@
       "elevation_gain": 0
     },
     "ytd_run_totals": {
-      "count": 78,
-      "distance": 882666,
-      "moving_time": 250141.0,
-      "elapsed_time": 251167.0,
-      "elevation_gain": 2443.0
+      "count": 79,
+      "distance": 896668,
+      "moving_time": 253827.0,
+      "elapsed_time": 254874.0,
+      "elevation_gain": 2461.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -89,6 +89,62 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "resource_state": 1
+      },
+      "name": "progressieve duurloop",
+      "distance": 14002.0,
+      "moving_time": 3686,
+      "elapsed_time": 3707,
+      "total_elevation_gain": 18.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": null,
+      "device_name": "Garmin Forerunner 570",
+      "id": 18029334884,
+      "start_date": "2026-04-08T15:24:31Z",
+      "start_date_local": "2026-04-08T17:24:31Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 7200.0,
+      "achievement_count": 0,
+      "kudos_count": 12,
+      "comment_count": 2,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": "g30083191",
+      "average_speed": 3.799,
+      "max_speed": 5.74,
+      "average_cadence": 82.4,
+      "average_watts": 342.8,
+      "max_watts": 444,
+      "weighted_average_watts": 343,
+      "device_watts": true,
+      "kilojoules": 1263.9,
+      "has_heartrate": true,
+      "average_heartrate": 159.3,
+      "max_heartrate": 182.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 8.2,
+      "elev_low": 1.4,
+      "upload_id": 19130451871,
+      "upload_id_str": "19130451871",
+      "external_id": "garmin_ping_556109508004",
+      "from_accepted_tag": false,
+      "pr_count": 0,
+      "total_photo_count": 1,
+      "has_kudoed": false,
+      "suffer_score": 87.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -110,7 +166,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 10,
+      "kudos_count": 11,
       "comment_count": 1,
       "athlete_count": 1,
       "photo_count": 0,
@@ -99179,10 +99235,10 @@
       },
       {
         "week": "2026-W14",
-        "total_distance": 27467,
-        "total_time": 8162,
-        "total_elevation": 77,
-        "activity_count": 2
+        "total_distance": 41469,
+        "total_time": 11848,
+        "total_elevation": 95,
+        "activity_count": 3
       }
     ],
     "monthly": [
@@ -99804,10 +99860,10 @@
       },
       {
         "month": "2026-04",
-        "total_distance": 68758.5,
-        "total_time": 19664,
-        "total_elevation": 186,
-        "activity_count": 6
+        "total_distance": 82760.5,
+        "total_time": 23350,
+        "total_elevation": 204,
+        "activity_count": 7
       }
     ]
   }
