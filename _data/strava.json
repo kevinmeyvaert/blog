@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-10T04:07:35Z",
+  "last_updated": "2026-04-11T03:55:28Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -110,7 +110,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 3,
+      "kudos_count": 4,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -166,7 +166,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 18,
+      "kudos_count": 19,
       "comment_count": 2,
       "athlete_count": 1,
       "photo_count": 0,
