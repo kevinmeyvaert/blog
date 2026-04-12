@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-04-11T03:55:29Z",
+  "last_updated": "2026-04-12T04:08:23Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18064501631,
+      "name": "versnellingen + ndl",
+      "date": "2026-04-11T12:29:46Z",
+      "distance": 8126.3,
+      "moving_time": 2154,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18042903153,
       "name": "rdl z1-z2",
       "date": "2026-04-09T17:48:10Z",
       "distance": 7031.8,
       "moving_time": 2029,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": true
     },
     {
@@ -140,8 +149,8 @@
     }
   ],
   "summary": {
-    "total_runs": 15,
-    "ward_kudos": 11,
-    "loyalty_pct": 73.3
+    "total_runs": 16,
+    "ward_kudos": 12,
+    "loyalty_pct": 75.0
   }
 }
