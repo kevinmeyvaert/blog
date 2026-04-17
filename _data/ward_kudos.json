@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-04-16T04:09:29Z",
+  "last_updated": "2026-04-17T04:08:33Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18134283130,
+      "name": "lekker duurloopje z2-z3",
+      "date": "2026-04-16T17:45:57Z",
+      "distance": 14044.4,
+      "moving_time": 3641,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18120636830,
       "name": "z1 hertsteljoggy mc jogface",
@@ -176,8 +185,8 @@
     }
   ],
   "summary": {
-    "total_runs": 19,
-    "ward_kudos": 15,
-    "loyalty_pct": 78.9
+    "total_runs": 20,
+    "ward_kudos": 16,
+    "loyalty_pct": 80.0
   }
 }
