@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-04-17T04:08:33Z",
+  "last_updated": "2026-04-18T04:02:14Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18147659966,
+      "name": "3 x 3000 tempo",
+      "date": "2026-04-17T18:05:47Z",
+      "distance": 14029.0,
+      "moving_time": 3742,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18134283130,
       "name": "lekker duurloopje z2-z3",
       "date": "2026-04-16T17:45:57Z",
       "distance": 14044.4,
       "moving_time": 3641,
-      "kudos_count": 6,
+      "kudos_count": 11,
       "ward_kudoed": true
     },
     {
@@ -18,7 +27,7 @@
       "date": "2026-04-15T17:53:53Z",
       "distance": 7078.3,
       "moving_time": 2200,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": true
     },
     {
@@ -185,8 +194,8 @@
     }
   ],
   "summary": {
-    "total_runs": 20,
-    "ward_kudos": 16,
-    "loyalty_pct": 80.0
+    "total_runs": 21,
+    "ward_kudos": 17,
+    "loyalty_pct": 80.9
   }
 }
