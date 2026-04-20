@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-19T04:09:35Z",
+  "last_updated": "2026-04-20T04:13:15Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -38,18 +38,18 @@
     },
     "recent_run_totals": {
       "count": 23,
-      "distance": 259269.80000000005,
-      "moving_time": 72918,
-      "elapsed_time": 73016,
-      "elevation_gain": 616.0,
+      "distance": 261233.5,
+      "moving_time": 73275,
+      "elapsed_time": 73373,
+      "elevation_gain": 636.0,
       "achievement_count": 0
     },
     "all_run_totals": {
-      "count": 1826,
-      "distance": 18718987.499999993,
-      "moving_time": 5239597,
-      "elapsed_time": 5405898,
-      "elevation_gain": 25664.300000000025
+      "count": 1827,
+      "distance": 18735042.89999999,
+      "moving_time": 5244143,
+      "elapsed_time": 5410444,
+      "elevation_gain": 25703.300000000025
     },
     "recent_swim_totals": {
       "count": 0,
@@ -74,11 +74,11 @@
       "elevation_gain": 0
     },
     "ytd_run_totals": {
-      "count": 87,
-      "distance": 975173,
-      "moving_time": 275733.0,
-      "elapsed_time": 276780.0,
-      "elevation_gain": 2616.0
+      "count": 88,
+      "distance": 991229,
+      "moving_time": 280279.0,
+      "elapsed_time": 281326.0,
+      "elevation_gain": 2655.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -89,6 +89,62 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "resource_state": 1
+      },
+      "name": "12km z2 + 4km sneller",
+      "distance": 16055.4,
+      "moving_time": 4546,
+      "elapsed_time": 4546,
+      "total_elevation_gain": 39.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": null,
+      "device_name": "Garmin Forerunner 570",
+      "id": 18169535048,
+      "start_date": "2026-04-19T09:07:21Z",
+      "start_date_local": "2026-04-19T11:07:21Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 7200.0,
+      "achievement_count": 0,
+      "kudos_count": 8,
+      "comment_count": 0,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": "g30083191",
+      "average_speed": 3.532,
+      "max_speed": 6.48,
+      "average_cadence": 81.5,
+      "average_watts": 323.4,
+      "max_watts": 446,
+      "weighted_average_watts": 327,
+      "device_watts": true,
+      "kilojoules": 1470.3,
+      "has_heartrate": true,
+      "average_heartrate": 147.5,
+      "max_heartrate": 182.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 8.6,
+      "elev_low": 1.4,
+      "upload_id": 19271926099,
+      "upload_id_str": "19271926099",
+      "external_id": "garmin_ping_560549908238",
+      "from_accepted_tag": false,
+      "pr_count": 0,
+      "total_photo_count": 0,
+      "has_kudoed": false,
+      "suffer_score": 46.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -110,7 +166,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 5,
+      "kudos_count": 6,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -99694,6 +99750,13 @@
         "total_time": 17723,
         "total_elevation": 116,
         "activity_count": 6
+      },
+      {
+        "week": "2026-W16",
+        "total_distance": 16055.4,
+        "total_time": 4546,
+        "total_elevation": 39.0,
+        "activity_count": 1
       }
     ],
     "monthly": [
@@ -100315,10 +100378,10 @@
       },
       {
         "month": "2026-04",
-        "total_distance": 161265.30000000002,
-        "total_time": 45256,
-        "total_elevation": 359,
-        "activity_count": 15
+        "total_distance": 177320.70000000004,
+        "total_time": 49802,
+        "total_elevation": 398,
+        "activity_count": 16
       }
     ]
   }
