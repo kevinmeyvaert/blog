@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-04-21T04:08:27Z",
+  "last_updated": "2026-04-22T04:07:29Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18200493842,
+      "name": "5 x 1000m vo2max",
+      "date": "2026-04-21T18:00:00Z",
+      "distance": 12311.2,
+      "moving_time": 3313,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18169535048,
       "name": "12km z2 + 4km sneller",
       "date": "2026-04-19T11:07:21Z",
       "distance": 16055.4,
       "moving_time": 4546,
-      "kudos_count": 8,
+      "kudos_count": 9,
       "ward_kudoed": true
     },
     {
@@ -212,8 +221,8 @@
     }
   ],
   "summary": {
-    "total_runs": 23,
-    "ward_kudos": 19,
-    "loyalty_pct": 82.6
+    "total_runs": 24,
+    "ward_kudos": 20,
+    "loyalty_pct": 83.3
   }
 }
