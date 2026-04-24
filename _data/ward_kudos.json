@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-04-23T04:08:47Z",
+  "last_updated": "2026-04-24T04:11:39Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18228094174,
+      "name": "duurloopje zout",
+      "date": "2026-04-23T17:43:56Z",
+      "distance": 14059.2,
+      "moving_time": 3609,
+      "kudos_count": 7,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18213852167,
       "name": "hersteljog z1",
       "date": "2026-04-22T17:36:34Z",
       "distance": 7074.4,
       "moving_time": 2190,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": true
     },
     {
@@ -18,7 +27,7 @@
       "date": "2026-04-21T18:00:00Z",
       "distance": 12311.2,
       "moving_time": 3313,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -230,8 +239,8 @@
     }
   ],
   "summary": {
-    "total_runs": 25,
-    "ward_kudos": 21,
-    "loyalty_pct": 84.0
+    "total_runs": 26,
+    "ward_kudos": 22,
+    "loyalty_pct": 84.6
   }
 }
