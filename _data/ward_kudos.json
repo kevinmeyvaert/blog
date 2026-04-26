@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-04-25T04:03:47Z",
+  "last_updated": "2026-04-26T04:16:04Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18253463925,
+      "name": "uitgespjort voor vandaag",
+      "date": "2026-04-25T16:14:51Z",
+      "distance": 7063.9,
+      "moving_time": 2122,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18241282768,
       "name": "extensief interval (4 x 2000m)",
@@ -248,8 +257,8 @@
     }
   ],
   "summary": {
-    "total_runs": 27,
-    "ward_kudos": 23,
-    "loyalty_pct": 85.1
+    "total_runs": 28,
+    "ward_kudos": 24,
+    "loyalty_pct": 85.7
   }
 }
