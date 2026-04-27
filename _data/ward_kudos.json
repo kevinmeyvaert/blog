@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-04-26T04:16:04Z",
+  "last_updated": "2026-04-27T04:20:30Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18264851696,
+      "name": "rdl + eindversnelling",
+      "date": "2026-04-26T12:39:33Z",
+      "distance": 14037.5,
+      "moving_time": 4102,
+      "kudos_count": 10,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18253463925,
       "name": "uitgespjort voor vandaag",
       "date": "2026-04-25T16:14:51Z",
       "distance": 7063.9,
       "moving_time": 2122,
-      "kudos_count": 5,
+      "kudos_count": 8,
       "ward_kudoed": true
     },
     {
@@ -257,8 +266,8 @@
     }
   ],
   "summary": {
-    "total_runs": 28,
-    "ward_kudos": 24,
-    "loyalty_pct": 85.7
+    "total_runs": 29,
+    "ward_kudos": 25,
+    "loyalty_pct": 86.2
   }
 }
