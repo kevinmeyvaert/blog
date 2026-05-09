@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-05-07T04:22:31Z",
+  "last_updated": "2026-05-09T04:15:42Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18414150346,
+      "name": "5 x 1000m V02max",
+      "date": "2026-05-07T17:16:12Z",
+      "distance": 12029.1,
+      "moving_time": 3224,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18401206505,
       "name": "herstel z1",
@@ -329,8 +338,8 @@
     }
   ],
   "summary": {
-    "total_runs": 36,
-    "ward_kudos": 32,
-    "loyalty_pct": 88.8
+    "total_runs": 37,
+    "ward_kudos": 33,
+    "loyalty_pct": 89.1
   }
 }
