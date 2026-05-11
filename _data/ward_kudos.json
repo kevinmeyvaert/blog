@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-05-10T04:28:09Z",
+  "last_updated": "2026-05-11T04:33:48Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18451972504,
+      "name": "herstel z1",
+      "date": "2026-05-10T14:07:51Z",
+      "distance": 6198.0,
+      "moving_time": 1942,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18437875338,
       "name": "ndl",
@@ -347,8 +356,8 @@
     }
   ],
   "summary": {
-    "total_runs": 38,
-    "ward_kudos": 34,
-    "loyalty_pct": 89.4
+    "total_runs": 39,
+    "ward_kudos": 35,
+    "loyalty_pct": 89.7
   }
 }
