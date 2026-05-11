@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 30,
+    "items": 31,
     "urls": {}
   },
   "wants": [
@@ -414,6 +414,61 @@
           "Folk, World, & Country"
         ],
         "styles": []
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 37179144,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/37179144",
+      "date_added": "2026-05-10T03:20:15-07:00",
+      "basic_information": {
+        "id": 37179144,
+        "master_id": 4207140,
+        "master_url": "https://api.discogs.com/masters/4207140",
+        "resource_url": "https://api.discogs.com/releases/37179144",
+        "title": "Exit",
+        "year": 2026,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album"
+            ],
+            "text": "Music Mania Exclusive Silver"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Bazart",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 4642261,
+            "resource_url": "https://api.discogs.com/artists/4642261"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Echo (47)",
+            "catno": "ECHO020",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 2966396,
+            "resource_url": "https://api.discogs.com/labels/2966396"
+          }
+        ],
+        "thumb": "https://i.discogs.com/BJP-ikBtcO8T8UV19JqIdtnBFIIcaInOD68UXNpBBoo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MTc5/MTQ0LTE3NzcyMTA2/NzYtNzY4OS5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/WltOST1JOCmAmeoIM4P81irP7y1eWhncGh5oHRYHsUo/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MTc5/MTQ0LTE3NzcyMTA2/NzYtNzY4OS5qcGVn.jpeg",
+        "genres": [
+          "Pop"
+        ],
+        "styles": [
+          "Indie Pop"
+        ]
       },
       "rating": 0,
       "notes": ""
@@ -1189,24 +1244,23 @@
       "notes": ""
     },
     {
-      "id": 16210640,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/16210640",
+      "id": 999889,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/999889",
       "date_added": "2026-01-12T06:13:12-08:00",
       "basic_information": {
-        "id": 16210640,
+        "id": 999889,
         "master_id": 119732,
         "master_url": "https://api.discogs.com/masters/119732",
-        "resource_url": "https://api.discogs.com/releases/16210640",
+        "resource_url": "https://api.discogs.com/releases/999889",
         "title": "Be True / Satellite Type 2",
-        "year": 2020,
+        "year": 2007,
         "formats": [
           {
             "name": "Vinyl",
             "qty": "1",
             "descriptions": [
               "12\"",
-              "45 RPM",
-              "Repress"
+              "45 RPM"
             ]
           }
         ],
@@ -1239,8 +1293,8 @@
             "resource_url": "https://api.discogs.com/labels/128"
           }
         ],
-        "thumb": "https://i.discogs.com/g_r6Ft9NtOBR0-yvctIqUQM-_M7udFbS2XY-X3ZoTo8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MjEw/NjQwLTE2MTI0Mzk0/MTYtNjE0My5qcGVn.jpeg",
-        "cover_image": "https://i.discogs.com/C4e1wHdIGdNBDdEkRq92y67IImzdzK1Ax4jE1k6SVu4/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2MjEw/NjQwLTE2MTI0Mzk0/MTYtNjE0My5qcGVn.jpeg",
+        "thumb": "https://i.discogs.com/gwNM7_ZM_zWitHrhxwcEU1guUCFXnRhFy__cqREbVVs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk5OTg4/OS0xMTg2ODQ4NDc0/LmpwZWc.jpeg",
+        "cover_image": "https://i.discogs.com/8KBlUjTKFlvlCHxxg5QxQWuTRXdYLOVt20VCL89z9Qo/rs:fit/g:sm/q:90/h:600/w:592/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk5OTg4/OS0xMTg2ODQ4NDc0/LmpwZWc.jpeg",
         "genres": [
           "Electronic"
         ],
