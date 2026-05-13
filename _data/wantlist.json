@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 31,
+    "items": 29,
     "urls": {}
   },
   "wants": [
@@ -419,61 +419,6 @@
       "notes": ""
     },
     {
-      "id": 37179144,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/37179144",
-      "date_added": "2026-05-10T03:20:15-07:00",
-      "basic_information": {
-        "id": 37179144,
-        "master_id": 4207140,
-        "master_url": "https://api.discogs.com/masters/4207140",
-        "resource_url": "https://api.discogs.com/releases/37179144",
-        "title": "Exit",
-        "year": 2026,
-        "formats": [
-          {
-            "name": "Vinyl",
-            "qty": "1",
-            "descriptions": [
-              "LP",
-              "Album"
-            ],
-            "text": "Music Mania Exclusive Silver"
-          }
-        ],
-        "artists": [
-          {
-            "name": "Bazart",
-            "anv": "",
-            "join": "",
-            "role": "",
-            "tracks": "",
-            "id": 4642261,
-            "resource_url": "https://api.discogs.com/artists/4642261"
-          }
-        ],
-        "labels": [
-          {
-            "name": "Echo (47)",
-            "catno": "ECHO020",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 2966396,
-            "resource_url": "https://api.discogs.com/labels/2966396"
-          }
-        ],
-        "thumb": "https://i.discogs.com/BJP-ikBtcO8T8UV19JqIdtnBFIIcaInOD68UXNpBBoo/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MTc5/MTQ0LTE3NzcyMTA2/NzYtNzY4OS5qcGVn.jpeg",
-        "cover_image": "https://i.discogs.com/WltOST1JOCmAmeoIM4P81irP7y1eWhncGh5oHRYHsUo/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MTc5/MTQ0LTE3NzcyMTA2/NzYtNzY4OS5qcGVn.jpeg",
-        "genres": [
-          "Pop"
-        ],
-        "styles": [
-          "Indie Pop"
-        ]
-      },
-      "rating": 0,
-      "notes": ""
-    },
-    {
       "id": 7545919,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/7545919",
       "date_added": "2026-04-02T06:47:37-07:00",
@@ -555,67 +500,6 @@
       "notes": ""
     },
     {
-      "id": 27535212,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/27535212",
-      "date_added": "2025-11-03T06:24:07-08:00",
-      "basic_information": {
-        "id": 27535212,
-        "master_id": 3153258,
-        "master_url": "https://api.discogs.com/masters/3153258",
-        "resource_url": "https://api.discogs.com/releases/27535212",
-        "title": "Messy",
-        "year": 2023,
-        "formats": [
-          {
-            "name": "Vinyl",
-            "qty": "1",
-            "descriptions": [
-              "LP",
-              "Album"
-            ]
-          }
-        ],
-        "artists": [
-          {
-            "name": "Olivia Dean",
-            "anv": "",
-            "join": "",
-            "role": "",
-            "tracks": "",
-            "id": 9686557,
-            "resource_url": "https://api.discogs.com/artists/9686557"
-          }
-        ],
-        "labels": [
-          {
-            "name": "EMI",
-            "catno": "EMIV 2093",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 26126,
-            "resource_url": "https://api.discogs.com/labels/26126"
-          },
-          {
-            "name": "EMI",
-            "catno": "00602455215895",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 26126,
-            "resource_url": "https://api.discogs.com/labels/26126"
-          }
-        ],
-        "thumb": "https://i.discogs.com/KIHqqxx8wCBFgrIwfJMbrsHM3U7hCQjqRnz7dqEckww/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE3NzEyNzA2/ODctMjg5Ni5qcGVn.jpeg",
-        "cover_image": "https://i.discogs.com/TLdAwXBgrxUJ3lyBYwTmngBtdbceq5OnNW-g8Fpmh3k/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NTM1/MjEyLTE3NzEyNzA2/ODctMjg5Ni5qcGVn.jpeg",
-        "genres": [
-          "Funk / Soul",
-          "Pop"
-        ],
-        "styles": []
-      },
-      "rating": 0,
-      "notes": ""
-    },
-    {
       "id": 3004588,
       "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/3004588",
       "date_added": "2025-09-03T05:11:05-07:00",
@@ -671,64 +555,6 @@
           "Rock"
         ],
         "styles": [
-          "Indie Rock"
-        ]
-      },
-      "rating": 0,
-      "notes": ""
-    },
-    {
-      "id": 29607481,
-      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/29607481",
-      "date_added": "2025-12-06T07:21:28-08:00",
-      "basic_information": {
-        "id": 29607481,
-        "master_id": 3377428,
-        "master_url": "https://api.discogs.com/masters/3377428",
-        "resource_url": "https://api.discogs.com/releases/29607481",
-        "title": "Madra",
-        "year": 2024,
-        "formats": [
-          {
-            "name": "Vinyl",
-            "qty": "1",
-            "descriptions": [
-              "LP",
-              "Album",
-              "Stereo"
-            ]
-          }
-        ],
-        "artists": [
-          {
-            "name": "NewDad",
-            "anv": "",
-            "join": "",
-            "role": "",
-            "tracks": "",
-            "id": 9136810,
-            "resource_url": "https://api.discogs.com/artists/9136810"
-          }
-        ],
-        "labels": [
-          {
-            "name": "Fair Youth",
-            "catno": "5054197703690",
-            "entity_type": "1",
-            "entity_type_name": "Label",
-            "id": 2166724,
-            "resource_url": "https://api.discogs.com/labels/2166724"
-          }
-        ],
-        "thumb": "https://i.discogs.com/lBSKK2mxJiYXwxbY9sgKQ7bT9XAElbu-xGNvCgsFyHI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5NjA3/NDgxLTE3MDYzNTI3/MjEtNjUyNy5qcGVn.jpeg",
-        "cover_image": "https://i.discogs.com/2BJX5D9C_KQXu4AM0moNzUwsxtDckDmgCEQlDqcR-FU/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5NjA3/NDgxLTE3MDYzNTI3/MjEtNjUyNy5qcGVn.jpeg",
-        "genres": [
-          "Rock",
-          "Pop"
-        ],
-        "styles": [
-          "Alternative Rock",
-          "Dream Pop",
           "Indie Rock"
         ]
       },
@@ -967,6 +793,72 @@
         ],
         "styles": [
           "Downtempo"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 8406882,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/8406882",
+      "date_added": "2026-05-12T05:46:25-07:00",
+      "basic_information": {
+        "id": 8406882,
+        "master_id": 228894,
+        "master_url": "https://api.discogs.com/masters/228894",
+        "resource_url": "https://api.discogs.com/releases/8406882",
+        "title": "Conditions",
+        "year": 2016,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "LP",
+              "Album",
+              "Repress"
+            ],
+            "text": "Gatefold Sleeve"
+          }
+        ],
+        "artists": [
+          {
+            "name": "The Temper Trap",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 1551192,
+            "resource_url": "https://api.discogs.com/artists/1551192"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Infectious Records",
+            "catno": "INFECT102LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1057,
+            "resource_url": "https://api.discogs.com/labels/1057"
+          },
+          {
+            "name": "Liberation Music",
+            "catno": "INFECT102LP",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 74258,
+            "resource_url": "https://api.discogs.com/labels/74258"
+          }
+        ],
+        "thumb": "https://i.discogs.com/csP65TXqo2JwzU7Z0xt7GB34d2pvTrjtfh2t2xnUyiA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg0MDY4/ODItMTQ2MDk5Nzc4/Ny01MzIyLmpwZWc.jpeg",
+        "cover_image": "https://i.discogs.com/lIyh_JszZC0pBqn6mPhj3Svlv3PPOoyPWI4xgSHYG9Y/rs:fit/g:sm/q:90/h:440/w:440/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg0MDY4/ODItMTQ2MDk5Nzc4/Ny01MzIyLmpwZWc.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock",
+          "New Wave",
+          "Indie Rock"
         ]
       },
       "rating": 0,
