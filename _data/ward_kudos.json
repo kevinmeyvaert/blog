@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-05-14T04:25:33Z",
+  "last_updated": "2026-05-15T04:29:07Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18504174567,
+      "name": "rust",
+      "date": "2026-05-14T14:47:09Z",
+      "distance": 6221.7,
+      "moving_time": 1933,
+      "kudos_count": 3,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18492909673,
       "name": "5 x versnellen",
       "date": "2026-05-13T17:47:36Z",
       "distance": 10469.9,
       "moving_time": 2977,
-      "kudos_count": 5,
+      "kudos_count": 6,
       "ward_kudoed": true
     },
     {
@@ -18,7 +27,7 @@
       "date": "2026-05-12T17:49:40Z",
       "distance": 7038.3,
       "moving_time": 1780,
-      "kudos_count": 8,
+      "kudos_count": 9,
       "ward_kudoed": true
     },
     {
@@ -374,8 +383,8 @@
     }
   ],
   "summary": {
-    "total_runs": 41,
-    "ward_kudos": 37,
-    "loyalty_pct": 90.2
+    "total_runs": 42,
+    "ward_kudos": 38,
+    "loyalty_pct": 90.4
   }
 }
