@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 29,
+    "items": 30,
     "urls": {}
   },
   "wants": [
@@ -737,6 +737,66 @@
           "Alternative Rock",
           "Pop Rock",
           "Pop Punk"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 35861278,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/35861278",
+      "date_added": "2026-05-14T11:37:08-07:00",
+      "basic_information": {
+        "id": 35861278,
+        "master_id": 4137580,
+        "master_url": "https://api.discogs.com/masters/4137580",
+        "resource_url": "https://api.discogs.com/releases/35861278",
+        "title": "Shrek – I’m A Believer / All Star",
+        "year": 2025,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "7\"",
+              "33 ⅓ RPM",
+              "Shape",
+              "Single",
+              "Limited Edition",
+              "Picture Disc"
+            ]
+          }
+        ],
+        "artists": [
+          {
+            "name": "Smash Mouth",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 90040,
+            "resource_url": "https://api.discogs.com/artists/90040"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Geffen Records",
+            "catno": "00602478848865",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 821,
+            "resource_url": "https://api.discogs.com/labels/821"
+          }
+        ],
+        "thumb": "https://i.discogs.com/9YfvCu_VJ9c2dI_rr-56bUb7SZfL8tLDEFaKyP5g7z8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1ODYx/Mjc4LTE3NjUwNzcz/NDctOTQ2MC5wbmc.jpeg",
+        "cover_image": "https://i.discogs.com/48irmqabfBLeeSVDVU1F00BA_UdEybjvhGJGEUApeuk/rs:fit/g:sm/q:90/h:597/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1ODYx/Mjc4LTE3NjUwNzcz/NDctOTQ2MC5wbmc.jpeg",
+        "genres": [
+          "Rock",
+          "Stage & Screen"
+        ],
+        "styles": [
+          "Soundtrack",
+          "Pop Rock"
         ]
       },
       "rating": 0,
@@ -1682,8 +1742,8 @@
       "date_added": "2025-12-07T08:54:13-08:00",
       "basic_information": {
         "id": 33206499,
-        "master_id": 0,
-        "master_url": null,
+        "master_id": 4225383,
+        "master_url": "https://api.discogs.com/masters/4225383",
         "resource_url": "https://api.discogs.com/releases/33206499",
         "title": "Après Coup",
         "year": 2025,
