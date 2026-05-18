@@ -1,15 +1,33 @@
 {
-  "last_updated": "2026-05-17T04:31:13Z",
+  "last_updated": "2026-05-18T04:36:03Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18539308772,
+      "name": "Stadsloop Gent 20ste! 🤝",
+      "date": "2026-05-17T10:44:08Z",
+      "distance": 10088.3,
+      "moving_time": 2247,
+      "kudos_count": 36,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 18539308654,
+      "name": "Morning Run",
+      "date": "2026-05-17T10:10:01Z",
+      "distance": 2376.3,
+      "moving_time": 669,
+      "kudos_count": 3,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 18526997930,
       "name": "kort los",
       "date": "2026-05-16T12:01:26Z",
       "distance": 4340.0,
       "moving_time": 1107,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -18,7 +36,7 @@
       "date": "2026-05-14T14:47:09Z",
       "distance": 6221.7,
       "moving_time": 1933,
-      "kudos_count": 3,
+      "kudos_count": 4,
       "ward_kudoed": true
     },
     {
@@ -45,7 +63,7 @@
       "date": "2026-05-10T14:07:51Z",
       "distance": 6198.0,
       "moving_time": 1942,
-      "kudos_count": 8,
+      "kudos_count": 9,
       "ward_kudoed": true
     },
     {
@@ -54,7 +72,7 @@
       "date": "2026-05-09T13:33:48Z",
       "distance": 10172.5,
       "moving_time": 2761,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -392,8 +410,8 @@
     }
   ],
   "summary": {
-    "total_runs": 43,
-    "ward_kudos": 39,
-    "loyalty_pct": 90.6
+    "total_runs": 45,
+    "ward_kudos": 40,
+    "loyalty_pct": 88.8
   }
 }
