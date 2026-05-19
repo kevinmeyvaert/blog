@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-05-18T04:36:03Z",
+  "last_updated": "2026-05-19T04:31:55Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18556627812,
+      "name": "herstel",
+      "date": "2026-05-18T17:45:45Z",
+      "distance": 6223.7,
+      "moving_time": 1928,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18539308772,
       "name": "Stadsloop Gent 20ste! 🤝",
       "date": "2026-05-17T10:44:08Z",
       "distance": 10088.3,
       "moving_time": 2247,
-      "kudos_count": 36,
+      "kudos_count": 41,
       "ward_kudoed": true
     },
     {
@@ -18,7 +27,7 @@
       "date": "2026-05-17T10:10:01Z",
       "distance": 2376.3,
       "moving_time": 669,
-      "kudos_count": 3,
+      "kudos_count": 5,
       "ward_kudoed": false
     },
     {
@@ -410,8 +419,8 @@
     }
   ],
   "summary": {
-    "total_runs": 45,
-    "ward_kudos": 40,
-    "loyalty_pct": 88.8
+    "total_runs": 46,
+    "ward_kudos": 41,
+    "loyalty_pct": 89.1
   }
 }
