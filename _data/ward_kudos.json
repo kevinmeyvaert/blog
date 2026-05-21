@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-05-20T04:33:48Z",
+  "last_updated": "2026-05-21T04:36:30Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18584129007,
+      "name": "rdl doef",
+      "date": "2026-05-20T17:44:56Z",
+      "distance": 12092.6,
+      "moving_time": 3498,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18556627812,
       "name": "herstel",
@@ -419,8 +428,8 @@
     }
   ],
   "summary": {
-    "total_runs": 46,
-    "ward_kudos": 41,
-    "loyalty_pct": 89.1
+    "total_runs": 47,
+    "ward_kudos": 42,
+    "loyalty_pct": 89.3
   }
 }
