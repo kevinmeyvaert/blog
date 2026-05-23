@@ -1,15 +1,33 @@
 {
-  "last_updated": "2026-05-21T04:36:30Z",
+  "last_updated": "2026-05-23T04:23:03Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18610773468,
+      "name": "saignant 🦞",
+      "date": "2026-05-22T18:10:49Z",
+      "distance": 10153.3,
+      "moving_time": 2827,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 18597449567,
+      "name": "ndl",
+      "date": "2026-05-21T17:58:05Z",
+      "distance": 9108.1,
+      "moving_time": 2339,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18584129007,
       "name": "rdl doef",
       "date": "2026-05-20T17:44:56Z",
       "distance": 12092.6,
       "moving_time": 3498,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -428,8 +446,8 @@
     }
   ],
   "summary": {
-    "total_runs": 47,
-    "ward_kudos": 42,
-    "loyalty_pct": 89.3
+    "total_runs": 49,
+    "ward_kudos": 44,
+    "loyalty_pct": 89.7
   }
 }
