@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-05-25T04:38:31Z",
+  "last_updated": "2026-05-26T04:32:35Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18646176963,
+      "name": "12k slow cooking in z2",
+      "date": "2026-05-25T12:11:33Z",
+      "distance": 12071.1,
+      "moving_time": 3591,
+      "kudos_count": 7,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18632020859,
       "name": "A point 🦞",
       "date": "2026-05-24T10:28:45Z",
       "distance": 14070.6,
       "moving_time": 4263,
-      "kudos_count": 13,
+      "kudos_count": 14,
       "ward_kudoed": true
     },
     {
@@ -464,8 +473,8 @@
     }
   ],
   "summary": {
-    "total_runs": 51,
-    "ward_kudos": 46,
-    "loyalty_pct": 90.1
+    "total_runs": 52,
+    "ward_kudos": 47,
+    "loyalty_pct": 90.3
   }
 }

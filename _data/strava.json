@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-25T04:38:31Z",
+  "last_updated": "2026-05-26T04:32:35Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -37,19 +37,19 @@
       "elevation_gain": 787.4000000000001
     },
     "recent_run_totals": {
-      "count": 22,
-      "distance": 192453.99999999997,
-      "moving_time": 53621,
-      "elapsed_time": 53767,
-      "elevation_gain": 491.0,
+      "count": 23,
+      "distance": 204525.09999999998,
+      "moving_time": 57212,
+      "elapsed_time": 57358,
+      "elevation_gain": 507.0,
       "achievement_count": 0
     },
     "all_run_totals": {
-      "count": 1855,
-      "distance": 18997449.999999993,
-      "moving_time": 5317086,
-      "elapsed_time": 5483533,
-      "elevation_gain": 26344.300000000025
+      "count": 1856,
+      "distance": 19009521.099999994,
+      "moving_time": 5320677,
+      "elapsed_time": 5487124,
+      "elevation_gain": 26360.300000000025
     },
     "recent_swim_totals": {
       "count": 0,
@@ -74,11 +74,11 @@
       "elevation_gain": 127.0
     },
     "ytd_run_totals": {
-      "count": 116,
-      "distance": 1253636,
-      "moving_time": 353222.0,
-      "elapsed_time": 354415.0,
-      "elevation_gain": 3296.0
+      "count": 117,
+      "distance": 1265707,
+      "moving_time": 356813.0,
+      "elapsed_time": 358006.0,
+      "elevation_gain": 3312.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -89,6 +89,62 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "resource_state": 1
+      },
+      "name": "12k slow cooking in z2",
+      "distance": 12071.1,
+      "moving_time": 3591,
+      "elapsed_time": 3591,
+      "total_elevation_gain": 16.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": null,
+      "device_name": "Garmin Forerunner 570",
+      "id": 18646176963,
+      "start_date": "2026-05-25T10:11:33Z",
+      "start_date_local": "2026-05-25T12:11:33Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 7200.0,
+      "achievement_count": 0,
+      "kudos_count": 7,
+      "comment_count": 0,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": "g30083191",
+      "average_speed": 3.361,
+      "max_speed": 5.88,
+      "average_cadence": 80.8,
+      "average_watts": 305.6,
+      "max_watts": 390,
+      "weighted_average_watts": 305,
+      "device_watts": true,
+      "kilojoules": 1097.6,
+      "has_heartrate": true,
+      "average_heartrate": 141.5,
+      "max_heartrate": 160.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 7.6,
+      "elev_low": 1.2,
+      "upload_id": 19753779206,
+      "upload_id_str": "19753779206",
+      "external_id": "garmin_ping_575978848661",
+      "from_accepted_tag": false,
+      "pr_count": 0,
+      "total_photo_count": 0,
+      "has_kudoed": false,
+      "suffer_score": 28.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -110,7 +166,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 13,
+      "kudos_count": 14,
       "comment_count": 0,
       "athlete_count": 2,
       "photo_count": 0,
@@ -101462,10 +101518,10 @@
       },
       {
         "week": "2026-W21",
-        "total_distance": 14070.6,
-        "total_time": 4263,
-        "total_elevation": 28.0,
-        "activity_count": 1
+        "total_distance": 26141.7,
+        "total_time": 7854,
+        "total_elevation": 44,
+        "activity_count": 2
       }
     ],
     "monthly": [
@@ -102094,10 +102150,10 @@
       },
       {
         "month": "2026-05",
-        "total_distance": 164321.5,
-        "total_time": 45815,
-        "total_elevation": 396,
-        "activity_count": 19
+        "total_distance": 176392.6,
+        "total_time": 49406,
+        "total_elevation": 412,
+        "activity_count": 20
       }
     ]
   }
