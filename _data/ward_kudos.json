@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-05-27T04:37:18Z",
+  "last_updated": "2026-05-28T04:34:35Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18678243403,
+      "name": "5 x 500 met gênant lange herstelpauzes",
+      "date": "2026-05-27T18:37:07Z",
+      "distance": 13405.7,
+      "moving_time": 3896,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18646176963,
       "name": "12k slow cooking in z2",
@@ -473,8 +482,8 @@
     }
   ],
   "summary": {
-    "total_runs": 52,
-    "ward_kudos": 47,
-    "loyalty_pct": 90.3
+    "total_runs": 53,
+    "ward_kudos": 48,
+    "loyalty_pct": 90.5
   }
 }
