@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-05-29T04:35:54Z",
+  "last_updated": "2026-05-30T04:28:08Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18702462652,
+      "name": "ndl gehalveerd",
+      "date": "2026-05-29T15:13:49Z",
+      "distance": 4697.8,
+      "moving_time": 1268,
+      "kudos_count": 7,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18691405394,
       "name": "Avondloop",
@@ -491,8 +500,8 @@
     }
   ],
   "summary": {
-    "total_runs": 54,
-    "ward_kudos": 49,
-    "loyalty_pct": 90.7
+    "total_runs": 55,
+    "ward_kudos": 50,
+    "loyalty_pct": 90.9
   }
 }
