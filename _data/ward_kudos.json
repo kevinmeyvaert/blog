@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-01T04:41:05Z",
+  "last_updated": "2026-06-02T04:37:41Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18744660981,
+      "name": "na verhuis benen wrecked rustig",
+      "date": "2026-06-01T18:39:32Z",
+      "distance": 6416.5,
+      "moving_time": 1897,
+      "kudos_count": 10,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18702462652,
       "name": "ndl gehalveerd",
@@ -500,8 +509,8 @@
     }
   ],
   "summary": {
-    "total_runs": 55,
-    "ward_kudos": 50,
-    "loyalty_pct": 90.9
+    "total_runs": 56,
+    "ward_kudos": 51,
+    "loyalty_pct": 91.0
   }
 }
