@@ -6,7 +6,7 @@ last_modified_at: 2026-06-02
 categories: [automation, ai]
 tags: [talk, concertje, automation, ai, side-project]
 excerpt: "VI.BE invited me to give a short talk about concertje.be, a Belgian concert calendar, and the photo pass automation it grew out of. Two takeaways: the data you collect beats the admin you offload, and the projects you filed under 'someday' are now a weekend."
-image: /assets/images/articles/default-og-image.jpg
+image: /assets/images/articles/talk-concertje-ab-rendez-vous-og.jpg
 ---
 
 VI.BE invited me to give a short talk at their AB Rendez-Vous event in Brussels last week. Ten minutes, on a tool or workflow, and how others could work with AI. I talked about [concertje.be](https://concertje.be), a Belgian concert calendar I built, and the photo pass automation system it grew out of.
