@@ -11,6 +11,9 @@ image: /assets/images/articles/talk-concertje-ab-rendez-vous-og.jpg
 
 VI.BE invited me to give a short talk at their AB Rendez-Vous event in Brussels last week. Ten minutes, on a tool or workflow, and how others could work with AI. I talked about [concertje.be](https://concertje.be), a Belgian concert calendar I built, and the photo pass automation system it grew out of.
 
+![Giving the talk at VI.BE's AB Rendez-Vous in Brussels, with the daily concertje briefing on screen](/assets/images/articles/talk-concertje-ab-rendez-vous.jpg)
+*Ten minutes on stage at AB Rendez-Vous, with the system's daily concertje briefing projected behind me.*
+
 If you've read the earlier post on [the photo pass system](/articles/photo-pass-automation/), some of the setup will sound familiar. This post is the shorter, more reflective version of the talk. There were two things I wanted the room to take away.
 
 ## A bit of context
