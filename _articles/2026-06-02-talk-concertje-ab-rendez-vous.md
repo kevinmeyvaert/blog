@@ -14,6 +14,11 @@ VI.BE invited me to give a short talk at their AB Rendez-Vous event in Brussels 
 ![Giving the talk at VI.BE's AB Rendez-Vous in Brussels, with the daily concertje briefing on screen](/assets/images/articles/talk-concertje-ab-rendez-vous.jpg)
 *Ten minutes on stage at AB Rendez-Vous, with the system's daily concertje briefing projected behind me.*
 
+<div class="tip-box">
+<p><strong>Slides</strong></p>
+<p>Want the deck? You can <a href="/assets/files/concertje-talk-slides.pdf">download the slides from the talk</a> (PDF).</p>
+</div>
+
 If you've read the earlier post on [the photo pass system](/articles/photo-pass-automation/), some of the setup will sound familiar. This post is the shorter, more reflective version of the talk. There were two things I wanted the room to take away.
 
 ## A bit of context
