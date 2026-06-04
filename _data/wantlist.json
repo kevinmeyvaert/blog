@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 30,
+    "items": 31,
     "urls": {}
   },
   "src": "db",
@@ -1503,6 +1503,63 @@
         "styles": [
           "Bass Music",
           "Electro"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 37475418,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/37475418",
+      "date_added": "2026-06-03T07:24:24-07:00",
+      "basic_information": {
+        "id": 37475418,
+        "master_id": 0,
+        "master_url": null,
+        "resource_url": "https://api.discogs.com/releases/37475418",
+        "title": "Bleech 9:3",
+        "year": 2026,
+        "formats": [
+          {
+            "name": "Vinyl",
+            "qty": "1",
+            "descriptions": [
+              "12\"",
+              "45 RPM",
+              "EP"
+            ],
+            "text": "White"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Bleech 9:3",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 16894891,
+            "resource_url": "https://api.discogs.com/artists/16894891"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Polydor",
+            "catno": "5768869",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 1610,
+            "resource_url": "https://api.discogs.com/labels/1610"
+          }
+        ],
+        "thumb": "https://i.discogs.com/Dq_77kNmOeUml4eeYrayx2uoONjuemqPJRZAmyR9cFY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3NDc1/NDE4LTE3ODAwNTI4/MDUtMjg0MC5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/3xikaW5YE8rcyzKQwMBOF3yHSmRW7PXQ1Id39JrGMuA/rs:fit/g:sm/q:90/h:600/w:593/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3NDc1/NDE4LTE3ODAwNTI4/MDUtMjg0MC5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Alternative Rock",
+          "Grunge"
         ]
       },
       "rating": 0,
