@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-03T04:38:22Z",
+  "last_updated": "2026-06-04T04:37:35Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18772258380,
+      "name": "4 x 1000m",
+      "date": "2026-06-03T17:49:08Z",
+      "distance": 11434.7,
+      "moving_time": 3040,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18744660981,
       "name": "na verhuis benen wrecked rustig",
@@ -509,8 +518,8 @@
     }
   ],
   "summary": {
-    "total_runs": 56,
-    "ward_kudos": 51,
-    "loyalty_pct": 91.0
+    "total_runs": 57,
+    "ward_kudos": 52,
+    "loyalty_pct": 91.2
   }
 }
