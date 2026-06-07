@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-06T04:29:17Z",
+  "last_updated": "2026-06-07T04:37:54Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18813176381,
+      "name": "🍝🦵🏻🦵🏻",
+      "date": "2026-06-06T18:25:16Z",
+      "distance": 6431.8,
+      "moving_time": 1997,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18799178779,
       "name": "eentje om snel te vergeten 🪦",
@@ -536,8 +545,8 @@
     }
   ],
   "summary": {
-    "total_runs": 59,
-    "ward_kudos": 54,
-    "loyalty_pct": 91.5
+    "total_runs": 60,
+    "ward_kudos": 55,
+    "loyalty_pct": 91.6
   }
 }
