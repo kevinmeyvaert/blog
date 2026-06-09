@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-08T04:39:10Z",
+  "last_updated": "2026-06-09T04:32:14Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -166,7 +166,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 7,
+      "kudos_count": 8,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
