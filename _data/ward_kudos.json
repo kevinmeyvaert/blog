@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-09T04:32:14Z",
+  "last_updated": "2026-06-10T04:37:05Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18852763505,
+      "name": "paar keer goed van jetje gegeven",
+      "date": "2026-06-09T17:37:50Z",
+      "distance": 10383.8,
+      "moving_time": 3018,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18823037183,
       "name": "5 x 2000m tempo",
@@ -554,8 +563,8 @@
     }
   ],
   "summary": {
-    "total_runs": 61,
-    "ward_kudos": 56,
-    "loyalty_pct": 91.8
+    "total_runs": 62,
+    "ward_kudos": 57,
+    "loyalty_pct": 91.9
   }
 }
