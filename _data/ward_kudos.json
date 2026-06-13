@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-12T04:37:43Z",
+  "last_updated": "2026-06-13T04:36:58Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18892917933,
+      "name": "benen strekken",
+      "date": "2026-06-12T18:27:03Z",
+      "distance": 4548.0,
+      "moving_time": 1109,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18867271037,
       "name": "zonnetje + overal regenbogen!",
@@ -572,8 +581,8 @@
     }
   ],
   "summary": {
-    "total_runs": 63,
-    "ward_kudos": 58,
-    "loyalty_pct": 92.0
+    "total_runs": 64,
+    "ward_kudos": 59,
+    "loyalty_pct": 92.1
   }
 }
