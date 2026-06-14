@@ -1,15 +1,33 @@
 {
-  "last_updated": "2026-06-13T04:36:58Z",
+  "last_updated": "2026-06-14T04:38:42Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18908309947,
+      "name": "Bashir's Summer Run",
+      "date": "2026-06-13T21:00:05Z",
+      "distance": 10034.8,
+      "moving_time": 2205,
+      "kudos_count": 17,
+      "ward_kudoed": false
+    },
+    {
+      "activity_id": 18907852958,
+      "name": "Avondloop",
+      "date": "2026-06-13T20:34:33Z",
+      "distance": 2205.1,
+      "moving_time": 607,
+      "kudos_count": 2,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 18892917933,
       "name": "benen strekken",
       "date": "2026-06-12T18:27:03Z",
       "distance": 4548.0,
       "moving_time": 1109,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": true
     },
     {
@@ -581,8 +599,8 @@
     }
   ],
   "summary": {
-    "total_runs": 64,
+    "total_runs": 66,
     "ward_kudos": 59,
-    "loyalty_pct": 92.1
+    "loyalty_pct": 89.3
   }
 }
