@@ -1,16 +1,25 @@
 {
-  "last_updated": "2026-06-14T04:38:42Z",
+  "last_updated": "2026-06-15T04:40:19Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18920130867,
+      "name": "herstel z1",
+      "date": "2026-06-14T18:13:49Z",
+      "distance": 6457.2,
+      "moving_time": 2028,
+      "kudos_count": 7,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 18908309947,
       "name": "Bashir's Summer Run",
       "date": "2026-06-13T21:00:05Z",
       "distance": 10034.8,
       "moving_time": 2205,
-      "kudos_count": 17,
-      "ward_kudoed": false
+      "kudos_count": 30,
+      "ward_kudoed": true
     },
     {
       "activity_id": 18907852958,
@@ -18,7 +27,7 @@
       "date": "2026-06-13T20:34:33Z",
       "distance": 2205.1,
       "moving_time": 607,
-      "kudos_count": 2,
+      "kudos_count": 3,
       "ward_kudoed": false
     },
     {
@@ -599,8 +608,8 @@
     }
   ],
   "summary": {
-    "total_runs": 66,
-    "ward_kudos": 59,
-    "loyalty_pct": 89.3
+    "total_runs": 67,
+    "ward_kudos": 60,
+    "loyalty_pct": 89.5
   }
 }
