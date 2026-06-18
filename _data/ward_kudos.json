@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-17T04:38:36Z",
+  "last_updated": "2026-06-18T04:38:00Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18955988125,
+      "name": "5 x (2 x 200m)",
+      "date": "2026-06-17T12:14:11Z",
+      "distance": 9064.6,
+      "moving_time": 2691,
+      "kudos_count": 4,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 18931912865,
       "name": "rdl z1-z2",
@@ -617,8 +626,8 @@
     }
   ],
   "summary": {
-    "total_runs": 68,
+    "total_runs": 69,
     "ward_kudos": 61,
-    "loyalty_pct": 89.7
+    "loyalty_pct": 88.4
   }
 }
