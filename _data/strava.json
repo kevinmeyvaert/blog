@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-19T04:39:22Z",
+  "last_updated": "2026-06-20T04:35:51Z",
   "athlete": {
     "id": 37171291,
     "username": "kmeyvaert",
@@ -37,11 +37,11 @@
       "elevation_gain": 787.4000000000001
     },
     "recent_run_totals": {
-      "count": 22,
-      "distance": 199508.9,
-      "moving_time": 57103,
-      "elapsed_time": 57201,
-      "elevation_gain": 397.0,
+      "count": 21,
+      "distance": 189355.59999999998,
+      "moving_time": 54276,
+      "elapsed_time": 54374,
+      "elevation_gain": 380.0,
       "achievement_count": 0
     },
     "all_run_totals": {
