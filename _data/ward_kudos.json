@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-06-20T04:35:51Z",
+  "last_updated": "2026-06-21T04:39:09Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 18994593249,
+      "name": "beentjes los",
+      "date": "2026-06-20T11:45:57Z",
+      "distance": 4535.1,
+      "moving_time": 1139,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 18973248353,
       "name": "rdl",
       "date": "2026-06-18T17:32:26Z",
       "distance": 6452.9,
       "moving_time": 1956,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": false
     },
     {
@@ -635,8 +644,8 @@
     }
   ],
   "summary": {
-    "total_runs": 70,
-    "ward_kudos": 61,
-    "loyalty_pct": 87.1
+    "total_runs": 71,
+    "ward_kudos": 62,
+    "loyalty_pct": 87.3
   }
 }
