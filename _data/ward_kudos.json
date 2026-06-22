@@ -1,15 +1,33 @@
 {
-  "last_updated": "2026-06-21T04:39:09Z",
+  "last_updated": "2026-06-22T04:40:37Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19006180813,
+      "name": "Mance run 🫡",
+      "date": "2026-06-21T09:31:47Z",
+      "distance": 6892.4,
+      "moving_time": 1649,
+      "kudos_count": 13,
+      "ward_kudoed": false
+    },
+    {
+      "activity_id": 19005821197,
+      "name": "Morning Run",
+      "date": "2026-06-21T09:21:35Z",
+      "distance": 1201.1,
+      "moving_time": 309,
+      "kudos_count": 1,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 18994593249,
       "name": "beentjes los",
       "date": "2026-06-20T11:45:57Z",
       "distance": 4535.1,
       "moving_time": 1139,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -644,8 +662,8 @@
     }
   ],
   "summary": {
-    "total_runs": 71,
+    "total_runs": 73,
     "ward_kudos": 62,
-    "loyalty_pct": 87.3
+    "loyalty_pct": 84.9
   }
 }
