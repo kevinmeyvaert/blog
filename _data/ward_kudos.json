@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-22T04:40:37Z",
+  "last_updated": "2026-06-23T04:30:07Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19024379009,
+      "name": "slow cooking",
+      "date": "2026-06-22T18:13:02Z",
+      "distance": 7331.7,
+      "moving_time": 2263,
+      "kudos_count": 5,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 19006180813,
       "name": "Mance run 🫡",
@@ -662,8 +671,8 @@
     }
   ],
   "summary": {
-    "total_runs": 73,
+    "total_runs": 74,
     "ward_kudos": 62,
-    "loyalty_pct": 84.9
+    "loyalty_pct": 83.7
   }
 }
