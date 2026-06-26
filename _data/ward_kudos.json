@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-06-25T04:31:48Z",
+  "last_updated": "2026-06-26T04:35:22Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19057583662,
+      "name": "tempoblokken 4 x 1000",
+      "date": "2026-06-25T06:28:34Z",
+      "distance": 11184.3,
+      "moving_time": 3177,
+      "kudos_count": 9,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 19037354647,
       "name": "nooooouuuuuu",
@@ -680,8 +689,8 @@
     }
   ],
   "summary": {
-    "total_runs": 75,
-    "ward_kudos": 63,
-    "loyalty_pct": 84.0
+    "total_runs": 76,
+    "ward_kudos": 64,
+    "loyalty_pct": 84.2
   }
 }
