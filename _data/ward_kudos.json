@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-07-04T06:26:15Z",
+  "last_updated": "2026-07-05T06:48:03Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19174707672,
+      "name": "Middagloop",
+      "date": "2026-07-04T12:25:09Z",
+      "distance": 10380.4,
+      "moving_time": 3083,
+      "kudos_count": 4,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 19149239788,
       "name": "Lunch Run",
       "date": "2026-07-02T12:34:18Z",
       "distance": 13272.8,
       "moving_time": 3689,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": true
     },
     {
@@ -734,8 +743,8 @@
     }
   ],
   "summary": {
-    "total_runs": 81,
+    "total_runs": 82,
     "ward_kudos": 67,
-    "loyalty_pct": 82.7
+    "loyalty_pct": 81.7
   }
 }
