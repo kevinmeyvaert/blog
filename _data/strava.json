@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-07T06:53:03Z",
+  "last_updated": "2026-07-08T06:04:23Z",
   "athlete": {
     "id": 37171291,
     "id_str": "37171291",
@@ -38,11 +38,11 @@
       "elevation_gain": 787.4000000000001
     },
     "recent_run_totals": {
-      "count": 23,
-      "distance": 209683.2,
-      "moving_time": 59766,
-      "elapsed_time": 60440,
-      "elevation_gain": 366.0,
+      "count": 22,
+      "distance": 199299.4,
+      "moving_time": 56748,
+      "elapsed_time": 57422,
+      "elevation_gain": 327.0,
       "achievement_count": 0
     },
     "all_run_totals": {
@@ -113,7 +113,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 1,
-      "kudos_count": 3,
+      "kudos_count": 5,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -171,7 +171,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 5,
+      "kudos_count": 6,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -229,7 +229,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
