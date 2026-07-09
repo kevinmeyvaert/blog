@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-07-08T06:04:23Z",
+  "last_updated": "2026-07-09T06:56:43Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19231118295,
+      "name": "Afternoon Run",
+      "date": "2026-07-08T17:53:22Z",
+      "distance": 9278.6,
+      "moving_time": 2518,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 19203557100,
       "name": "Evening Run",
@@ -761,8 +770,8 @@
     }
   ],
   "summary": {
-    "total_runs": 84,
-    "ward_kudos": 70,
-    "loyalty_pct": 83.3
+    "total_runs": 85,
+    "ward_kudos": 71,
+    "loyalty_pct": 83.5
   }
 }
