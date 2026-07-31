@@ -16,9 +16,9 @@ That sounds like a front end change. It mostly was not.
 
 ## Fourteen scrapers in two days
 
-Everything on concertje comes from scrapers. Every venue, every promoter, every festival gets its own little program that reads their website and turns it into shows in our database. Belgium had built up to around twenty of them over the years, added one at a time as I needed them.
+Everything on concertje comes from scrapers. Every venue, every promoter, every festival gets its own little program that reads their website and turns it into shows in our database. Belgium had built up to around twenty of them in the few months since concertje started, added one at a time as I needed them.
 
-Launching the Netherlands meant Paradiso, Melkweg, TivoliVredenburg, 013, Doornroosje, Effenaar, EKKO, Paard, Rotown, SPOT Groningen, Muziekgieterij, Hedon, and a couple of promoters. Fourteen new scrapers, written and shipped across two days at the start of July.
+Launching the Netherlands meant fourteen new scrapers for Dutch venues and promoters, written and shipped across two days at the start of July.
 
 The scraper count went from about twenty to about thirty-five in a weekend.
 
