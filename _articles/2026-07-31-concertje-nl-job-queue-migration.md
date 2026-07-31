@@ -6,11 +6,15 @@ last_modified_at: 2026-07-31
 categories: [web-development, automation]
 tags: [concertje, scrapers, bullmq, redis, job-queue, infrastructure]
 excerpt: "Launching a Dutch version of concertje meant adding fourteen scrapers in two days. That growth broke the assumptions the old setup rested on, so I spent four nights replacing it with a proper job queue."
+image: /assets/images/articles/concertje-nl-job-queue-migration-og.jpg
 ---
 
 I have not shipped a visible feature in a week. Nothing new on the site, nothing anyone would notice. All of it went into the part of concertje that nobody sees.
 
 First, the news I never got round to posting: concertje.nl is live. concertje started as a Belgian concert calendar, and it now runs a Dutch version too, on its own domain, with its own venues, its own newsletter and its own login.
+
+![concertje.nl, the Dutch version of the site, live with its own trending concerts and venues](/assets/images/articles/concertje-nl-job-queue-migration.jpg)
+*concertje.nl, live with its own trending concerts, venues, and newsletter.*
 
 That sounds like a front end change. It mostly was not.
 
@@ -57,6 +61,9 @@ Then ticket price lookups got their own queue. Prices come from platforms that a
 After that I moved about 57,000 media files off a mounted volume into object storage, with a temporary fallback that read from the old volume for anything not copied yet. That way the migration could run while the site stayed up.
 
 The remaining cron endpoints became real jobs. Each one now writes a row to the jobs table, so the admin UI shows what ran, when, and what it produced.
+
+![The scrape jobs dashboard, showing scheduled tasks with their next run, last run, and state](/assets/images/articles/concertje-nl-job-queue-migration-jobs-dashboard.jpg)
+*The scrape jobs dashboard: every scheduled task, its next and last run, and its state, at a glance.*
 
 The fifth phase extracted the 125 files shared between the web app and the jobs into their own package. Nothing changed at runtime. It existed purely so the last phase was possible.
 
