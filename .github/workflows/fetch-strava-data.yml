@@ -165,48 +165,64 @@ jobs:
           WARD_FIRSTNAME="Ward"
           PERIOD_START="2026-03-24"
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          RECHECK_SINCE=$(date -u -d "7 days ago" +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || date -u -v-7d +"%Y-%m-%dT%H:%M:%SZ")
 
-          # Get recent run activity IDs from the strava data (last 4 weeks)
-          CUTOFF=$(date -u -d "4 weeks ago" +"%Y-%m-%dT00:00:00Z" 2>/dev/null || date -u -v-4w +"%Y-%m-%dT00:00:00Z")
-          ACTIVITY_IDS=$(jq -r --arg cutoff "$PERIOD_START" \
-            '[.activities[] | select(.type == "Run" and .start_date >= ($cutoff + "T00:00:00Z"))] | .[].id' \
-            _data/strava.json)
+          # Runs in the period, with fresh metadata from strava.json
+          jq --arg cutoff "$PERIOD_START" \
+            '[.activities[] | select(.type == "Run" and .start_date >= ($cutoff + "T00:00:00Z")) | {activity_id: .id, name: .name, date: .start_date_local, distance: .distance, moving_time: .moving_time, kudos_count: .kudos_count}]' \
+            _data/strava.json > /tmp/runs.json
 
-          echo '[]' > /tmp/ward_activities.json
+          # Verdicts we already know from the previous run
+          if [ -f _data/ward_kudos.json ]; then
+            jq '[.activities[] | {key: (.activity_id | tostring), value: .ward_kudoed}] | from_entries' \
+              _data/ward_kudos.json > /tmp/known_verdicts.json
+          else
+            echo '{}' > /tmp/known_verdicts.json
+          fi
 
-          for AID in $ACTIVITY_IDS; do
+          # Strava allows 100 reads per 15 min, so only call the API for runs without a
+          # verdict, plus recent runs Ward may still kudo
+          FETCH_IDS=$(jq -r --slurpfile known /tmp/known_verdicts.json --arg recheck "$RECHECK_SINCE" \
+            '.[] | (.activity_id | tostring) as $key | select(($known[0][$key] == null) or ($known[0][$key] == false and .date >= $recheck)) | .activity_id' \
+            /tmp/runs.json)
+
+          echo '{}' > /tmp/new_verdicts.json
+
+          for AID in $FETCH_IDS; do
             echo "Checking kudos for activity $AID..."
             curl -s -H "Authorization: Bearer $ACCESS_TOKEN" \
               "https://www.strava.com/api/v3/activities/$AID/kudos?per_page=200" \
               -o /tmp/kudos_response.json
 
+            if ! jq -e 'type == "array"' /tmp/kudos_response.json > /dev/null 2>&1; then
+              echo "::warning::Unexpected kudos response for $AID, keeping known verdicts: $(cat /tmp/kudos_response.json)"
+              break
+            fi
+
             WARD_KUDOED=$(jq --arg name "$WARD_FIRSTNAME" \
               '[.[] | select(.firstname == $name)] | length > 0' \
               /tmp/kudos_response.json)
 
-            ACTIVITY_DATA=$(jq --arg aid "$AID" --argjson ward "$WARD_KUDOED" \
-              '.activities[] | select(.id == ($aid | tonumber)) | {activity_id: .id, name: .name, date: .start_date_local, distance: .distance, moving_time: .moving_time, kudos_count: .kudos_count, ward_kudoed: $ward}' \
-              _data/strava.json)
-
-            jq --argjson item "$ACTIVITY_DATA" '. + [$item]' /tmp/ward_activities.json > /tmp/ward_activities_tmp.json
-            mv /tmp/ward_activities_tmp.json /tmp/ward_activities.json
+            jq --arg aid "$AID" --argjson ward "$WARD_KUDOED" '.[$aid] = $ward' \
+              /tmp/new_verdicts.json > /tmp/new_verdicts_tmp.json
+            mv /tmp/new_verdicts_tmp.json /tmp/new_verdicts.json
 
             sleep 0.5
           done
 
-          TOTAL=$(jq 'length' /tmp/ward_activities.json)
-          WARD_COUNT=$(jq '[.[] | select(.ward_kudoed == true)] | length' /tmp/ward_activities.json)
-          PCT=$(echo "scale=1; $WARD_COUNT * 100 / $TOTAL" | bc 2>/dev/null || echo "0.0")
+          jq -s '.[0] * .[1]' /tmp/known_verdicts.json /tmp/new_verdicts.json > /tmp/verdicts.json
 
           jq -n \
             --arg timestamp "$TIMESTAMP" \
             --arg period_start "$PERIOD_START" \
             --arg ward_name "$WARD_FIRSTNAME" \
-            --argjson activities "$(cat /tmp/ward_activities.json)" \
-            --argjson total "$TOTAL" \
-            --argjson ward_count "$WARD_COUNT" \
-            --arg pct "$PCT" \
-            '{
+            --slurpfile runs /tmp/runs.json \
+            --slurpfile verdicts /tmp/verdicts.json \
+            '$verdicts[0] as $v
+            | [$runs[0][] | . + {ward_kudoed: ($v[.activity_id | tostring] // false)}] as $activities
+            | ($activities | length) as $total
+            | ([$activities[] | select(.ward_kudoed)] | length) as $ward_count
+            | {
               last_updated: $timestamp,
               ward_name: $ward_name,
               period_start: $period_start,
@@ -214,12 +230,12 @@ jobs:
               summary: {
                 total_runs: $total,
                 ward_kudos: $ward_count,
-                loyalty_pct: ($pct | tonumber)
+                loyalty_pct: (if $total == 0 then 0 else (($ward_count * 1000 / $total) | round) / 10 end)
               }
             }' > _data/ward_kudos.json
 
-          echo "Ward kudoed $WARD_COUNT/$TOTAL runs ($PCT%)"
-          rm -f /tmp/kudos_response.json /tmp/ward_activities.json
+          jq -r '"Ward kudoed \(.summary.ward_kudos)/\(.summary.total_runs) runs (\(.summary.loyalty_pct)%)"' _data/ward_kudos.json
+          rm -f /tmp/kudos_response.json /tmp/runs.json /tmp/known_verdicts.json /tmp/new_verdicts.json /tmp/verdicts.json
 
       - name: Check for changes
         id: check_changes
