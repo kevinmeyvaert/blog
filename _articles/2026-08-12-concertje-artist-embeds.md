@@ -13,7 +13,7 @@ Every artist website has a tour page. Almost every one of them is out of date.
 
 Not because nobody cares. Because keeping it current means editing HTML, or wrestling a page builder, every time a show is announced, moved, sold out or cancelled. The band already told Instagram, the promoter already put it on their site, the ticket link already exists. Typing it in a fourth place is the part that gets skipped.
 
-concertje already has that data. Around thirty-five scrapers read venue and promoter sites every night, for Belgium and the Netherlands, and turn them into shows in one database. If a Belgian venue announces a concert, concertje knows within a day. So the list an artist maintains by hand is a worse copy of a list that already maintains itself.
+concertje already has that data. Around thirty-five scrapers read venue and promoter sites twice a day, for Belgium and the Netherlands, and turn them into shows in one database. If a Belgian venue announces a concert, concertje picks it up within hours. So the list an artist maintains by hand is a worse copy of a list that already maintains itself.
 
 That is what embeds fix.
 
@@ -27,6 +27,8 @@ That is what embeds fix.
 ```
 
 Paste that anywhere HTML goes: a Squarespace code block, a WordPress post, a Webflow embed, a plain static site. The script draws the artist's upcoming concerts in place of the div. No account, no API key, no build step.
+
+It loads async, so it never holds up your page, and it renders in the flow of your document instead of an iframe, so it takes your width and does not jump around. No cookies, nothing read from your page.
 
 The link inside the div is not decoration. It is what search engines and anyone without JavaScript see, and it points at the artist page on concertje. The embed replaces it once it loads.
 
@@ -52,12 +54,6 @@ Every artist page on concertje now has an embed button that opens the builder ab
 Artists and bands who want a tour section that stops rotting. Management and labels who look after a roster and do not want to update a dozen sites by hand. Music blogs and venue partners who write about an artist and want the shows next to the piece.
 
 It costs nothing and it needs no permission from us. If the artist exists on concertje, the embed exists.
-
-## The trade-off
-
-You are putting a script from someone else's domain on your site. That is worth being honest about, because it is the reason to be careful with embeds in general.
-
-So: it loads async, so it never blocks your page. It renders in the flow of your document rather than in an iframe, so it inherits your width and does not jump around. It reads nothing from your page and sets no cookies. If our server is down, the fallback link stays, which is the worst case and it is a working link.
 
 ## What is next
 
