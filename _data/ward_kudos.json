@@ -1,15 +1,186 @@
 {
-  "last_updated": "2026-07-14T05:37:48Z",
+  "last_updated": "2026-08-12T12:05:43Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19699135145,
+      "name": "2 x 5 x 300:150 3:20/km",
+      "date": "2026-08-11T18:22:49Z",
+      "distance": 11045.5,
+      "moving_time": 3009,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19668683404,
+      "name": "Namiddagloop",
+      "date": "2026-08-09T14:27:51Z",
+      "distance": 12019.5,
+      "moving_time": 3444,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19650887733,
+      "name": "Ochtendloop",
+      "date": "2026-08-08T10:28:29Z",
+      "distance": 6074.5,
+      "moving_time": 1699,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19638763789,
+      "name": "when in pelt",
+      "date": "2026-08-07T11:46:38Z",
+      "distance": 11361.7,
+      "moving_time": 3074,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19592042567,
+      "name": "ik haat het",
+      "date": "2026-08-04T06:20:42Z",
+      "distance": 8585.6,
+      "moving_time": 2434,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19571758872,
+      "name": "ja nee dit was het niet",
+      "date": "2026-08-02T15:33:54Z",
+      "distance": 14052.7,
+      "moving_time": 4264,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19555447967,
+      "name": "rdl",
+      "date": "2026-08-01T13:48:54Z",
+      "distance": 11078.3,
+      "moving_time": 3092,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19544568581,
+      "name": "8 x 1000m",
+      "date": "2026-07-31T17:07:56Z",
+      "distance": 14294.5,
+      "moving_time": 3973,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19517547879,
+      "name": "het hoofd koel houden",
+      "date": "2026-07-29T17:56:03Z",
+      "distance": 12029.1,
+      "moving_time": 3510,
+      "kudos_count": 5,
+      "ward_kudoed": false
+    },
+    {
+      "activity_id": 19502461255,
+      "name": "2 x 8 x 200:100m ~3:15/km (snelkookpan)",
+      "date": "2026-07-28T17:30:07Z",
+      "distance": 11904.9,
+      "moving_time": 3404,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19473790506,
+      "name": "Afternoon Run",
+      "date": "2026-07-26T14:57:56Z",
+      "distance": 11265.1,
+      "moving_time": 3326,
+      "kudos_count": 7,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19459180751,
+      "name": "Afternoon Run",
+      "date": "2026-07-25T14:41:23Z",
+      "distance": 9261.2,
+      "moving_time": 2589,
+      "kudos_count": 7,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19444512940,
+      "name": "7 x 1000m + 100m stappen",
+      "date": "2026-07-24T11:49:42Z",
+      "distance": 12719.0,
+      "moving_time": 3593,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19415831423,
+      "name": "mega zware benen haha",
+      "date": "2026-07-22T12:09:39Z",
+      "distance": 11023.8,
+      "moving_time": 3106,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19402524061,
+      "name": "2 x 7 x 200m:100m 3:15/km",
+      "date": "2026-07-21T13:47:17Z",
+      "distance": 10768.4,
+      "moving_time": 2943,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19377215922,
+      "name": "conditie nog niet volledig dood",
+      "date": "2026-07-19T14:36:59Z",
+      "distance": 17056.7,
+      "moving_time": 4699,
+      "kudos_count": 9,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19348159573,
+      "name": "Lunch Run",
+      "date": "2026-07-17T12:07:09Z",
+      "distance": 11094.1,
+      "moving_time": 3134,
+      "kudos_count": 6,
+      "ward_kudoed": false
+    },
+    {
+      "activity_id": 19334738868,
+      "name": "Lunch Run",
+      "date": "2026-07-16T12:04:22Z",
+      "distance": 9252.0,
+      "moving_time": 2600,
+      "kudos_count": 7,
+      "ward_kudoed": true
+    },
+    {
+      "activity_id": 19311650980,
+      "name": "2 x 6 x 200m vo2max",
+      "date": "2026-07-14T17:48:52Z",
+      "distance": 10191.3,
+      "moving_time": 2847,
+      "kudos_count": 9,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 19296924336,
       "name": "Namiddagloop",
       "date": "2026-07-13T17:46:59Z",
       "distance": 9286.6,
       "moving_time": 2526,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -18,7 +189,7 @@
       "date": "2026-07-09T17:39:01Z",
       "distance": 11315.0,
       "moving_time": 3138,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -27,7 +198,7 @@
       "date": "2026-07-08T17:53:22Z",
       "distance": 9278.6,
       "moving_time": 2518,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -36,7 +207,7 @@
       "date": "2026-07-06T18:08:01Z",
       "distance": 12035.5,
       "moving_time": 3416,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -45,7 +216,7 @@
       "date": "2026-07-05T16:48:04Z",
       "distance": 15127.6,
       "moving_time": 4386,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -54,7 +225,7 @@
       "date": "2026-07-04T12:25:09Z",
       "distance": 10380.4,
       "moving_time": 3083,
-      "kudos_count": 5,
+      "kudos_count": 6,
       "ward_kudoed": true
     },
     {
@@ -63,7 +234,7 @@
       "date": "2026-07-02T12:34:18Z",
       "distance": 13272.8,
       "moving_time": 3689,
-      "kudos_count": 5,
+      "kudos_count": 6,
       "ward_kudoed": true
     },
     {
@@ -72,7 +243,7 @@
       "date": "2026-07-01T17:59:02Z",
       "distance": 10427.7,
       "moving_time": 3063,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": false
     },
     {
@@ -788,8 +959,8 @@
     }
   ],
   "summary": {
-    "total_runs": 87,
-    "ward_kudos": 73,
-    "loyalty_pct": 83.9
+    "total_runs": 106,
+    "ward_kudos": 90,
+    "loyalty_pct": 84.9
   }
 }
