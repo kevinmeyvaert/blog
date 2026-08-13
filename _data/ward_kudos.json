@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-08-12T12:05:43Z",
+  "last_updated": "2026-08-13T04:58:48Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19715430159,
+      "name": "naar de zonsverduistering gejeet",
+      "date": "2026-08-12T19:14:59Z",
+      "distance": 11021.8,
+      "moving_time": 2936,
+      "kudos_count": 3,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 19699135145,
       "name": "2 x 5 x 300:150 3:20/km",
@@ -959,8 +968,8 @@
     }
   ],
   "summary": {
-    "total_runs": 106,
+    "total_runs": 107,
     "ward_kudos": 90,
-    "loyalty_pct": 84.9
+    "loyalty_pct": 84.1
   }
 }
