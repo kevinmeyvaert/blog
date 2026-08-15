@@ -3,7 +3,7 @@
     "page": 1,
     "pages": 1,
     "per_page": 100,
-    "items": 31,
+    "items": 32,
     "urls": {}
   },
   "src": "es",
@@ -1448,6 +1448,60 @@
           "Trap",
           "Future Bass",
           "Breakbeat"
+        ]
+      },
+      "rating": 0,
+      "notes": ""
+    },
+    {
+      "id": 22970681,
+      "resource_url": "https://api.discogs.com/users/kevinmeyvaert/wants/22970681",
+      "date_added": "2026-08-14T06:08:44-07:00",
+      "basic_information": {
+        "id": 22970681,
+        "master_id": 2602640,
+        "master_url": "https://api.discogs.com/masters/2602640",
+        "resource_url": "https://api.discogs.com/releases/22970681",
+        "title": "Skinty Fia",
+        "year": 2022,
+        "formats": [
+          {
+            "name": "Cassette",
+            "qty": "1",
+            "descriptions": [
+              "Album"
+            ],
+            "text": "Red"
+          }
+        ],
+        "artists": [
+          {
+            "name": "Fontaines D.C.",
+            "anv": "",
+            "join": "",
+            "role": "",
+            "tracks": "",
+            "id": 6322880,
+            "resource_url": "https://api.discogs.com/artists/6322880"
+          }
+        ],
+        "labels": [
+          {
+            "name": "Partisan Records",
+            "catno": "PTKF3016-4",
+            "entity_type": "1",
+            "entity_type_name": "Label",
+            "id": 140545,
+            "resource_url": "https://api.discogs.com/labels/140545"
+          }
+        ],
+        "thumb": "https://i.discogs.com/wwkK52f4qf65n0oTtvQuhKNGbLo15f6suT6ZSufvMbs/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyOTcw/NjgxLTE3NzI3OTA1/MDItNzM3My5qcGVn.jpeg",
+        "cover_image": "https://i.discogs.com/aLwYGepNC3KFqLij2LWTGJ5a6x-Agwk-MAQY0UeG6Tw/rs:fit/g:sm/q:90/h:600/w:384/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyOTcw/NjgxLTE3NzI3OTA1/MDItNzM3My5qcGVn.jpeg",
+        "genres": [
+          "Rock"
+        ],
+        "styles": [
+          "Post-Punk"
         ]
       },
       "rating": 0,
