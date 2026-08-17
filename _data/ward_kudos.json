@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-08-16T03:54:02Z",
+  "last_updated": "2026-08-17T03:56:21Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19769942418,
+      "name": "bijna pukkelpop-piek-conditie",
+      "date": "2026-08-16T18:37:03Z",
+      "distance": 6478.4,
+      "moving_time": 2029,
+      "kudos_count": 5,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 19753409124,
       "name": "warm ze pee",
       "date": "2026-08-15T14:48:46Z",
       "distance": 16531.8,
       "moving_time": 4798,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -986,8 +995,8 @@
     }
   ],
   "summary": {
-    "total_runs": 109,
+    "total_runs": 110,
     "ward_kudos": 93,
-    "loyalty_pct": 85.3
+    "loyalty_pct": 84.5
   }
 }
