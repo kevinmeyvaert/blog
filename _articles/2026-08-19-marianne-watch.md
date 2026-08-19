@@ -1,12 +1,12 @@
 ---
 layout: article
-published: false
+published: true
 title: "I built a radio listener to win Fontaines D.C. tickets"
 date: 2026-08-19
 last_modified_at: 2026-08-19
 categories: [automation, ai]
-tags: [tauri, rust, audio-fingerprinting, chromaprint, radio, claude-code]
-excerpt: "Studio Brussel plays one song every few hours and the first listeners to message win tickets. I could not sit next to a radio for a week, so I built something that listens for me, and then had to prove it was listening to the right song."
+tags: [swift, shazamkit, macos, radio, claude-code]
+excerpt: "Studio Brussel is giving away tickets to a Fontaines D.C. showcase. Every few hours they play the new single, and whoever messages the station first goes into the draw. So I built a small app that listens to the stream and tells me when the Fontaines D.C. song is on the radio."
 image: /assets/images/articles/marianne-watch-og.jpg
 ---
 
@@ -14,45 +14,36 @@ Studio Brussel is running a competition next week. Every few hours they play "Ma
 
 I'm a really really really really big fan and I really really really need to get in. 🥺
 
-I opened Claude Code and described the problem in one paragraph. Here is a stream URL, here is the audio file of the single, can we build something that listens and tells me. That was around ten in the morning. By early afternoon there was a desktop app on my Mac listening to Studio Brussel continuously.
+I cannot sit next to a radio for a week, so I opened Claude Code and described the problem in one paragraph.
 
 ![The prompt I sent to Claude Code, describing the radio competition and asking whether the app could be built from a stream URL and the audio file of the single](/assets/images/articles/marianne-watch-prompt.jpg)
-*The entire brief. One paragraph, ten in the morning.*
+*The original brief. One paragraph, ten in the morning.*
 
-## The track title is useless
+I had something working by lunch: a Tauri app doing its own audio fingerprinting, hand-rolled. Then [Tim](https://broddin.be) pointed out that Apple has ShazamKit. So I refactored it into a native macOS app built on that instead, and it works better than what I had.
 
-The obvious approach is to read what is playing. Icecast streams carry ICY metadata, and Studio Brussel does broadcast the track title.
+## What it does
 
-It is no good for this. The title updates when it feels like it. It goes stale during talk breaks, and it sits there showing the previous song while the new one is already three verses in. Trigger on that and you either miss the window entirely or fire during the news.
+MarianneWatch sits open on my Mac and listens to the Studio Brussel stream, the same way you would hold up your phone to work out what is on.
 
-## How it actually listens
+It names whatever is on the radio, and only shouts when it is Fontaines D.C. When it hears them it posts to Discord, fires a macOS notification, and brings up the VRT MAX chat with my message already typed. All that is left is pressing send.
 
-The app listens to the sound itself. `ffmpeg` pulls in the stream, and once a second the last six seconds get turned into a fingerprint, a compact summary of what that bit of audio sounds like. The single I dragged in gets the same treatment.
+![The app listening to Studio Brussel, showing The Strokes - Bad Decisions as the current track](/assets/images/articles/marianne-watch-listening.jpg)
+*Most of the time it just tells you what is on.*
 
-It gets fingerprinted three times, at normal speed and slightly either side of it. Radio stations quietly speed music up to fit more into an hour, and a fingerprint at the wrong speed does not match.
+## Jingles are a problem
 
-Two of those snippets in a row that look close enough, and it fires. A Discord webhook, a macOS notification, and a twelve minute quiet period so one play does not produce forty alerts.
+Working well has its own failure mode. Studio Brussel drops snippets of Fontaines into their own jingles and adverts, and the app fired on every single one.
 
-## The first thing it caught was the wrong song
+The fix is patience. It has to hear the same song twice in a row, about ten seconds, before it does anything. A hook in a jingle does not last that long. A song does.
 
-The first time it went off, it was not Marianne. Some other track had come close enough to fool it.
-
-The app keeps the last forty-five seconds of audio in memory and saves them to a file whenever something fires. That was there for the jingles, the bit the station plays just before a song, so I can teach the app those too and get an even earlier warning. It turned out to be just as handy here. I had a recording of exactly what had tricked it, so instead of guessing I could tighten the rules until it stopped happening.
-
-## Sending the message
-
-When Marianne is detected, a second window inside the app comes to the front with the VRT MAX chat open and my message already typed into the box. All that is left is pressing send.
+![The app with the rings turned red, showing Marianne by Fontaines D.C. confirmed and sent to Discord](/assets/images/articles/marianne-watch-match.jpg)
+*Rings go red, alerts go out. That is the whole point of the thing.*
 
 ## Where it stands
 
-The app runs, and everything in it is checked against real recordings rather than my assumptions.
+It has already caught a real play, five seconds into the song, and everything in it is checked against recordings off the actual radio rather than my assumptions.
 
-It has already caught a real play. Marianne came on and the app fired five seconds in, and the recording it saved holds the jingle the station plays just before the song. Fingerprinting that jingle is the next thing on the list, because it would buy another few seconds.
-
-![The marianne watch app listening to the Studio Brussel stream, showing a match at 13:14:44 with a score of 0.152, five seconds into the track](/assets/images/articles/marianne-watch-app.jpg)
-*A real catch. Five seconds into the song, clip saved.*
-
-The competition itself starts next week. This week is for testing and refining, so that when it counts the thing already works.
+The competition itself starts next week. This week is for testing, so that when it counts the thing already works.
 
 ## How this can help you win tickets
 
