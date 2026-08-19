@@ -26,23 +26,17 @@ It is no good for this. The title updates when it feels like it. It goes stale d
 
 ## How it actually listens
 
-The app listens to the sound itself. `ffmpeg` pulls in the stream, and once a second the last six seconds get turned into a fingerprint, a compact summary of what that bit of audio sounds like. The single I dragged in gets the same treatment once.
+The app listens to the sound itself. `ffmpeg` pulls in the stream, and once a second the last six seconds get turned into a fingerprint, a compact summary of what that bit of audio sounds like. The single I dragged in gets the same treatment.
 
-Comparing two fingerprints gives you one number, the difference score. Identical audio scores near zero. Two unrelated songs score near a half. Everything after this is about picking the right cutoff.
+It gets fingerprinted three times, at normal speed and slightly either side of it. Radio stations quietly speed music up to fit more into an hour, and a fingerprint at the wrong speed does not match.
 
-The single is fingerprinted three times, at normal speed and slightly either side of it. Radio stations quietly speed music up to fit more into an hour, and a fingerprint at the wrong speed does not match.
-
-Two windows in a row under the cutoff and it fires. A Discord webhook, a macOS notification, and a twelve minute quiet period so one play does not produce forty alerts.
+Two of those snippets in a row that look close enough, and it fires. A Discord webhook, a macOS notification, and a twelve minute quiet period so one play does not produce forty alerts.
 
 ## The first thing it caught was the wrong song
 
-I set the cutoff at 0.28, meaning a six second window had to be less than 28 percent different from the single to count as a match. Then I armed it and went to do something else. It fired within the hour, on a track that was very much not Marianne.
+The first time it went off, it was not Marianne. Some other track had come close enough to fool it.
 
-The app keeps the last forty-five seconds of audio in memory at all times and writes it to a file whenever something fires. That was originally there for the jingles, the bit the station plays just before a song, so I can fingerprint those too and get an even earlier warning. It turned out to be just as useful here. Instead of a false positive I could not investigate, I had a WAV file of exactly what fooled it.
-
-Replaying it told me two things. The cutoff was too generous, so it moved to 0.18. And a real match moves forward through the song as time passes, while the false one jumped backwards, so consecutive matches now have to agree on where in the song they are or the streak resets.
-
-The imposter no longer produces a single qualifying window.
+The app keeps the last forty-five seconds of audio in memory and saves them to a file whenever something fires. That was there for the jingles, the bit the station plays just before a song, so I can teach the app those too and get an even earlier warning. It turned out to be just as handy here. I had a recording of exactly what had tricked it, so instead of guessing I could tighten the rules until it stopped happening.
 
 ## Sending the message
 
@@ -50,12 +44,12 @@ When Marianne is detected, a second window inside the app comes to the front wit
 
 ## Where it stands
 
-The app runs. The detection logic has tests pinning the exact false positive that caused all this, and everything is verified against real recordings rather than my assumptions.
+The app runs, and everything in it is checked against real recordings rather than my assumptions.
 
 It has already caught a real play. Marianne came on and the app fired five seconds in, and the recording it saved holds the jingle the station plays just before the song. Fingerprinting that jingle is the next thing on the list, because it would buy another few seconds.
 
 ![The marianne watch app listening to the Studio Brussel stream, showing a match at 13:14:44 with a score of 0.152, five seconds into the track](/assets/images/articles/marianne-watch-app.jpg)
-*A real catch. Five seconds into the song, score 0.152, clip saved.*
+*A real catch. Five seconds into the song, clip saved.*
 
 The competition itself starts next week. This week is for testing and refining, so that when it counts the thing already works.
 
