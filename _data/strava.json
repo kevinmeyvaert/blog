@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-23T03:56:11Z",
+  "last_updated": "2026-08-24T04:00:04Z",
   "athlete": {
     "id": 37171291,
     "id_str": "37171291",
@@ -23,11 +23,11 @@
     "biggest_ride_distance": 55303.6,
     "biggest_climb_elevation_gain": 9.600000000000001,
     "recent_ride_totals": {
-      "count": 2,
-      "distance": 43335.100000000006,
-      "moving_time": 6121,
-      "elapsed_time": 6402,
-      "elevation_gain": 214.0,
+      "count": 0,
+      "distance": 0,
+      "moving_time": 0,
+      "elapsed_time": 0,
+      "elevation_gain": 0,
       "achievement_count": 0
     },
     "all_ride_totals": {
@@ -38,11 +38,11 @@
       "elevation_gain": 1001.4000000000001
     },
     "recent_run_totals": {
-      "count": 18,
-      "distance": 208554.89999999997,
-      "moving_time": 59059,
-      "elapsed_time": 63885,
-      "elevation_gain": 424.0,
+      "count": 17,
+      "distance": 197289.79999999996,
+      "moving_time": 55733,
+      "elapsed_time": 60155,
+      "elevation_gain": 380.0,
       "achievement_count": 0
     },
     "all_run_totals": {
