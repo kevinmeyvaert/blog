@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-08-25T03:54:10Z",
+  "last_updated": "2026-08-26T03:58:22Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19895971542,
+      "name": "comeback",
+      "date": "2026-08-25T18:14:54Z",
+      "distance": 10024.1,
+      "moving_time": 2715,
+      "kudos_count": 7,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 19812001682,
       "name": "6 x 1300m",
@@ -1022,8 +1031,8 @@
     }
   ],
   "summary": {
-    "total_runs": 113,
+    "total_runs": 114,
     "ward_kudos": 95,
-    "loyalty_pct": 84.1
+    "loyalty_pct": 83.3
   }
 }
