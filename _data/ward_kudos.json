@@ -1,16 +1,25 @@
 {
-  "last_updated": "2026-08-26T03:58:22Z",
+  "last_updated": "2026-08-27T14:20:08Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19911646743,
+      "name": "2 x 7 x 300:150",
+      "date": "2026-08-26T18:34:33Z",
+      "distance": 12224.2,
+      "moving_time": 3449,
+      "kudos_count": 3,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 19895971542,
       "name": "comeback",
       "date": "2026-08-25T18:14:54Z",
       "distance": 10024.1,
       "moving_time": 2715,
-      "kudos_count": 7,
-      "ward_kudoed": false
+      "kudos_count": 13,
+      "ward_kudoed": true
     },
     {
       "activity_id": 19812001682,
@@ -1031,8 +1040,8 @@
     }
   ],
   "summary": {
-    "total_runs": 114,
-    "ward_kudos": 95,
-    "loyalty_pct": 83.3
+    "total_runs": 115,
+    "ward_kudos": 97,
+    "loyalty_pct": 84.3
   }
 }
