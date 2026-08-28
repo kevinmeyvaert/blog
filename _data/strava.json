@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-27T14:20:08Z",
+  "last_updated": "2026-08-28T15:14:50Z",
   "athlete": {
     "id": 37171291,
     "id_str": "37171291",
@@ -12,7 +12,7 @@
     "premium": true,
     "summit": true,
     "created_at": "2018-12-15T19:33:34Z",
-    "updated_at": "2026-08-12T06:48:13Z",
+    "updated_at": "2026-08-28T14:05:42Z",
     "badge_type_id": 1,
     "profile_medium": "https://dgalywyr863hv.cloudfront.net/pictures/athletes/37171291/23411418/7/medium.jpg",
     "profile": "https://dgalywyr863hv.cloudfront.net/pictures/athletes/37171291/23411418/7/large.jpg",
@@ -38,19 +38,19 @@
       "elevation_gain": 1001.4000000000001
     },
     "recent_run_totals": {
-      "count": 17,
-      "distance": 195604.09999999998,
-      "moving_time": 54983,
-      "elapsed_time": 59408,
-      "elevation_gain": 373.0,
+      "count": 18,
+      "distance": 205969.69999999998,
+      "moving_time": 57975,
+      "elapsed_time": 62403,
+      "elevation_gain": 388.0,
       "achievement_count": 0
     },
     "all_run_totals": {
-      "count": 1919,
-      "distance": 19655692.400000006,
-      "moving_time": 5503447,
-      "elapsed_time": 5675457,
-      "elevation_gain": 27655.300000000032
+      "count": 1920,
+      "distance": 19666058.000000004,
+      "moving_time": 5506439,
+      "elapsed_time": 5678452,
+      "elevation_gain": 27670.300000000032
     },
     "recent_swim_totals": {
       "count": 0,
@@ -75,11 +75,11 @@
       "elevation_gain": 341.0
     },
     "ytd_run_totals": {
-      "count": 180,
-      "distance": 1911878,
-      "moving_time": 539583.0,
-      "elapsed_time": 546339.0,
-      "elevation_gain": 4607.0
+      "count": 181,
+      "distance": 1922244,
+      "moving_time": 542575.0,
+      "elapsed_time": 549334.0,
+      "elevation_gain": 4622.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -90,6 +90,64 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "id_str": "37171291",
+        "resource_state": 1
+      },
+      "name": "rdl",
+      "distance": 10365.6,
+      "moving_time": 2992,
+      "elapsed_time": 2995,
+      "total_elevation_gain": 15.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": 0,
+      "device_name": "Garmin Forerunner 570",
+      "id": 19925457811,
+      "id_str": "19925457811",
+      "start_date": "2026-08-27T16:18:11Z",
+      "start_date_local": "2026-08-27T18:18:11Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 7200.0,
+      "achievement_count": 0,
+      "kudos_count": 4,
+      "comment_count": 0,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": null,
+      "average_speed": 3.464,
+      "max_speed": 4.44,
+      "average_cadence": 79.6,
+      "average_watts": 315.5,
+      "max_watts": 377,
+      "weighted_average_watts": 315,
+      "device_watts": true,
+      "kilojoules": 944.0,
+      "has_heartrate": true,
+      "average_heartrate": 147.5,
+      "max_heartrate": 170.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 10.0,
+      "elev_low": 0.4,
+      "upload_id": 21061928559,
+      "upload_id_str": "21061928559",
+      "external_id": "garmin_ping_619769928890",
+      "from_accepted_tag": false,
+      "pr_count": 0,
+      "total_photo_count": 0,
+      "has_kudoed": false,
+      "suffer_score": 36.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -113,7 +171,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 3,
+      "kudos_count": 4,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -109278,10 +109336,10 @@
       },
       {
         "week": "2026-W34",
-        "total_distance": 22248.300000000003,
-        "total_time": 6164,
-        "total_elevation": 40,
-        "activity_count": 2
+        "total_distance": 32613.9,
+        "total_time": 9156,
+        "total_elevation": 55,
+        "activity_count": 3
       }
     ],
     "monthly": [
@@ -109931,10 +109989,10 @@
       },
       {
         "month": "2026-08",
-        "total_distance": 181309.6,
-        "total_time": 51010,
-        "total_elevation": 339,
-        "activity_count": 16
+        "total_distance": 191675.2,
+        "total_time": 54002,
+        "total_elevation": 354,
+        "activity_count": 17
       }
     ]
   }
