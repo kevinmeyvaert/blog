@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-08-28T15:14:51Z",
+  "last_updated": "2026-08-29T09:57:05Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19938869700,
+      "name": "5 x 1600m tempo (60s rust)",
+      "date": "2026-08-28T18:27:46Z",
+      "distance": 14520.6,
+      "moving_time": 3945,
+      "kudos_count": 3,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 19925457811,
       "name": "rdl",
@@ -1049,8 +1058,8 @@
     }
   ],
   "summary": {
-    "total_runs": 116,
+    "total_runs": 117,
     "ward_kudos": 98,
-    "loyalty_pct": 84.5
+    "loyalty_pct": 83.8
   }
 }
