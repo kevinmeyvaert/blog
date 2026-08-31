@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-08-30T09:08:07Z",
+  "last_updated": "2026-08-31T09:36:21Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19963734754,
+      "name": "joggy mc jogface",
+      "date": "2026-08-30T14:10:37Z",
+      "distance": 18027.6,
+      "moving_time": 5269,
+      "kudos_count": 7,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 19952464561,
       "name": "rdl z2",
       "date": "2026-08-29T17:49:33Z",
       "distance": 13018.7,
       "moving_time": 3726,
-      "kudos_count": 2,
+      "kudos_count": 4,
       "ward_kudoed": false
     },
     {
@@ -18,7 +27,7 @@
       "date": "2026-08-28T18:27:46Z",
       "distance": 14520.6,
       "moving_time": 3945,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": false
     },
     {
@@ -27,7 +36,7 @@
       "date": "2026-08-27T18:18:11Z",
       "distance": 10365.6,
       "moving_time": 2992,
-      "kudos_count": 4,
+      "kudos_count": 5,
       "ward_kudoed": true
     },
     {
@@ -1067,8 +1076,8 @@
     }
   ],
   "summary": {
-    "total_runs": 118,
+    "total_runs": 119,
     "ward_kudos": 98,
-    "loyalty_pct": 83.1
+    "loyalty_pct": 82.4
   }
 }
