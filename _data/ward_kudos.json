@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-09-01T08:32:21Z",
+  "last_updated": "2026-09-02T07:49:42Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 19992965104,
+      "name": "4 x 1000m",
+      "date": "2026-09-01T17:58:09Z",
+      "distance": 10431.3,
+      "moving_time": 2920,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 19963734754,
       "name": "joggy mc jogface",
       "date": "2026-08-30T14:10:37Z",
       "distance": 18027.6,
       "moving_time": 5269,
-      "kudos_count": 7,
+      "kudos_count": 8,
       "ward_kudoed": false
     },
     {
@@ -27,7 +36,7 @@
       "date": "2026-08-28T18:27:46Z",
       "distance": 14520.6,
       "moving_time": 3945,
-      "kudos_count": 5,
+      "kudos_count": 6,
       "ward_kudoed": false
     },
     {
@@ -1076,8 +1085,8 @@
     }
   ],
   "summary": {
-    "total_runs": 119,
-    "ward_kudos": 98,
-    "loyalty_pct": 82.4
+    "total_runs": 120,
+    "ward_kudos": 99,
+    "loyalty_pct": 82.5
   }
 }
