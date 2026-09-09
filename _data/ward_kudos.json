@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-09-08T08:00:10Z",
+  "last_updated": "2026-09-09T08:02:56Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20090902218,
+      "name": "4 x 2000",
+      "date": "2026-09-08T17:56:54Z",
+      "distance": 14554.7,
+      "moving_time": 3929,
+      "kudos_count": 3,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20023058948,
       "name": "5 x 1200",
@@ -1103,8 +1112,8 @@
     }
   ],
   "summary": {
-    "total_runs": 122,
-    "ward_kudos": 101,
-    "loyalty_pct": 82.8
+    "total_runs": 123,
+    "ward_kudos": 102,
+    "loyalty_pct": 82.9
   }
 }
