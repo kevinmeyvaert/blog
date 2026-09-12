@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-09-11T07:58:33Z",
+  "last_updated": "2026-09-12T07:50:50Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20128444884,
+      "name": "5 x 1200m",
+      "date": "2026-09-11T11:57:46Z",
+      "distance": 12604.3,
+      "moving_time": 3389,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20116612339,
       "name": "meer rdl",
       "date": "2026-09-10T14:14:18Z",
       "distance": 13032.2,
       "moving_time": 3720,
-      "kudos_count": 1,
+      "kudos_count": 2,
       "ward_kudoed": false
     },
     {
@@ -1130,8 +1139,8 @@
     }
   ],
   "summary": {
-    "total_runs": 125,
-    "ward_kudos": 103,
-    "loyalty_pct": 82.4
+    "total_runs": 126,
+    "ward_kudos": 104,
+    "loyalty_pct": 82.5
   }
 }
