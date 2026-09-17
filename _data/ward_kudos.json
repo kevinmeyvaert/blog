@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-09-16T08:28:58Z",
+  "last_updated": "2026-09-17T08:34:09Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20196496297,
+      "name": "5 x 400m",
+      "date": "2026-09-16T09:51:27Z",
+      "distance": 8334.2,
+      "moving_time": 2272,
+      "kudos_count": 2,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20181273489,
       "name": "ruhiger mosel herstelloopje",
@@ -1166,8 +1175,8 @@
     }
   ],
   "summary": {
-    "total_runs": 129,
-    "ward_kudos": 106,
-    "loyalty_pct": 82.2
+    "total_runs": 130,
+    "ward_kudos": 107,
+    "loyalty_pct": 82.3
   }
 }
