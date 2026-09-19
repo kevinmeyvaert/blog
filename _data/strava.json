@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-18T08:09:02Z",
+  "last_updated": "2026-09-19T07:58:21Z",
   "athlete": {
     "id": 37171291,
     "id_str": "37171291",
@@ -171,7 +171,7 @@
       "timezone": "(GMT+01:00) Europe/Berlin",
       "utc_offset": 7200.0,
       "achievement_count": 0,
-      "kudos_count": 2,
+      "kudos_count": 3,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
