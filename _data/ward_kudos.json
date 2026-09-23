@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-09-22T08:26:32Z",
+  "last_updated": "2026-09-23T08:28:47Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20282594002,
+      "name": "taxis verbieden",
+      "date": "2026-09-22T16:15:45Z",
+      "distance": 5142.6,
+      "moving_time": 1485,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20251950480,
       "name": "Gent 10 mijl",
@@ -1211,8 +1220,8 @@
     }
   ],
   "summary": {
-    "total_runs": 134,
-    "ward_kudos": 110,
-    "loyalty_pct": 82.1
+    "total_runs": 135,
+    "ward_kudos": 111,
+    "loyalty_pct": 82.2
   }
 }
