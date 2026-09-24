@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-09-23T08:28:47Z",
+  "last_updated": "2026-09-24T08:21:03Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20298119132,
+      "name": "rdl",
+      "date": "2026-09-23T16:38:44Z",
+      "distance": 13025.1,
+      "moving_time": 3821,
+      "kudos_count": 2,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20282594002,
       "name": "taxis verbieden",
@@ -18,7 +27,7 @@
       "date": "2026-09-20T10:45:33Z",
       "distance": 16330.4,
       "moving_time": 3982,
-      "kudos_count": 28,
+      "kudos_count": 29,
       "ward_kudoed": true
     },
     {
@@ -1220,8 +1229,8 @@
     }
   ],
   "summary": {
-    "total_runs": 135,
-    "ward_kudos": 111,
-    "loyalty_pct": 82.2
+    "total_runs": 136,
+    "ward_kudos": 112,
+    "loyalty_pct": 82.4
   }
 }
