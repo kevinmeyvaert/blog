@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-09-25T08:43:34Z",
+  "last_updated": "2026-09-26T08:30:28Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20325706535,
+      "name": "4 x 1000 tempo",
+      "date": "2026-09-25T17:13:31Z",
+      "distance": 10826.0,
+      "moving_time": 2979,
+      "kudos_count": 2,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 20311147131,
       "name": "rdl",
@@ -1238,8 +1247,8 @@
     }
   ],
   "summary": {
-    "total_runs": 137,
+    "total_runs": 138,
     "ward_kudos": 112,
-    "loyalty_pct": 81.8
+    "loyalty_pct": 81.2
   }
 }
