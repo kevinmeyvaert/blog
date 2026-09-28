@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-09-27T09:09:16Z",
+  "last_updated": "2026-09-28T09:38:01Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20351575316,
+      "name": "lsd krokant",
+      "date": "2026-09-27T13:36:39Z",
+      "distance": 20024.6,
+      "moving_time": 5817,
+      "kudos_count": 11,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20339749207,
       "name": "kort los",
@@ -1256,8 +1265,8 @@
     }
   ],
   "summary": {
-    "total_runs": 139,
-    "ward_kudos": 112,
-    "loyalty_pct": 80.6
+    "total_runs": 140,
+    "ward_kudos": 113,
+    "loyalty_pct": 80.7
   }
 }
