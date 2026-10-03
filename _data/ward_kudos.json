@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-02T09:36:46Z",
+  "last_updated": "2026-10-03T09:02:38Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
@@ -9,7 +9,7 @@
       "date": "2026-10-02T07:03:15Z",
       "distance": 12383.4,
       "moving_time": 3356,
-      "kudos_count": 2,
+      "kudos_count": 4,
       "ward_kudoed": false
     },
     {
