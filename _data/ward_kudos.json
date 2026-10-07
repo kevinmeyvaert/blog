@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-10-06T10:02:33Z",
+  "last_updated": "2026-10-07T10:07:00Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20477373121,
+      "name": "rdl met goeie stride op laatste 750m",
+      "date": "2026-10-06T18:05:07Z",
+      "distance": 13020.1,
+      "moving_time": 3592,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20448859377,
       "name": "rdl",
@@ -1319,8 +1328,8 @@
     }
   ],
   "summary": {
-    "total_runs": 146,
-    "ward_kudos": 120,
-    "loyalty_pct": 82.2
+    "total_runs": 147,
+    "ward_kudos": 121,
+    "loyalty_pct": 82.3
   }
 }
