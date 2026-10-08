@@ -1,0 +1,15 @@
+<figure class="cis-lane{% if include.muted %} cis-lane--muted{% endif %}">
+  <figcaption class="cis-lane-label">{{ include.label }}</figcaption>
+  <div class="cis-lane-row">
+    {% for show in site.data.cis_v2[include.group] %}
+    <div class="cis-tile">
+      <img src="{{ '/assets/images/articles/cis-v2/' | append: show.image | append: '.jpg' | relative_url }}" alt="" loading="lazy">
+      <div class="cis-tile-body">
+        <span class="cis-tile-date">{{ show.date | date: "%a %-d %b" }}</span>
+        <span class="cis-tile-title">{{ show.title }}</span>
+        <span class="cis-tile-venue">{{ show.venue }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</figure>

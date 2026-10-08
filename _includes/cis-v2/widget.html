@@ -1,0 +1,48 @@
+{% if include.kind == "base" %}
+<div class="cis-widget" data-cis-widget="base">
+  <label class="cis-widget-input">
+    <span>Listeners: <output data-out="listeners"></output></span>
+    <input type="range" min="3" max="7" step="0.01" value="4.62" data-in="logListeners">
+  </label>
+  <div class="cis-widget-presets">
+    <button type="button" data-preset="4.62">Kruelty (42k)</button>
+    <button type="button" data-preset="6.49">Bryan Adams (3.1M)</button>
+  </div>
+  <div class="cis-bars">
+    <div class="cis-bar"><span>v1 base</span><div class="cis-bar-track"><div class="cis-bar-fill" data-bar="v1"></div></div><output data-out="v1"></output></div>
+    <div class="cis-bar"><span>v2 base</span><div class="cis-bar-track"><div class="cis-bar-fill cis-bar-fill--v2" data-bar="v2"></div></div><output data-out="v2"></output></div>
+  </div>
+</div>
+{% elsif include.kind == "momentum" %}
+<div class="cis-widget" data-cis-widget="momentum">
+  <label class="cis-widget-input">
+    <span>Views in the last 14 days: <output data-out="recent"></output></span>
+    <input type="range" min="0" max="40" step="1" value="2" data-in="recent">
+  </label>
+  <label class="cis-widget-input">
+    <span>Views in the 16 days before: <output data-out="prior"></output></span>
+    <input type="range" min="0" max="40" step="1" value="0" data-in="prior">
+  </label>
+  <div class="cis-bars">
+    <div class="cis-bar"><span>v1 momentum</span><div class="cis-bar-track"><div class="cis-bar-fill" data-bar="v1"></div></div><output data-out="v1"></output></div>
+    <div class="cis-bar"><span>v2 momentum</span><div class="cis-bar-track"><div class="cis-bar-fill cis-bar-fill--v2" data-bar="v2"></div></div><output data-out="v2"></output></div>
+  </div>
+  <p class="cis-widget-note" data-out="note"></p>
+</div>
+{% elsif include.kind == "lift" %}
+<div class="cis-widget" data-cis-widget="lift">
+  <label class="cis-widget-input">
+    <span>Points this week: <output data-out="recent"></output></span>
+    <input type="range" min="0" max="80" step="1" value="2" data-in="recent">
+  </label>
+  <label class="cis-widget-input">
+    <span>Points in the 21 days before: <output data-out="prior"></output></span>
+    <input type="range" min="0" max="150" step="1" value="0" data-in="prior">
+  </label>
+  <div class="cis-lift">
+    <div><span class="cis-lift-label">Without smoothing</span><output data-out="raw"></output></div>
+    <div><span class="cis-lift-label">With +10 smoothing</span><output data-out="lift"></output></div>
+  </div>
+  <p class="cis-widget-note" data-out="note"></p>
+</div>
+{% endif %}
