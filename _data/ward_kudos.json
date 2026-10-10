@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-10-09T10:21:33Z",
+  "last_updated": "2026-10-10T09:41:28Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20517867843,
+      "name": "5 x 1200 tegenwind",
+      "date": "2026-10-09T18:03:52Z",
+      "distance": 14207.9,
+      "moving_time": 3846,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20504690674,
       "name": "broekje nat",
@@ -1346,8 +1355,8 @@
     }
   ],
   "summary": {
-    "total_runs": 149,
-    "ward_kudos": 122,
-    "loyalty_pct": 81.9
+    "total_runs": 150,
+    "ward_kudos": 123,
+    "loyalty_pct": 82
   }
 }
