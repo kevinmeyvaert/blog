@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-10-15T08:10:27Z",
+  "last_updated": "2026-10-16T08:03:29Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20598087364,
+      "name": "Avondloop",
+      "date": "2026-10-15T18:01:13Z",
+      "distance": 9264.3,
+      "moving_time": 2505,
+      "kudos_count": 4,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20577136305,
       "name": "6 x 200 tocht door het donker",
@@ -1391,8 +1400,8 @@
     }
   ],
   "summary": {
-    "total_runs": 154,
-    "ward_kudos": 124,
-    "loyalty_pct": 80.5
+    "total_runs": 155,
+    "ward_kudos": 125,
+    "loyalty_pct": 80.6
   }
 }
