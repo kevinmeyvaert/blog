@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-10-17T07:41:17Z",
+  "last_updated": "2026-10-18T07:56:34Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20621599903,
+      "name": "5 x 600m tempo",
+      "date": "2026-10-17T14:35:40Z",
+      "distance": 10789.5,
+      "moving_time": 2889,
+      "kudos_count": 5,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20598087364,
       "name": "Avondloop",
       "date": "2026-10-15T18:01:13Z",
       "distance": 9264.3,
       "moving_time": 2505,
-      "kudos_count": 6,
+      "kudos_count": 7,
       "ward_kudoed": true
     },
     {
@@ -1400,8 +1409,8 @@
     }
   ],
   "summary": {
-    "total_runs": 155,
-    "ward_kudos": 125,
-    "loyalty_pct": 80.6
+    "total_runs": 156,
+    "ward_kudos": 126,
+    "loyalty_pct": 80.8
   }
 }
