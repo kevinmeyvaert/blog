@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-10-24T08:02:05Z",
+  "last_updated": "2026-10-25T08:18:20Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20711932805,
+      "name": "4 x 1500",
+      "date": "2026-10-24T13:08:46Z",
+      "distance": 12244.7,
+      "moving_time": 3168,
+      "kudos_count": 3,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 20690688600,
       "name": "z2 mooi consistent :)",
@@ -1445,8 +1454,8 @@
     }
   ],
   "summary": {
-    "total_runs": 160,
+    "total_runs": 161,
     "ward_kudos": 129,
-    "loyalty_pct": 80.6
+    "loyalty_pct": 80.1
   }
 }
