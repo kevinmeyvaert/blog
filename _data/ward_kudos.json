@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-10-25T08:18:20Z",
+  "last_updated": "2026-10-26T08:45:35Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20722991928,
+      "name": "winderig duurloopje",
+      "date": "2026-10-25T09:44:13Z",
+      "distance": 20039.6,
+      "moving_time": 5523,
+      "kudos_count": 6,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 20711932805,
       "name": "4 x 1500",
       "date": "2026-10-24T13:08:46Z",
       "distance": 12244.7,
       "moving_time": 3168,
-      "kudos_count": 3,
+      "kudos_count": 4,
       "ward_kudoed": false
     },
     {
@@ -1454,8 +1463,8 @@
     }
   ],
   "summary": {
-    "total_runs": 161,
+    "total_runs": 162,
     "ward_kudos": 129,
-    "loyalty_pct": 80.1
+    "loyalty_pct": 79.6
   }
 }
