@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-10-31T09:29:57Z",
+  "last_updated": "2026-11-01T10:19:18Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20806039232,
+      "name": "tempo blokjes",
+      "date": "2026-10-31T15:34:06Z",
+      "distance": 14305.5,
+      "moving_time": 3787,
+      "kudos_count": 6,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20767513504,
       "name": "3 x 6 x 200m gaz",
@@ -1481,8 +1490,8 @@
     }
   ],
   "summary": {
-    "total_runs": 164,
-    "ward_kudos": 129,
-    "loyalty_pct": 78.7
+    "total_runs": 165,
+    "ward_kudos": 130,
+    "loyalty_pct": 78.8
   }
 }
