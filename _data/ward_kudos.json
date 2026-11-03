@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-02T10:52:04Z",
+  "last_updated": "2026-11-03T10:42:12Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20831452940,
+      "name": "chill",
+      "date": "2026-11-02T17:17:22Z",
+      "distance": 7050.9,
+      "moving_time": 1943,
+      "kudos_count": 6,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 20816922752,
       "name": "lange kalme zondag",
@@ -1499,8 +1508,8 @@
     }
   ],
   "summary": {
-    "total_runs": 166,
+    "total_runs": 167,
     "ward_kudos": 131,
-    "loyalty_pct": 78.9
+    "loyalty_pct": 78.4
   }
 }
