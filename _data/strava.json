@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-05T10:41:12Z",
+  "last_updated": "2026-11-06T10:41:15Z",
   "athlete": {
     "id": 37171291,
     "id_str": "37171291",
@@ -38,11 +38,11 @@
       "elevation_gain": 1111.2
     },
     "recent_run_totals": {
-      "count": 19,
-      "distance": 226426.60000000003,
-      "moving_time": 61665,
-      "elapsed_time": 61879,
-      "elevation_gain": 608.0,
+      "count": 18,
+      "distance": 215986.80000000002,
+      "moving_time": 58855,
+      "elapsed_time": 58883,
+      "elevation_gain": 590.0,
       "achievement_count": 6
     },
     "all_run_totals": {
