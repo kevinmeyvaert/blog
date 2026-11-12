@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-11T10:39:39Z",
+  "last_updated": "2026-11-12T10:52:16Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20947659008,
+      "name": "Nat en kou",
+      "date": "2026-11-11T14:44:38Z",
+      "distance": 13031.1,
+      "moving_time": 3677,
+      "kudos_count": 8,
+      "ward_kudoed": true
+    },
     {
       "activity_id": 20935989817,
       "name": "3 x 7 x 200 sesh",
@@ -1526,8 +1535,8 @@
     }
   ],
   "summary": {
-    "total_runs": 169,
-    "ward_kudos": 133,
-    "loyalty_pct": 78.7
+    "total_runs": 170,
+    "ward_kudos": 134,
+    "loyalty_pct": 78.8
   }
 }
