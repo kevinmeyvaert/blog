@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-13T10:48:34Z",
+  "last_updated": "2026-11-14T10:02:36Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 20971225662,
+      "name": "5 x 1500",
+      "date": "2026-11-13T12:19:18Z",
+      "distance": 14286.4,
+      "moving_time": 3797,
+      "kudos_count": 0,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 20947659008,
       "name": "Nat en kou",
@@ -1535,8 +1544,8 @@
     }
   ],
   "summary": {
-    "total_runs": 170,
+    "total_runs": 171,
     "ward_kudos": 134,
-    "loyalty_pct": 78.8
+    "loyalty_pct": 78.4
   }
 }
