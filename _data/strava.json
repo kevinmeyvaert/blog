@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-14T10:02:36Z",
+  "last_updated": "2026-11-15T10:39:04Z",
   "athlete": {
     "id": 37171291,
     "id_str": "37171291",
@@ -38,11 +38,11 @@
       "elevation_gain": 1111.2
     },
     "recent_run_totals": {
-      "count": 16,
-      "distance": 202776.90000000005,
-      "moving_time": 54814,
-      "elapsed_time": 54817,
-      "elevation_gain": 565.0,
+      "count": 15,
+      "distance": 191987.40000000005,
+      "moving_time": 51925,
+      "elapsed_time": 51928,
+      "elevation_gain": 540.0,
       "achievement_count": 6
     },
     "all_run_totals": {
@@ -97,6 +97,56 @@
         "id_str": "37171291",
         "resource_state": 1
       },
+      "name": "treinstapper met 👩🏻‍🦰",
+      "distance": 20407.0,
+      "moving_time": 14642,
+      "elapsed_time": 15706,
+      "total_elevation_gain": 251.0,
+      "type": "Walk",
+      "sport_type": "Walk",
+      "device_name": "Garmin vívoactive 5",
+      "tags": [],
+      "id": 20985049109,
+      "id_str": "20985049109",
+      "start_date": "2026-11-14T09:49:28Z",
+      "start_date_local": "2026-11-14T10:49:28Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 3600.0,
+      "achievement_count": 0,
+      "kudos_count": 5,
+      "comment_count": 1,
+      "athlete_count": 2,
+      "photo_count": 0,
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": null,
+      "average_speed": 1.394,
+      "max_speed": 2.233,
+      "average_cadence": 48.9,
+      "has_heartrate": false,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": false,
+      "elev_high": 147.6,
+      "elev_low": 6.0,
+      "upload_id": 22152569438,
+      "upload_id_str": "22152569438",
+      "external_id": "stripped_accepted_tag_from_22152528026.fit",
+      "from_accepted_tag": true,
+      "pr_count": 0,
+      "total_photo_count": 0,
+      "has_kudoed": false
+    },
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "id_str": "37171291",
+        "resource_state": 1
+      },
       "name": "5 x 1500",
       "distance": 14286.4,
       "moving_time": 3797,
@@ -114,7 +164,7 @@
       "timezone": "(GMT+01:00) Europe/Brussels",
       "utc_offset": 3600.0,
       "achievement_count": 0,
-      "kudos_count": 0,
+      "kudos_count": 2,
       "comment_count": 0,
       "athlete_count": 1,
       "photo_count": 0,
@@ -114837,10 +114887,10 @@
       },
       {
         "week": "2026-W45",
-        "total_distance": 55913.7,
-        "total_time": 15108,
-        "total_elevation": 125,
-        "activity_count": 4
+        "total_distance": 76320.7,
+        "total_time": 29750,
+        "total_elevation": 376,
+        "activity_count": 5
       }
     ],
     "monthly": [
@@ -115511,10 +115561,10 @@
       },
       {
         "month": "2026-11",
-        "total_distance": 80991.9,
-        "total_time": 22186,
-        "total_elevation": 165,
-        "activity_count": 6
+        "total_distance": 101398.9,
+        "total_time": 36828,
+        "total_elevation": 416,
+        "activity_count": 7
       }
     ]
   }
