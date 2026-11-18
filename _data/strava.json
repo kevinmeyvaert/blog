@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-17T11:40:24Z",
+  "last_updated": "2026-11-18T11:27:35Z",
   "athlete": {
     "id": 37171291,
     "id_str": "37171291",
@@ -39,18 +39,18 @@
     },
     "recent_run_totals": {
       "count": 15,
-      "distance": 198935.60000000003,
-      "moving_time": 53938,
-      "elapsed_time": 54032,
-      "elevation_gain": 574.0,
-      "achievement_count": 6
+      "distance": 201298.30000000002,
+      "moving_time": 54489,
+      "elapsed_time": 54580,
+      "elevation_gain": 583.0,
+      "achievement_count": 9
     },
     "all_run_totals": {
-      "count": 1976,
-      "distance": 20325988.999999993,
-      "moving_time": 5688683,
-      "elapsed_time": 5861056,
-      "elevation_gain": 29177.300000000014
+      "count": 1977,
+      "distance": 20335376.799999993,
+      "moving_time": 5691168,
+      "elapsed_time": 5863541,
+      "elevation_gain": 29203.300000000014
     },
     "recent_swim_totals": {
       "count": 0,
@@ -75,11 +75,11 @@
       "elevation_gain": 450.8
     },
     "ytd_run_totals": {
-      "count": 237,
-      "distance": 2582175,
-      "moving_time": 724819.0,
-      "elapsed_time": 731938.0,
-      "elevation_gain": 6129.0
+      "count": 238,
+      "distance": 2591562,
+      "moving_time": 727304.0,
+      "elapsed_time": 734423.0,
+      "elevation_gain": 6155.0
     },
     "ytd_swim_totals": {
       "count": 0,
@@ -90,6 +90,65 @@
     }
   },
   "activities": [
+    {
+      "resource_state": 2,
+      "athlete": {
+        "id": 37171291,
+        "id_str": "37171291",
+        "resource_state": 1
+      },
+      "name": "interval ingekort",
+      "distance": 9387.8,
+      "moving_time": 2485,
+      "elapsed_time": 2485,
+      "total_elevation_gain": 26.0,
+      "type": "Run",
+      "sport_type": "Run",
+      "workout_type": null,
+      "device_name": "Garmin Forerunner 570",
+      "tags": [],
+      "id": 21023420407,
+      "id_str": "21023420407",
+      "start_date": "2026-11-17T16:04:47Z",
+      "start_date_local": "2026-11-17T17:04:47Z",
+      "timezone": "(GMT+01:00) Europe/Brussels",
+      "utc_offset": 3600.0,
+      "achievement_count": 3,
+      "kudos_count": 4,
+      "comment_count": 0,
+      "athlete_count": 1,
+      "photo_count": 0,
+      "trainer": false,
+      "commute": false,
+      "manual": false,
+      "private": false,
+      "visibility": "everyone",
+      "flagged": false,
+      "gear_id": null,
+      "average_speed": 3.778,
+      "max_speed": 7.1,
+      "average_cadence": 83.9,
+      "average_watts": 350.7,
+      "max_watts": 584,
+      "weighted_average_watts": 357,
+      "device_watts": true,
+      "kilojoules": 871.5,
+      "has_heartrate": true,
+      "average_heartrate": 162.2,
+      "max_heartrate": 183.0,
+      "heartrate_opt_out": false,
+      "display_hide_heartrate_option": true,
+      "elev_high": 8.6,
+      "elev_low": -1.4,
+      "upload_id": 22191596627,
+      "upload_id_str": "22191596627",
+      "external_id": "garmin_ping_658877750605",
+      "from_accepted_tag": false,
+      "pr_count": 1,
+      "total_photo_count": 0,
+      "has_kudoed": false,
+      "suffer_score": 67.0
+    },
     {
       "resource_state": 2,
       "athlete": {
@@ -114953,10 +115012,10 @@
       },
       {
         "week": "2026-W46",
-        "total_distance": 18036.8,
-        "total_time": 5037,
-        "total_elevation": 48.0,
-        "activity_count": 1
+        "total_distance": 27424.6,
+        "total_time": 7522,
+        "total_elevation": 74,
+        "activity_count": 2
       }
     ],
     "monthly": [
@@ -115627,10 +115686,10 @@
       },
       {
         "month": "2026-11",
-        "total_distance": 119435.7,
-        "total_time": 41865,
-        "total_elevation": 464,
-        "activity_count": 8
+        "total_distance": 128823.5,
+        "total_time": 44350,
+        "total_elevation": 490,
+        "activity_count": 9
       }
     ]
   }
