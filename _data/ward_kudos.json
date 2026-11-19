@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-18T11:27:35Z",
+  "last_updated": "2026-11-19T11:25:37Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21037172645,
+      "name": "duurloopje",
+      "date": "2026-11-18T17:26:46Z",
+      "distance": 13027.9,
+      "moving_time": 3453,
+      "kudos_count": 3,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21023420407,
       "name": "interval ingekort",
@@ -1562,8 +1571,8 @@
     }
   ],
   "summary": {
-    "total_runs": 173,
+    "total_runs": 174,
     "ward_kudos": 134,
-    "loyalty_pct": 77.5
+    "loyalty_pct": 77
   }
 }
