@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-11-19T11:25:37Z",
+  "last_updated": "2026-11-20T11:15:46Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21048876089,
+      "name": "Namiddagloop",
+      "date": "2026-11-19T17:27:53Z",
+      "distance": 7028.9,
+      "moving_time": 1986,
+      "kudos_count": 2,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21037172645,
       "name": "duurloopje",
       "date": "2026-11-18T17:26:46Z",
       "distance": 13027.9,
       "moving_time": 3453,
-      "kudos_count": 3,
+      "kudos_count": 4,
       "ward_kudoed": false
     },
     {
@@ -1571,8 +1580,8 @@
     }
   ],
   "summary": {
-    "total_runs": 174,
+    "total_runs": 175,
     "ward_kudos": 134,
-    "loyalty_pct": 77
+    "loyalty_pct": 76.6
   }
 }
