@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-11-20T11:15:46Z",
+  "last_updated": "2026-11-21T10:52:14Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21061405369,
+      "name": "ik had een schaduw van de maan!!!!!",
+      "date": "2026-11-20T17:53:48Z",
+      "distance": 13822.3,
+      "moving_time": 3674,
+      "kudos_count": 2,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21048876089,
       "name": "Namiddagloop",
       "date": "2026-11-19T17:27:53Z",
       "distance": 7028.9,
       "moving_time": 1986,
-      "kudos_count": 2,
+      "kudos_count": 3,
       "ward_kudoed": false
     },
     {
@@ -1580,8 +1589,8 @@
     }
   ],
   "summary": {
-    "total_runs": 175,
+    "total_runs": 176,
     "ward_kudos": 134,
-    "loyalty_pct": 76.6
+    "loyalty_pct": 76.1
   }
 }
