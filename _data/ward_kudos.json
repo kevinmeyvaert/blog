@@ -1,15 +1,24 @@
 {
-  "last_updated": "2026-11-21T10:52:14Z",
+  "last_updated": "2026-11-22T11:00:44Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21070067327,
+      "name": "Middagloop",
+      "date": "2026-11-21T12:38:34Z",
+      "distance": 10521.8,
+      "moving_time": 2858,
+      "kudos_count": 3,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21061405369,
       "name": "ik had een schaduw van de maan!!!!!",
       "date": "2026-11-20T17:53:48Z",
       "distance": 13822.3,
       "moving_time": 3674,
-      "kudos_count": 2,
+      "kudos_count": 4,
       "ward_kudoed": false
     },
     {
@@ -18,7 +27,7 @@
       "date": "2026-11-19T17:27:53Z",
       "distance": 7028.9,
       "moving_time": 1986,
-      "kudos_count": 3,
+      "kudos_count": 4,
       "ward_kudoed": false
     },
     {
@@ -1589,8 +1598,8 @@
     }
   ],
   "summary": {
-    "total_runs": 176,
+    "total_runs": 177,
     "ward_kudos": 134,
-    "loyalty_pct": 76.1
+    "loyalty_pct": 75.7
   }
 }
