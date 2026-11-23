@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-22T11:00:44Z",
+  "last_updated": "2026-11-23T12:09:30Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21083342784,
+      "name": "herfstjog",
+      "date": "2026-11-22T12:12:13Z",
+      "distance": 21213.9,
+      "moving_time": 5991,
+      "kudos_count": 6,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21070067327,
       "name": "Middagloop",
@@ -1598,8 +1607,8 @@
     }
   ],
   "summary": {
-    "total_runs": 177,
+    "total_runs": 178,
     "ward_kudos": 134,
-    "loyalty_pct": 75.7
+    "loyalty_pct": 75.3
   }
 }
