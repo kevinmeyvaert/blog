@@ -1,1904 +1,777 @@
 /**
- * Strava Data Visualization Script
- * Initializes ApexCharts and Leaflet.js for running statistics
+ * Running page: renders stats, tables and charts from the embedded Strava data.
+ * Metric calculations live in strava-metrics.js.
  */
+(function () {
+  const M = window.StravaMetrics;
+  const source = document.getElementById('strava-data');
+  if (!M || !source) return;
 
-// Store chart instances for re-rendering on theme change
-const chartInstances = {};
-let stravaThemeObserver = null;
-let responsiveListenerRegistered = false;
-let lastCompactMode = null;
-
-// Locale helpers
-const DATE_LOCALE = 'nl-BE';
-const DATE_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric'
-});
-const MONTH_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
-  month: 'short',
-  year: 'numeric'
-});
-const MONTH_LONG_FORMATTER = new Intl.DateTimeFormat(DATE_LOCALE, {
-  month: 'long',
-  year: 'numeric'
-});
-
-function getTooltipTheme() {
-  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-}
-
-function getLocalDateKey(dateObj) {
-  const year = dateObj.getFullYear();
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-  const day = String(dateObj.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-function parseLocalDateKey(dateKey) {
-  if (!dateKey) return null;
-  const [year, month, day] = dateKey.split('-').map(Number);
-  if (!year || !month || !day) return null;
-  return new Date(year, month - 1, day);
-}
-
-function formatDateFromISO(dateStr) {
-  if (!dateStr) return '';
-  const dateKey = dateStr.split('T')[0];
-  const date = parseLocalDateKey(dateKey);
-  return date ? DATE_FORMATTER.format(date) : '';
-}
-
-function formatDateFromTimestamp(ms) {
-  if (ms === null || ms === undefined) return '';
-  return DATE_FORMATTER.format(new Date(ms));
-}
-
-function isCompactMobileView() {
-  return window.matchMedia('(max-width: 768px)').matches;
-}
-
-function supportsHoverInteractions() {
-  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-}
-
-function shouldUseCompactVisuals() {
-  return isCompactMobileView() || !supportsHoverInteractions();
-}
-
-function formatPaceValue(minutesPerKm) {
-  const minutes = Math.floor(minutesPerKm);
-  const seconds = Math.round((minutesPerKm - minutes) * 60);
-  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
-
-function formatSignedOneDecimal(value) {
-  const rounded = Math.round(value * 10) / 10;
-  const sign = rounded > 0 ? '+' : '';
-  return `${sign}${rounded.toFixed(1)}`;
-}
-
-function destroyAllCharts() {
-  Object.keys(chartInstances).forEach(key => {
-    const chart = chartInstances[key];
-    if (chart && chart.destroy) {
-      chart.destroy();
-    }
-    chartInstances[key] = null;
-  });
-}
-
-/**
- * Get theme-aware colors from CSS variables
- */
-function getThemeColors() {
-  const root = document.documentElement;
-  const style = getComputedStyle(root);
-
-  return {
-    textPrimary: style.getPropertyValue('--color-text-primary').trim() || '#000000',
-    textSecondary: style.getPropertyValue('--color-text-secondary').trim() || '#333333',
-    textMuted: style.getPropertyValue('--color-text-muted').trim() || '#666666',
-    textLight: style.getPropertyValue('--color-text-light').trim() || '#999999',
-    borderPrimary: style.getPropertyValue('--color-border-primary').trim() || '#e0e0e0',
-    bgPrimary: style.getPropertyValue('--color-bg-primary').trim() || '#ffffff',
-    bgSecondary: style.getPropertyValue('--color-bg-secondary').trim() || '#f9f9f9'
+  const LOCALE = 'en-GB';
+  const TIME_ZONE = 'Europe/Brussels';
+  const EQUATOR_KM = 40075;
+  const CALENDAR_WEEKS = 53;
+  const CALENDAR_LEVELS_KM = [7, 11, 15]; // upper bounds of the first three shades
+  const MONTH_LABEL_COLUMNS = 3; // room a month label needs in the calendar
+  const LOAD_CHART_DAYS = 180;
+  const FITNESS_TREND_DAYS = 28;
+  const CHART_HEIGHTS = {
+    wide: { standard: 300, cumulative: 360 },
+    compact: { standard: 240, cumulative: 280 }
   };
-}
+  const RECENT_RUNS = 6;
+  const RECENT_WORKOUTS = 8;
+  const COMPACT_QUERY = '(max-width: 768px)';
 
-function initializeStravaCharts(data) {
-  if (!data || !data.activities) {
-    console.warn('No Strava data available');
-    return;
+  /* ---------- formatting ---------- */
+
+  const whole = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 });
+  const oneDecimal = new Intl.NumberFormat(LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const dateFormatter = options => new Intl.DateTimeFormat(LOCALE, { ...options, timeZone: 'UTC' });
+  const DATE = {
+    full: dateFormatter({ day: 'numeric', month: 'long', year: 'numeric' }),
+    short: dateFormatter({ day: 'numeric', month: 'short', year: 'numeric' }),
+    weekday: dateFormatter({ weekday: 'short', day: 'numeric', month: 'short' }),
+    month: dateFormatter({ month: 'short' }),
+    monthYear: dateFormatter({ month: 'long', year: 'numeric' }),
+    dayMonth: dateFormatter({ day: 'numeric', month: 'short' })
+  };
+
+  const formatDay = (day, style = 'short') => DATE[style].format(M.toDate(day));
+  const formatMonth = monthKey => formatDay(M.toDay(`${monthKey}-01`), 'monthYear');
+  const km = meters => meters / 1000;
+  const formatKm = meters => oneDecimal.format(km(meters));
+  const signed = value => `${value > 0 ? '+' : value < 0 ? '−' : ''}${whole.format(Math.abs(value))}`;
+  const percent = share => `${Math.round(share * 100)}%`;
+  const el = id => document.getElementById(id);
+
+  function escapeHtml(text) {
+    return String(text).replace(/[&<>"']/g, ch => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+    ));
   }
 
-  const compactVisuals = shouldUseCompactVisuals();
-  lastCompactMode = compactVisuals;
+  /* ---------- data ---------- */
 
-  // Initialize all charts
-  initializeYearlyTotals(data);
-  initializeYoYDistanceChart(data, compactVisuals);
-  initializeDistanceChart(data, compactVisuals);
-  initializePaceChart(data, compactVisuals);
-  initializeHRZonesChart(data);
-  if (compactVisuals) {
-    renderCompactEfficiencySummary(data);
-    renderCompactTrainingLoadSummary(data);
-  } else {
-    initializeEfficiencyChart(data);
-    initializeTrainingLoadChart(data);
-  }
-  initializeIntervalScorecard(data);
-  initializeActivityCalendar(data);
-
-  // Re-render charts on theme change
-  if (!stravaThemeObserver) {
-    stravaThemeObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-          destroyAllCharts();
-          initializeStravaCharts(data);
-        }
-      });
-    });
-
-    stravaThemeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
+  function parseActivities(rows) {
+    return rows.map(([type, start, name, distance, moving, elapsed, climb, hr, maxHr, workout]) => {
+      const date = start.slice(0, 10);
+      return { type, date, hour: +start.slice(11, 13), day: M.toDay(date), name, distance, moving, elapsed, climb, hr, maxHr, workout };
     });
   }
 
-  if (!responsiveListenerRegistered) {
-    responsiveListenerRegistered = true;
-    window.addEventListener('resize', () => {
-      const nextMode = shouldUseCompactVisuals();
-      if (nextMode !== lastCompactMode) {
-        destroyAllCharts();
-        initializeStravaCharts(data);
-      }
-    });
-  }
-}
-
-/**
- * Yearly Totals Cards
- */
-function initializeYearlyTotals(data) {
-  const container = document.getElementById('yearly-totals');
-  if (!container || !data.activities) return;
-
-  const runs = data.activities.filter(a => a.type === 'Run');
-  const yearMap = {};
-
-  runs.forEach(run => {
-    const year = run.start_date_local.substring(0, 4);
-    if (!yearMap[year]) {
-      yearMap[year] = { distance: 0, time: 0, elevation: 0, count: 0 };
-    }
-    yearMap[year].distance += run.distance;
-    yearMap[year].time += run.moving_time;
-    yearMap[year].elevation += run.total_elevation_gain || 0;
-    yearMap[year].count += 1;
-  });
-
-  const years = Object.keys(yearMap).sort();
-
-  let html = '';
-  years.forEach(year => {
-    const y = yearMap[year];
-    const distKm = (y.distance / 1000).toFixed(0);
-    const hours = Math.floor(y.time / 3600);
-    const elevKm = (y.elevation / 1000).toFixed(1);
-
-    html += `
-      <div class="yearly-card">
-        <div class="yearly-year">${year}</div>
-        <div class="yearly-stats">
-          <div class="yearly-stat">
-            <span class="yearly-stat-value">${distKm}</span>
-            <span class="yearly-stat-label">km</span>
-          </div>
-          <div class="yearly-stat">
-            <span class="yearly-stat-value">${y.count}</span>
-            <span class="yearly-stat-label">runs</span>
-          </div>
-          <div class="yearly-stat">
-            <span class="yearly-stat-value">${hours}</span>
-            <span class="yearly-stat-label">hours</span>
-          </div>
-          <div class="yearly-stat">
-            <span class="yearly-stat-value">${elevKm}</span>
-            <span class="yearly-stat-label">km ↑</span>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html;
-}
-
-/**
- * Year-over-Year Monthly Distance Chart
- */
-function initializeYoYDistanceChart(data, compactVisuals = false) {
-  if (!data.activities) return;
-
-  const runs = data.activities.filter(a => a.type === 'Run');
-  const yearMonthMap = {};
-
-  runs.forEach(run => {
-    const year = run.start_date_local.substring(0, 4);
-    const month = parseInt(run.start_date_local.substring(5, 7));
-    if (!yearMonthMap[year]) yearMonthMap[year] = {};
-    if (!yearMonthMap[year][month]) yearMonthMap[year][month] = 0;
-    yearMonthMap[year][month] += run.distance / 1000;
-  });
-
-  const years = Object.keys(yearMonthMap).sort();
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const colors = getThemeColors();
-
-  const yearColors = [
-    '#6366f1', '#ec4899', '#14b8a6', '#f59e0b', '#ef4444',
-    '#8b5cf6', '#06b6d4', '#84cc16', '#f97316', '#64748b'
-  ];
-
-  const series = years.map((year, i) => ({
-    name: year,
-    data: monthNames.map((_, monthIdx) => {
-      const val = yearMonthMap[year][monthIdx + 1] || 0;
-      return parseFloat(val.toFixed(1));
-    })
-  }));
-
-  const options = {
-    series: series,
-    chart: {
-      type: 'bar',
-      height: compactVisuals ? 320 : 400,
-      toolbar: { show: false },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 2,
-        columnWidth: '80%'
-      }
-    },
-    colors: yearColors.slice(0, years.length),
-    xaxis: {
-      categories: monthNames,
-      labels: {
-        style: { colors: colors.textPrimary, fontSize: '12px' }
-      }
-    },
-    yaxis: {
-      title: {
-        text: 'Distance (km)',
-        style: { color: colors.textPrimary, fontSize: '12px' }
-      },
-      labels: {
-        style: { colors: colors.textPrimary, fontSize: '12px' }
-      }
-    },
-    grid: { borderColor: colors.borderPrimary },
-    legend: {
-      position: 'top',
-      horizontalAlign: 'center',
-      labels: { colors: colors.textPrimary }
-    },
-    dataLabels: { enabled: false },
-    tooltip: {
-      theme: getTooltipTheme(),
-      y: {
-        formatter: function(val) {
-          return val + ' km';
-        }
-      }
-    }
-  };
-
-  const chart = new ApexCharts(document.querySelector('#yoy-distance-chart'), options);
-  chart.render();
-  chartInstances.yoyDistance = chart;
-}
-
-/**
- * Distance Over Time Chart
- */
-function initializeDistanceChart(data, compactVisuals = false) {
-  // CHART TYPE CONFIG: Change 'line' to 'bar' to switch visualization style
-  const CHART_TYPE = 'bar'; // Options: 'line' or 'bar'
-
-  if (!data.aggregated || !data.aggregated.monthly) {
-    return;
-  }
-
-  const monthlyData = data.aggregated.monthly;
-
-  // Sort by month
-  monthlyData.sort((a, b) => a.month.localeCompare(b.month));
-
-  // Filter out first month if it's partial (activities don't start in first few days)
-  let filteredMonthlyData = [...monthlyData];
-  if (filteredMonthlyData.length > 0 && data.activities) {
-    const firstMonth = filteredMonthlyData[0].month;
-    const activitiesInFirstMonth = data.activities.filter(a =>
-      a.start_date_local && a.start_date_local.startsWith(firstMonth)
-    );
-
-    if (activitiesInFirstMonth.length > 0) {
-      // Find the earliest activity in the first month
-      const earliestActivity = activitiesInFirstMonth.reduce((earliest, current) =>
-        current.start_date_local < earliest.start_date_local ? current : earliest
-      );
-
-      // Extract day of month from date (format: YYYY-MM-DD)
-      const dayOfMonth = parseInt(earliestActivity.start_date_local.split('T')[0].split('-')[2]);
-
-      // If first activity is after day 3, consider it a partial month and remove it
-      if (dayOfMonth > 3) {
-        filteredMonthlyData = filteredMonthlyData.slice(1);
-      }
-    }
-  }
-
-  // Keep mobile view compact
-  const selectedMonths = filteredMonthlyData.slice(compactVisuals ? -6 : -24);
-
-  const colors = getThemeColors();
-
-  const options = {
-    series: [{
-      name: 'Distance (km)',
-      data: selectedMonths.map(m => ({
-        x: formatMonth(m.month),
-        y: parseFloat((m.total_distance / 1000).toFixed(1))
-      }))
-    }],
-    chart: {
-      type: CHART_TYPE,
-      height: compactVisuals ? 280 : 350,
-      toolbar: {
-        show: false
-      },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    colors: [colors.textPrimary],
-    xaxis: {
-      type: 'category',
-      title: {
-        text: 'Month',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      }
-    },
-    yaxis: {
-      title: {
-        text: 'Distance (km)',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      }
-    },
-    grid: {
-      borderColor: colors.borderPrimary
-    },
-    tooltip: {
-      theme: getTooltipTheme(),
-      y: {
-        formatter: function(val) {
-          return val + ' km';
-        }
-      }
-    }
-  };
-
-  // Add chart type-specific options
-  if (CHART_TYPE === 'line') {
-    options.stroke = {
-      curve: 'smooth',
-      width: 2
-    };
-  } else if (CHART_TYPE === 'bar') {
-    options.plotOptions = {
-      bar: {
-        borderRadius: 4,
-        columnWidth: compactVisuals ? '52%' : '60%'
-      }
-    };
-  }
-
-  if (compactVisuals) {
-    options.dataLabels = {
-      enabled: true,
-      formatter: function(val) {
-        return `${val} km`;
-      },
-      style: {
-        colors: [colors.textPrimary],
-        fontSize: '11px'
-      }
-    };
-  }
-
-  const chart = new ApexCharts(document.querySelector('#distance-chart'), options);
-  chart.render();
-  chartInstances.distance = chart;
-}
-
-/**
- * Average Pace Chart
- */
-function initializePaceChart(data, compactVisuals = false) {
-  if (!data.activities) {
-    return;
-  }
-
-  // Filter only runs and calculate monthly average pace
-  const runs = data.activities.filter(a => a.type === 'Run');
-
-  // Group by month and calculate average pace
-  const monthlyPace = {};
-
-  runs.forEach(run => {
-    const month = run.start_date_local.substring(0, 7); // YYYY-MM
-    const paceMinPerKm = (run.moving_time / 60) / (run.distance / 1000);
-
-    if (!monthlyPace[month]) {
-      monthlyPace[month] = { total: 0, count: 0 };
-    }
-
-    monthlyPace[month].total += paceMinPerKm;
-    monthlyPace[month].count += 1;
-  });
-
-  // Calculate averages and sort
-  const paceData = Object.keys(monthlyPace)
-    .map(month => ({
-      month: month,
-      avgPace: monthlyPace[month].total / monthlyPace[month].count
-    }))
-    .sort((a, b) => a.month.localeCompare(b.month))
-    .slice(compactVisuals ? -6 : -24);
-
-  const colors = getThemeColors();
-  const chartType = compactVisuals ? 'bar' : 'line';
-
-  const options = {
-    series: [{
-      name: 'Avg Pace (min/km)',
-      data: paceData.map(p => ({
-        x: formatMonth(p.month),
-        y: parseFloat(p.avgPace.toFixed(2))
-      }))
-    }],
-    chart: {
-      type: chartType,
-      height: compactVisuals ? 280 : 350,
-      toolbar: {
-        show: false
-      },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    colors: [colors.textPrimary],
-    xaxis: {
-      type: 'category',
-      title: {
-        text: 'Month',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      }
-    },
-    yaxis: {
-      title: {
-        text: 'Pace (min/km)',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        },
-        formatter: function(val) {
-          return formatPaceValue(val);
-        }
-      },
-      reversed: true // Lower pace is better
-    },
-    grid: {
-      borderColor: colors.borderPrimary
-    },
-    tooltip: {
-      theme: getTooltipTheme(),
-      y: {
-        formatter: function(val) {
-          return formatPaceValue(val) + ' /km';
-        }
-      }
-    }
-  };
-
-  if (chartType === 'line') {
-    options.stroke = {
-      curve: 'smooth',
-      width: 2
-    };
-  } else {
-    options.plotOptions = {
-      bar: {
-        borderRadius: 4,
-        columnWidth: '52%'
-      }
-    };
-    options.dataLabels = {
-      enabled: true,
-      formatter: function(val) {
-        return formatPaceValue(val);
-      },
-      style: {
-        colors: [colors.textPrimary],
-        fontSize: '11px'
-      }
-    };
-  }
-
-  const chart = new ApexCharts(document.querySelector('#pace-chart'), options);
-  chart.render();
-  chartInstances.pace = chart;
-}
-
-/**
- * Heart Rate Zones Distribution Chart
- */
-function initializeHRZonesChart(data) {
-  if (!data.activities) {
-    return;
-  }
-
-  // Define HR zones
-  const zones = [
-    { name: 'Recovery', min: 0, max: 130, color: '#90EE90' },
-    { name: 'Easy', min: 130, max: 150, color: '#87CEEB' },
-    { name: 'Moderate', min: 150, max: 165, color: '#FFD700' },
-    { name: 'Hard', min: 165, max: 180, color: '#FF8C00' },
-    { name: 'Max', min: 180, max: 220, color: '#FF4500' }
-  ];
-
-  // Count activities in each zone based on average HR
-  const zoneCounts = zones.map(zone => ({ ...zone, count: 0 }));
-
-  data.activities.forEach(activity => {
-    if (activity.type === 'Run' && activity.has_heartrate && activity.average_heartrate) {
-      const avgHR = activity.average_heartrate;
-      const zone = zoneCounts.find(z => avgHR >= z.min && avgHR < z.max);
-      if (zone) {
-        zone.count++;
-      }
-    }
-  });
-
-  // Filter out zones with no activities
-  const activeZones = zoneCounts.filter(z => z.count > 0);
-
-  const colors = getThemeColors();
-
-  if (activeZones.length === 0) {
-    document.querySelector('#hr-zones-chart').innerHTML =
-      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">No heart rate data available</p>`;
-    return;
-  }
-
-  const options = {
-    series: [{
-      name: 'Number of Runs',
-      data: activeZones.map(z => z.count)
-    }],
-    chart: {
-      type: 'bar',
-      height: 350,
-      toolbar: {
-        show: false
-      },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        horizontal: true,
-        distributed: true,
-        dataLabels: {
-          position: 'right'
-        }
-      }
-    },
-    colors: activeZones.map(z => z.color),
-    dataLabels: {
-      enabled: true,
-      formatter: function(val) {
-        return val + ' runs';
-      },
-      style: {
-        colors: [colors.textPrimary],
-        fontSize: '12px'
-      }
-    },
-    xaxis: {
-      categories: activeZones.map(z => `${z.name} (${z.min}-${z.max} bpm)`),
-      title: {
-        text: 'Runs',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      }
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      }
-    },
-    grid: {
-      borderColor: colors.borderPrimary
-    },
-    legend: {
-      show: false
-    },
-    tooltip: {
-      theme: getTooltipTheme(),
-      y: {
-        formatter: function(val) {
-          return val + ' runs';
-        }
-      }
-    }
-  };
-
-  const chart = new ApexCharts(document.querySelector('#hr-zones-chart'), options);
-  chart.render();
-  chartInstances.hrZones = chart;
-}
-
-function renderCompactEfficiencySummary(data) {
-  const target = document.querySelector('#efficiency-chart');
-  if (!target) return;
-
-  const container = target.parentElement;
-  const existingStats = container.querySelector('.efficiency-stats');
-  if (existingStats) {
-    existingStats.remove();
-  }
-  chartInstances.efficiency = null;
-
-  const runs = data.activities
-    .filter(a => a.type === 'Run' && a.has_heartrate && a.average_heartrate && a.distance > 1000)
-    .sort((a, b) => new Date(b.start_date_local) - new Date(a.start_date_local))
-    .slice(0, 4);
-
-  if (runs.length === 0) {
-    const colors = getThemeColors();
-    target.innerHTML = `<p style="text-align: center; color: ${colors.textLight}; padding: 24px;">Not enough heart rate data available for compact view.</p>`;
-    return;
-  }
-
-  const averagePace = runs.reduce((sum, run) => sum + ((run.moving_time / 60) / (run.distance / 1000)), 0) / runs.length;
-  const averageHR = Math.round(runs.reduce((sum, run) => sum + run.average_heartrate, 0) / runs.length);
-
-  let rowsHtml = '';
-  runs.forEach(run => {
-    const pace = (run.moving_time / 60) / (run.distance / 1000);
-    rowsHtml += `
-      <div class="compact-summary-row">
-        <span class="compact-summary-date">${formatDateFromISO(run.start_date_local)}</span>
-        <span class="compact-summary-value">${formatPaceValue(pace)} /km</span>
-        <span class="compact-summary-muted">${Math.round(run.average_heartrate)} bpm</span>
-      </div>
-    `;
-  });
-
-  target.innerHTML = `
-    <div class="compact-summary">
-      <div class="compact-summary-grid">
-        <div class="compact-summary-item">
-          <span class="compact-summary-label">Recent avg pace</span>
-          <span class="compact-summary-emphasis">${formatPaceValue(averagePace)} /km</span>
-        </div>
-        <div class="compact-summary-item">
-          <span class="compact-summary-label">Recent avg HR</span>
-          <span class="compact-summary-emphasis">${averageHR} bpm</span>
-        </div>
-      </div>
-      <div class="compact-summary-list">
-        ${rowsHtml}
-      </div>
-      <p class="compact-summary-note">Compact view lists recent pace and heart-rate values directly so no hover is required.</p>
-    </div>
-  `;
-}
-
-function renderCompactTrainingLoadSummary(data) {
-  const target = document.querySelector('#training-load-chart');
-  if (!target) return;
-
-  const container = target.parentElement;
-  const existingCaption = container.querySelector('.warmup-caption');
-  if (existingCaption) {
-    existingCaption.remove();
-  }
-  chartInstances.trainingLoad = null;
-
-  const metrics = new StravaMetrics(data);
-  const history = metrics.generateTrainingLoadHistory(30);
-  if (history.length === 0) {
-    const colors = getThemeColors();
-    target.innerHTML = `<p style="text-align: center; color: ${colors.textLight}; padding: 24px;">Not enough activity data available for compact view.</p>`;
-    return;
-  }
-
-  const latest = history[history.length - 1];
-  const weekBack = history[Math.max(0, history.length - 8)];
-  const ctlDelta = latest.ctl - weekBack.ctl;
-  const atlDelta = latest.atl - weekBack.atl;
-  const tsbDelta = latest.tsb - weekBack.tsb;
-
-  target.innerHTML = `
-    <div class="compact-summary">
-      <div class="compact-summary-grid compact-summary-grid-3">
-        <div class="compact-summary-item">
-          <span class="compact-summary-label">CTL (fitness)</span>
-          <span class="compact-summary-emphasis">${latest.ctl.toFixed(1)}</span>
-          <span class="compact-summary-delta">${formatSignedOneDecimal(ctlDelta)} vs 7d</span>
-        </div>
-        <div class="compact-summary-item">
-          <span class="compact-summary-label">ATL (fatigue)</span>
-          <span class="compact-summary-emphasis">${latest.atl.toFixed(1)}</span>
-          <span class="compact-summary-delta">${formatSignedOneDecimal(atlDelta)} vs 7d</span>
-        </div>
-        <div class="compact-summary-item">
-          <span class="compact-summary-label">TSB (form)</span>
-          <span class="compact-summary-emphasis">${latest.tsb.toFixed(1)}</span>
-          <span class="compact-summary-delta">${formatSignedOneDecimal(tsbDelta)} vs 7d</span>
-        </div>
-      </div>
-      <p class="compact-summary-note">Compact view surfaces current training load values and 7-day movement with explicit labels.</p>
-    </div>
-  `;
-}
-
-/**
- * Running Efficiency Chart (Pace vs Heart Rate over time)
- */
-function initializeEfficiencyChart(data) {
-  if (!data.activities) {
-    return;
-  }
-
-  // Filter runs with HR data and sort by date
-  const runsWithHR = data.activities
-    .filter(a => {
-      if (a.type !== 'Run' || !a.has_heartrate || !a.average_heartrate || a.distance <= 1000) {
-        return false;
-      }
-      // Exclude runs with pace slower than 5:30 min/km
-      const paceMinPerKm = (a.moving_time / 60) / (a.distance / 1000);
-      return paceMinPerKm <= 5.5;
-    })
-    .sort((a, b) => new Date(a.start_date_local) - new Date(b.start_date_local))
-    .slice(-50); // Last 50 runs with HR data
-
-  const colors = getThemeColors();
-
-  if (runsWithHR.length === 0) {
-    document.querySelector('#efficiency-chart').innerHTML =
-      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">Not enough heart rate data available</p>`;
-    return;
-  }
-
-  // Get date range for color mapping
-  const timestamps = runsWithHR.map(r => new Date(r.start_date_local).getTime());
-  const minDate = Math.min(...timestamps);
-  const maxDate = Math.max(...timestamps);
-  const dateRange = maxDate - minDate || 1;
-
-  // Calculate pace, EF, and color for each run
-  const scatterData = runsWithHR.map((run, index) => {
-    const paceMinPerKm = (run.moving_time / 60) / (run.distance / 1000);
-    const speedKmPerMin = 1 / paceMinPerKm; // km/min
-    const ef = speedKmPerMin / run.average_heartrate * 1000; // Scale for readability
-    const dateKey = run.start_date_local.split('T')[0];
-    const timestamp = parseLocalDateKey(dateKey)?.getTime() || new Date(run.start_date_local).getTime();
-    const dateProgress = (timestamp - minDate) / dateRange;
-
-    // Color gradient: light gray (old) to dark blue (recent)
-    const lightness = 80 - (dateProgress * 50); // 80 to 30
-    const hue = 210; // Blue hue
+  function buildView() {
+    const raw = JSON.parse(source.textContent);
+    const activities = parseActivities(raw.activities);
+    const runs = activities
+      .filter(a => a.type === 'Run' && a.distance > 0 && a.moving > 0)
+      .sort((a, b) => a.day - b.day);
+
+    // "Today" is the day the data was fetched, so the page never depends on the visitor's clock.
+    const asOfKey = new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE }).format(new Date(raw.updated));
+    const asOfDay = M.toDay(asOfKey);
+    const year = asOfKey.slice(0, 4);
+
+    const hrModel = M.estimateHrModel(runs, asOfDay);
+    const scoreLoad = M.createLoadScorer(activities, hrModel);
+    const raceList = M.races(runs);
+    const months = M.monthSummaries(runs, asOfKey);
 
     return {
-      x: run.average_heartrate,
-      y: paceMinPerKm,
-      date: formatDateFromISO(dateKey),
-      dateKey: dateKey,
-      timestamp: timestamp,
-      name: run.name,
-      distance: (run.distance / 1000).toFixed(2),
-      ef: ef.toFixed(2),
-      color: `hsl(${hue}, 60%, ${lightness}%)`,
-      dateProgress: dateProgress
+      runs,
+      asOfKey,
+      asOfDay,
+      year,
+      hrModel,
+      scoreLoad,
+      raceList,
+      total: M.summarize(runs),
+      years: M.yearSummaries(runs),
+      months,
+      bestMonth: months.reduce((top, m) => (m.distance > top.distance ? m : top)),
+      easyBand: hrModel && M.easyBandBpm(hrModel),
+      toDate: M.distanceToDate(runs, asOfKey),
+      cumulative: M.cumulativeByYear(runs, asOfKey),
+      byDay: M.dailyRuns(runs),
+      load: M.trainingLoadHistory(activities, asOfDay, scoreLoad),
+      easyPace: M.easyPaceByQuarter(runs, hrModel),
+      intensity: M.intensityByYear(runs, hrModel),
+      predictions: M.racePredictions(raceList, asOfDay)
     };
-  });
+  }
 
-  // Calculate LOWESS smoothed trend line
-  // Sort by HR for LOWESS
-  const sortedData = [...scatterData].sort((a, b) => a.x - b.x);
+  /* ---------- building blocks ---------- */
 
-  // Simple LOWESS implementation with tricube weighting
-  const lowessSmooth = (data, bandwidth = 0.3) => {
-    const n = data.length;
-    const result = [];
+  function renderStats(id, stats) {
+    el(id).innerHTML = stats
+      .map(({ label, value, unit, detail }) => `
+        <div class="run-stat">
+          <dt>${label}</dt>
+          <dd>
+            <span class="run-stat-value">${value}</span>${unit ? `<span class="run-stat-unit">${unit}</span>` : ''}
+            ${detail ? `<span class="run-stat-detail">${detail}</span>` : ''}
+          </dd>
+        </div>`)
+      .join('');
+  }
 
-    for (let i = 0; i < n; i++) {
-      const x0 = data[i].x;
-      const distances = data.map(d => Math.abs(d.x - x0));
-      const maxDist = Math.max(...distances);
+  function renderTable(id, columns, rows) {
+    const head = columns
+      .map(c => `<th scope="col"${c.className ? ` class="${c.className}"` : ''}>${c.label}</th>`)
+      .join('');
+    const body = rows
+      .map(row => `<tr>${columns
+        .map(c => `<td${c.className ? ` class="${c.className}"` : ''}>${c.cell(row)}</td>`)
+        .join('')}</tr>`)
+      .join('');
+    el(id).innerHTML = `<table class="run-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  }
 
-      // Calculate weights using tricube kernel
-      const weights = distances.map(d => {
-        const u = d / (maxDist * bandwidth);
-        return u < 1 ? Math.pow(1 - Math.pow(u, 3), 3) : 0;
-      });
+  const keyItem = (kind, label) => `<span><i class="run-swatch run-swatch-${kind}" aria-hidden="true"></i>${label}</span>`;
+  const dash = '<span class="run-empty-cell">–</span>';
 
-      // Weighted linear regression
-      const sumW = weights.reduce((a, b) => a + b, 0);
-      const sumWX = weights.reduce((sum, w, j) => sum + w * data[j].x, 0);
-      const sumWY = weights.reduce((sum, w, j) => sum + w * data[j].y, 0);
-      const sumWXX = weights.reduce((sum, w, j) => sum + w * data[j].x * data[j].x, 0);
-      const sumWXY = weights.reduce((sum, w, j) => sum + w * data[j].x * data[j].y, 0);
+  /* ---------- sections ---------- */
 
-      const meanX = sumWX / sumW;
-      const meanY = sumWY / sumW;
+  function renderAllTime(view) {
+    const { total, runs } = view;
+    const lap = km(total.distance) / EQUATOR_KM;
+    const distance = lap >= 1
+      ? `${oneDecimal.format(lap)} laps of the equator`
+      : `${percent(lap)} of the way around the equator`;
+    el('run-alltime-note').textContent =
+      `Every run since ${formatDay(runs[0].day, 'monthYear')}. That is ${distance}. Updated ${formatDay(view.asOfDay, 'full')}.`;
 
-      const slope = (sumWXY - sumW * meanX * meanY) / (sumWXX - sumW * meanX * meanX);
-      const intercept = meanY - slope * meanX;
+    renderStats('run-alltime-stats', [
+      { label: 'Distance', value: whole.format(km(total.distance)), unit: 'km' },
+      { label: 'Runs', value: whole.format(total.count) },
+      { label: 'Time', value: whole.format(total.moving / 3600), unit: 'h' },
+      { label: 'Climbed', value: whole.format(total.climb), unit: 'm' }
+    ]);
+  }
 
-      result.push({ x: x0, y: slope * x0 + intercept });
+  function renderYear(view) {
+    const { year, toDate, asOfKey } = view;
+    const summary = view.years.find(y => y.year === year);
+    el('run-year-title').textContent = `${year} so far`;
+    if (!summary) {
+      el('run-year-note').textContent = 'No runs yet this year.';
+      return;
     }
 
-    return result;
+    const lastYear = String(+year - 1);
+    const sentences = [];
+    if (toDate[lastYear]) {
+      const gap = Math.round(km(toDate[year] - toDate[lastYear]));
+      sentences.push(gap === 0
+        ? `Level with ${lastYear} at this date.`
+        : `${whole.format(Math.abs(gap))} km ${gap > 0 ? 'ahead of' : 'behind'} ${lastYear} at this date.`);
+    }
+    const projected = Math.round(km(M.projectYearEnd(toDate[year], asOfKey)) / 10) * 10;
+    sentences.push(`At this rate the year ends near ${whole.format(projected)} km.`);
+    el('run-year-note').textContent = sentences.join(' ');
+
+    renderStats('run-year-stats', [
+      { label: 'Distance', value: whole.format(km(summary.distance)), unit: 'km' },
+      { label: 'Runs', value: whole.format(summary.count) },
+      { label: 'Time', value: whole.format(summary.moving / 3600), unit: 'h' },
+      { label: 'Average pace', value: M.formatPace(summary.pace), unit: '/km' }
+    ]);
+
+    const earlier = view.cumulative.years.filter(c => c.year !== year).map(c => c.year);
+    el('run-cumulative-key').innerHTML = keyItem('accent', year) +
+      (earlier.length ? keyItem('context', `${earlier[0]} to ${earlier[earlier.length - 1]}`) : '');
+  }
+
+  function calendarLevel(distanceKm) {
+    return 1 + CALENDAR_LEVELS_KM.filter(limit => distanceKm >= limit).length;
+  }
+
+  function describeDay(view, day) {
+    const runs = view.byDay.get(day);
+    if (!runs) return `${formatDay(day, 'weekday')}: rest day`;
+    const { distance, pace } = M.summarize(runs);
+    const names = runs.map(r => r.name).join(' + ');
+    return `${formatDay(day, 'weekday')}: ${names}, ${formatKm(distance)} km at ${M.formatPace(pace)}/km`;
+  }
+
+  function renderCalendar(view) {
+    const { asOfDay, byDay } = view;
+    const lastWeek = M.toWeek(asOfDay);
+    const firstDay = M.weekStartDay(lastWeek - CALENDAR_WEEKS + 1);
+
+    let cells = '';
+    const labels = [];
+    let previousMonth = null;
+    for (let week = 0; week < CALENDAR_WEEKS; week++) {
+      const monday = firstDay + week * 7;
+      const month = M.toDateKey(monday).slice(0, 7);
+      if (month !== previousMonth) labels.push({ week, text: formatDay(monday, 'month') });
+      previousMonth = month;
+
+      for (let offset = 0; offset < 7; offset++) {
+        const day = monday + offset;
+        if (day > asOfDay) {
+          cells += '<i class="run-cal-cell is-future"></i>';
+          continue;
+        }
+        const runs = byDay.get(day);
+        const level = runs ? calendarLevel(km(M.sum(runs, r => r.distance))) : 0;
+        cells += `<i class="run-cal-cell l${level}" data-day="${day}"></i>`;
+      }
+    }
+
+    // Drop a label without enough columns before the next label or the edge.
+    const months = labels
+      .filter((label, i) => (labels[i + 1] ? labels[i + 1].week : CALENDAR_WEEKS) - label.week >= MONTH_LABEL_COLUMNS)
+      .map(label => `<span style="grid-column:${label.week + 1}">${label.text}</span>`)
+      .join('');
+    const legend = [0, 1, 2, 3, 4].map(level => `<i class="run-cal-cell l${level}"></i>`).join('');
+    el('run-calendar').innerHTML = `
+      <div class="run-cal-scroll">
+        <div class="run-cal" role="img" aria-labelledby="run-calendar-note">
+          <div class="run-cal-months" style="grid-template-columns:repeat(${CALENDAR_WEEKS}, minmax(0, 1fr))">${months}</div>
+          <div class="run-cal-weekdays" aria-hidden="true"><span>Mon</span><span>Wed</span><span>Fri</span><span>Sun</span></div>
+          <div class="run-cal-grid">${cells}</div>
+        </div>
+      </div>
+      <div class="run-cal-footer">
+        <p class="run-cal-detail" aria-live="polite"></p>
+        <p class="run-cal-legend" aria-hidden="true">Shorter ${legend} Longer</p>
+      </div>`;
+
+    const windowDays = asOfDay - firstDay + 1;
+    const inWindow = view.runs.filter(r => r.day >= firstDay);
+    const runDays = new Set(inWindow.map(r => r.day)).size;
+    el('run-calendar-note').textContent =
+      `Ran on ${runDays} of the last ${windowDays} days, ${whole.format(km(M.sum(inWindow, r => r.distance)))} km in total. Each square is a day, shaded by distance.`;
+
+    const grid = el('run-calendar').querySelector('.run-cal-grid');
+    const detail = el('run-calendar').querySelector('.run-cal-detail');
+    const latest = view.runs[view.runs.length - 1].day;
+    let selected = null;
+    const show = day => {
+      detail.textContent = describeDay(view, day);
+    };
+    const select = cell => {
+      if (selected) selected.classList.remove('is-selected');
+      selected = cell;
+      selected.classList.add('is-selected');
+      show(+cell.dataset.day);
+    };
+    const cellOf = event => event.target.closest('.run-cal-cell[data-day]');
+
+    grid.addEventListener('mouseover', event => {
+      const cell = cellOf(event);
+      if (cell) show(+cell.dataset.day);
+    });
+    grid.addEventListener('mouseleave', () => show(+selected.dataset.day));
+    grid.addEventListener('click', event => {
+      const cell = cellOf(event);
+      if (cell) select(cell);
+    });
+    select(grid.querySelector(`[data-day="${latest}"]`));
+
+    // On narrow screens the grid scrolls; start at the most recent weeks.
+    const scroller = el('run-calendar').querySelector('.run-cal-scroll');
+    scroller.scrollLeft = scroller.scrollWidth;
+  }
+
+  const runColumns = {
+    date: { label: 'Date', className: 'nowrap', cell: r => formatDay(r.day) },
+    distance: { label: 'Distance', className: 'num', cell: r => `${formatKm(r.distance)} km` },
+    pace: { label: 'Pace', className: 'num', cell: r => `${M.formatPace(M.paceOf(r))}/km` },
+    hr: { label: 'Avg HR', className: 'num wide-only', cell: r => (r.hr ? Math.round(r.hr) : dash) },
+    maxHr: { label: 'Max HR', className: 'num wide-only', cell: r => (r.maxHr ? Math.round(r.maxHr) : dash) }
   };
+  const nameColumn = label => ({ label, className: 'name', cell: r => escapeHtml(r.name) });
 
-  const trendLineData = lowessSmooth(sortedData, 0.4);
+  function renderRecent(view) {
+    renderTable('run-recent', [
+      runColumns.date,
+      nameColumn('Run'),
+      runColumns.distance,
+      runColumns.pace,
+      runColumns.hr,
+      { label: 'Climb', className: 'num wide-only', cell: r => `${Math.round(r.climb)} m` }
+    ], view.runs.slice(-RECENT_RUNS).reverse());
+  }
 
-  // Detect outliers using signed residuals
-  // Positive residual = slower than trend (bad), Negative residual = faster than trend (good)
-  const signedResiduals = scatterData.map((d, i) => {
-    const trendY = trendLineData.find(t => Math.abs(t.x - d.x) < 1)?.y || d.y;
-    return d.y - trendY; // Keep sign: positive = slower, negative = faster
-  });
-
-  const absResiduals = signedResiduals.map(r => Math.abs(r));
-  const meanResidual = absResiduals.reduce((a, b) => a + b, 0) / absResiduals.length;
-  const stdResidual = Math.sqrt(
-    absResiduals.reduce((sum, r) => sum + Math.pow(r - meanResidual, 2), 0) / absResiduals.length
-  );
-
-  const threshold = 2 * stdResidual;
-
-  // Classify outliers
-  scatterData.forEach((d, i) => {
-    const signedRes = signedResiduals[i];
-    d.isPositiveOutlier = signedRes < -threshold; // Faster than expected (GOOD)
-    d.isNegativeOutlier = signedRes > threshold;  // Slower than expected (BAD)
-    d.isOutlier = d.isPositiveOutlier || d.isNegativeOutlier;
-  });
-
-  // Calculate overall and recent EF statistics
-  const allEF = scatterData.map(d => parseFloat(d.ef));
-  const meanEF = (allEF.reduce((a, b) => a + b, 0) / allEF.length).toFixed(2);
-
-  // Last 30 days
-  const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
-  const recentEF = scatterData
-    .filter(d => d.timestamp >= thirtyDaysAgo)
-    .map(d => parseFloat(d.ef));
-  const recentMeanEF = recentEF.length > 0
-    ? (recentEF.reduce((a, b) => a + b, 0) / recentEF.length).toFixed(2)
-    : meanEF;
-
-  const options = {
-    series: [
+  function renderYears(view) {
+    const longest = Math.max(...view.years.map(y => y.distance));
+    renderTable('run-years', [
+      { label: 'Year', cell: y => y.year },
       {
-        name: 'Runs',
-        type: 'scatter',
-        data: scatterData
+        label: 'Distance',
+        className: 'bar',
+        cell: y => `
+          <div class="run-bar-cell">
+            <span class="run-bar${y.year === view.year ? ' is-current' : ''}"><span style="width:${(y.distance / longest) * 100}%"></span></span>
+            <span class="run-bar-value">${whole.format(km(y.distance))} km</span>
+          </div>`
       },
+      { label: 'Runs', className: 'num', cell: y => y.count },
+      { label: 'Time', className: 'num wide-only', cell: y => `${whole.format(y.moving / 3600)} h` },
+      { label: 'Pace', className: 'num', cell: y => `${M.formatPace(y.pace)}/km` },
+      { label: 'Climbed', className: 'num wide-only', cell: y => `${whole.format(y.climb)} m` },
+      { label: 'Longest', className: 'num wide-only', cell: y => `${formatKm(y.longest.distance)} km` }
+    ], [...view.years].reverse());
+  }
+
+  function renderTrendNotes(view) {
+    const { months, bestMonth, easyPace, intensity } = view;
+
+    const lastTwelve = months.slice(0, -1).slice(-12); // the current month is still in progress
+    el('run-monthly-note').textContent =
+      `${whole.format(km(M.sum(lastTwelve, m => m.distance)) / lastTwelve.length)} km a month on average over the last 12 full months. ` +
+      `The record is ${whole.format(km(bestMonth.distance))} km in ${formatMonth(bestMonth.month)}.`;
+
+    if (!easyPace.length) {
+      el('run-easy-figure').hidden = true;
+    } else {
+      const [low, high] = view.easyBand;
+      const latest = easyPace[easyPace.length - 1];
+      const [latestYear, latestQuarter] = latest.quarter.split('-');
+      const yearBefore = easyPace.find(q => q.quarter === `${+latestYear - 1}-${latestQuarter}`);
+      let comparison = '';
+      if (yearBefore) {
+        const gap = Math.round(yearBefore.pace - latest.pace);
+        comparison = gap === 0
+          ? ', the same as a year earlier'
+          : `, ${Math.abs(gap)} s/km ${gap > 0 ? 'faster' : 'slower'} than a year earlier`;
+      }
+      el('run-easy-note').textContent =
+        `Median pace of steady runs at ${low} to ${high} bpm, per quarter. Faster at the same heart rate means fitter. ` +
+        `Now ${M.formatPace(latest.pace)}/km${comparison}.`;
+    }
+
+    if (!intensity.length) {
+      el('run-intensity-figure').hidden = true;
+    } else {
+      const latest = intensity[intensity.length - 1];
+      const previous = intensity[intensity.length - 2];
+      el('run-intensity-note').textContent =
+        `Share of running time by each run's average heart rate. In ${latest.year}, ${percent(latest.shares[0])} was easy` +
+        (previous ? `, against ${percent(previous.shares[0])} in ${previous.year}.` : '.');
+      renderIntensity(view);
+    }
+  }
+
+  function renderIntensity(view) {
+    const { intensity, hrModel } = view;
+    const zones = M.INTENSITY_ZONES;
+    const bounds = zones.map(z => Math.round(z.upTo * hrModel.max));
+    const range = i => {
+      if (i === 0) return `under ${bounds[0]} bpm`;
+      if (i === zones.length - 1) return `${bounds[i - 1]} bpm and up`;
+      return `${bounds[i - 1]} to ${bounds[i]} bpm`;
+    };
+
+    const key = zones
+      .map((z, i) => `<span><i class="run-zone z${i + 1}" aria-hidden="true"></i>${z.name} <small>${range(i)}</small></span>`)
+      .join('');
+    const rows = [...intensity].reverse()
+      .map(({ year, shares }) => {
+        const segments = shares
+          .map((share, i) => (share > 0
+            ? `<span class="run-zone z${i + 1}" style="flex-grow:${share * 1000}" title="${zones[i].name}: ${percent(share)}">${share >= 0.08 ? percent(share) : ''}</span>`
+            : ''))
+          .join('');
+        const label = shares.map((share, i) => `${zones[i].name} ${percent(share)}`).join(', ');
+        return `<div class="run-zone-row"><span>${year}</span><div class="run-zone-bar" role="img" aria-label="${year}: ${label}">${segments}</div></div>`;
+      })
+      .join('');
+    el('run-intensity').innerHTML = `<p class="run-key run-zone-key">${key}</p>${rows}`;
+  }
+
+  function renderLoad(view) {
+    const { load } = view;
+    const today = load[load.length - 1];
+    const before = load[Math.max(0, load.length - 1 - FITNESS_TREND_DAYS)];
+    const peak = load.reduce((top, d) => (d.fitness > top.fitness ? d : top), load[0]);
+    const trend = Math.round(today.fitness - before.fitness);
+    const weeks = `${FITNESS_TREND_DAYS / 7} weeks`;
+
+    el('run-load-note').textContent =
+      `Fitness is the ${M.FITNESS_DAYS}-day average of daily training load, fatigue the ${M.FATIGUE_DAYS}-day average. ` +
+      'Form is fitness minus fatigue: negative while training hard, positive when rested.';
+
+    renderStats('run-load-stats', [
       {
-        name: 'Trend',
-        type: 'line',
-        data: trendLineData
-      }
-    ],
-    chart: {
-      type: 'line', // Changed from 'scatter' to support mixed types
-      height: 400,
-      toolbar: {
-        show: false
+        label: 'Fitness',
+        value: whole.format(today.fitness),
+        detail: trend === 0 ? `Level over ${weeks}` : `${signed(trend)} in ${weeks}`
       },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-      zoom: {
-        enabled: false
-      },
-      animations: {
-        enabled: true,
-        speed: 800
-      }
-    },
-    colors: ['#4169E1', colors.textSecondary],
-    stroke: {
-      width: [0, 3],
-      dashArray: [0, 0],
-      curve: ['straight', 'straight']
-    },
-    fill: {
-      opacity: [1, 0.5]
-    },
-    xaxis: {
-      title: {
-        text: 'Average Heart Rate (bpm)',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px',
-          fontWeight: 600
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      tickAmount: 8
-    },
-    yaxis: {
-      title: {
-        text: 'Pace (min/km)',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px',
-          fontWeight: 600
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        },
-        formatter: function(val) {
-          const minutes = Math.floor(val);
-          const seconds = Math.round((val - minutes) * 60);
-          return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-        }
-      },
-      reversed: true // Lower pace (faster) at top
-    },
-    grid: {
-      borderColor: colors.borderPrimary,
-      strokeDashArray: 3
-    },
-    markers: {
-      size: [7, 0],
-      strokeWidth: 2,
-      strokeColors: [colors.bgPrimary],
-      hover: {
-        size: 10
-      },
-      discrete: scatterData.map((d, index) => ({
-        seriesIndex: 0,
-        dataPointIndex: index,
-        fillColor: d.isPositiveOutlier ? '#4CAF50' : (d.isNegativeOutlier ? '#FF6B6B' : d.color),
-        strokeColor: d.isOutlier ? colors.bgPrimary : colors.bgPrimary,
-        strokeWidth: d.isOutlier ? 3 : 2,
-        size: d.isOutlier ? 9 : 7,
-        shape: d.isOutlier ? 'square' : 'circle'
-      }))
-    },
-    legend: {
-      show: true,
-      position: 'top',
-      horizontalAlign: 'right',
-      markers: {
-        width: 12,
-        height: 12
-      },
-      labels: {
-        colors: colors.textPrimary
-      }
-    },
-    tooltip: {
-      shared: false,
-      intersect: true,
-      custom: function({ series, seriesIndex, dataPointIndex, w }) {
-        if (seriesIndex === 1) return ''; // No tooltip for trend line
+      { label: 'Fatigue', value: whole.format(today.fatigue) },
+      { label: 'Form', value: signed(Math.round(today.form)), detail: M.describeForm(today.form) },
+      { label: 'Peak fitness', value: whole.format(peak.fitness), detail: formatDay(peak.day, 'monthYear') }
+    ]);
+  }
 
-        const colors = getThemeColors();
-        const d = scatterData[dataPointIndex];
-        const minutes = Math.floor(d.y);
-        const seconds = Math.round((d.y - minutes) * 60);
-        const pace = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+  function renderRaces(view) {
+    const { raceList, predictions } = view;
+    if (!raceList.length) {
+      el('run-races-section').hidden = true;
+      return;
+    }
 
-        let outlierBadge = '';
-        if (d.isPositiveOutlier) {
-          outlierBadge = '<span style="display: inline-block; background: #4CAF50; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 6px;">▲ FASTER</span>';
-        } else if (d.isNegativeOutlier) {
-          outlierBadge = '<span style="display: inline-block; background: #FF6B6B; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 6px;">▼ SLOWER</span>';
-        }
+    if (predictions) {
+      const { race, times } = predictions;
+      el('run-races-note').textContent =
+        `Best race of the last 12 months: ${race.name}, ${formatKm(race.distance)} km in ${M.formatDuration(race.elapsed)}. ` +
+        'The same effort at other distances would be worth:';
+      renderStats('run-predictions', times.map(t => ({ label: t.name, value: M.formatDuration(t.seconds) })));
+    } else {
+      el('run-predictions').hidden = true;
+    }
 
-        return `<div style="padding: 12px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 6px; min-width: 220px;">
-          <strong style="color: ${colors.textSecondary}; font-size: 13px;">${d.name}</strong>${outlierBadge}<br>
-          <div style="margin-top: 8px; font-size: 12px; color: ${colors.textMuted};">
-            <strong>Date:</strong> ${d.date}<br>
-            <strong>Distance:</strong> ${d.distance} km<br>
-            <strong>HR:</strong> ${Math.round(d.x)} bpm<br>
-            <strong>Pace:</strong> ${pace} /km<br>
-            <strong>EF:</strong> ${d.ef}
-          </div>
-        </div>`;
+    const bestVdot = Math.max(...raceList.map(r => r.vdot));
+    renderTable('run-races', [
+      runColumns.date,
+      nameColumn('Race'),
+      runColumns.distance,
+      { label: 'Time', className: 'num', cell: r => M.formatDuration(r.elapsed) },
+      { label: 'Pace', className: 'num wide-only', cell: r => `${M.formatPace(r.pace)}/km` },
+      {
+        label: 'VDOT',
+        className: 'num',
+        cell: r => (r.vdot === bestVdot ? `<strong title="Best race">${oneDecimal.format(r.vdot)}</strong>` : oneDecimal.format(r.vdot))
       }
-    },
-    annotations: {
-      position: 'back',
-      yaxis: [],
-      points: scatterData
-        .filter(d => d.isOutlier)
-        .map((d, idx) => ({
-          x: d.x,
-          y: d.y,
-          marker: {
-            size: 0
-          },
-          label: {
-            text: d.isPositiveOutlier ? '▲' : '▼',
-            offsetY: d.isPositiveOutlier ? -12 : -12,
-            style: {
-              fontSize: '14px',
-              background: 'transparent',
-              color: d.isPositiveOutlier ? '#4CAF50' : '#FF6B6B',
-              fontWeight: 'bold'
-            }
-          }
+    ], raceList);
+  }
+
+  function renderWorkouts(view) {
+    const workouts = view.runs.filter(M.isWorkout).slice(-RECENT_WORKOUTS).reverse();
+    if (!workouts.length) {
+      el('run-workouts-section').hidden = true;
+      return;
+    }
+    renderTable('run-workouts', [
+      runColumns.date,
+      nameColumn('Workout'),
+      runColumns.distance,
+      runColumns.pace,
+      runColumns.hr,
+      runColumns.maxHr,
+      { label: 'Load', className: 'num', cell: r => Math.round(view.scoreLoad(r)) }
+    ], workouts);
+  }
+
+  function renderRecords(view) {
+    const { runs, total, bestMonth, asOfDay } = view;
+    const week = M.biggestBy(runs, r => M.toWeek(r.day));
+    const streaks = M.weekStreaks(runs, asOfDay);
+    const eddington = M.eddington(runs);
+    const start = M.favouriteHour(runs);
+
+    const records = [
+      {
+        label: 'Longest run',
+        value: `${formatKm(total.longest.distance)} km`,
+        detail: `${escapeHtml(total.longest.name)}, ${formatDay(total.longest.day)}`
+      },
+      { label: 'Biggest week', value: `${formatKm(week.distance)} km`, detail: `Week of ${formatDay(M.weekStartDay(week.key))}` },
+      { label: 'Biggest month', value: `${whole.format(km(bestMonth.distance))} km`, detail: formatMonth(bestMonth.month) },
+      {
+        label: 'Weekly streak',
+        value: `${streaks.current} weeks`,
+        detail: `in a row with at least one run. The record is ${streaks.longest}.`
+      },
+      { label: 'Eddington number', value: eddington, detail: `${eddington} km or more on ${eddington} different days` },
+      { label: 'Favourite start', value: `${start.hour}:00`, detail: `${percent(start.share)} of all runs start in this hour` }
+    ];
+    el('run-records').innerHTML = records
+      .map(r => `<div class="run-record"><dt>${r.label}</dt><dd><span class="run-record-value">${r.value}</span><span class="run-record-detail">${r.detail}</span></dd></div>`)
+      .join('');
+  }
+
+  function renderMethod(view) {
+    const { hrModel, easyBand } = view;
+    const paragraphs = [
+      'Activities come from Strava and refresh once a day. Totals count runs only.',
+      'Race equivalents use the Daniels and Gilbert VDOT formula on finish time and GPS distance. It assumes an all-out effort, so it is only applied to races.'
+    ];
+    if (hrModel) {
+      paragraphs.splice(1, 0,
+        `Max heart rate (${hrModel.max} bpm) is read from the data: the ${M.HR_MODEL.maxPercentile * 100}th percentile of per-run peaks over the last ${M.HR_MODEL.maxWindowYears} years. ` +
+        `Threshold heart rate (${hrModel.threshold} bpm) is ${M.HR_MODEL.thresholdFraction * 100}% of that, which matches my hour-long races. Resting heart rate is assumed to be ${hrModel.resting} bpm.`,
+        'Training load is the Banister heart-rate impulse of each activity, scaled so an hour at threshold scores 100. Runs without heart rate get my median load per hour. ' +
+        `Fitness and fatigue are ${M.FITNESS_DAYS}-day and ${M.FATIGUE_DAYS}-day exponential averages, calculated from the very first run.`,
+        `Easy effort means steady runs of ${M.STEADY_MIN_KM} km or more, races and workouts excluded, with an average heart rate of ${easyBand[0]} to ${easyBand[1]} bpm. ` +
+        'Heart rate comes from three different watches over the years, so small shifts can be the sensor rather than me.'
+      );
+    }
+    el('run-method').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+  }
+
+  /* ---------- charts ---------- */
+
+  const charts = [];
+  let drawnWith = null;
+
+  function themeColors() {
+    const style = getComputedStyle(document.documentElement);
+    const read = name => style.getPropertyValue(name).trim();
+    return {
+      dark: document.documentElement.getAttribute('data-theme') === 'dark',
+      font: getComputedStyle(document.body).fontFamily,
+      muted: read('--color-text-muted'),
+      grid: read('--color-border-secondary'),
+      axis: read('--color-border-primary'),
+      surface: read('--color-bg-primary'),
+      ink: read('--color-text-secondary'),
+      accent: read('--run-accent'),
+      context: read('--run-context')
+    };
+  }
+
+  function baseOptions(colors, type, height) {
+    return {
+      chart: {
+        type,
+        height,
+        fontFamily: colors.font,
+        background: 'transparent',
+        toolbar: { show: false },
+        zoom: { enabled: false },
+        selection: { enabled: false },
+        animations: { enabled: false },
+        parentHeightOffset: 0
+      },
+      theme: { mode: colors.dark ? 'dark' : 'light' },
+      dataLabels: { enabled: false },
+      legend: { show: false },
+      grid: {
+        borderColor: colors.grid,
+        strokeDashArray: 0,
+        padding: { top: 0, right: 12, bottom: 0, left: 8 }
+      },
+      states: {
+        hover: { filter: { type: 'none' } },
+        active: { filter: { type: 'none' } }
+      },
+      markers: { size: 0, strokeColors: colors.surface, strokeWidth: 2, hover: { size: 4 } },
+      tooltip: { theme: colors.dark ? 'dark' : 'light', style: { fontSize: '12px' } }
+    };
+  }
+
+  function axisLabels(colors, extra = {}) {
+    return { style: { colors: colors.muted, fontSize: '11px' }, ...extra };
+  }
+
+  // Category axis that prints only the labels `labelOf` returns; every other category stays blank.
+  function categoryAxis(colors, categories, labelOf) {
+    return {
+      type: 'category',
+      categories,
+      axisBorder: { color: colors.axis },
+      axisTicks: { show: false },
+      tooltip: { enabled: false },
+      crosshairs: { stroke: { color: colors.axis, dashArray: 0 } },
+      labels: axisLabels(colors, {
+        rotate: 0,
+        hideOverlappingLabels: false,
+        formatter: value => labelOf(String(value))
+      })
+    };
+  }
+
+  const yearAtJanuary = monthKey => (monthKey.endsWith('-01') ? monthKey.slice(0, 4) : '');
+  const monthAtFirst = dateKey => (dateKey.endsWith('-01') ? formatDay(M.toDay(dateKey), 'month') : '');
+
+  // Tooltip titled by data index, because most category labels are blank.
+  function indexTooltip(base, titleOf, valueOf, extra) {
+    return {
+      ...base.tooltip,
+      x: { formatter: (_value, { dataPointIndex }) => titleOf(dataPointIndex) },
+      y: { formatter: valueOf },
+      ...extra
+    };
+  }
+
+  // Butt caps (the default): round caps would paint a dot for every empty day in a series.
+  const LINE = { width: 2, curve: 'straight' };
+  const SINGLE_SERIES = { marker: { show: false } };
+  const SHARED = { shared: true, intersect: false };
+
+  // Value axis from zero with at most five round steps.
+  function valueAxis(colors, values) {
+    const top = Math.max(...values.filter(v => v !== null), 1);
+    const step = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000]
+      .find(candidate => top / candidate <= 5) || 10000;
+    const max = Math.ceil(top / step) * step;
+    return { min: 0, max, tickAmount: max / step, labels: axisLabels(colors, { formatter: v => whole.format(v) }) };
+  }
+
+  // Pace axis snapped to round steps, faster at the top.
+  function paceAxis(colors, values) {
+    const present = values.filter(v => v !== null);
+    const step = Math.max(...present) - Math.min(...present) > 60 ? 20 : 10;
+    const min = Math.floor(Math.min(...present) / step) * step;
+    const max = Math.ceil(Math.max(...present) / step) * step;
+    return {
+      reversed: true,
+      min,
+      max,
+      tickAmount: (max - min) / step,
+      labels: axisLabels(colors, { formatter: M.formatPace })
+    };
+  }
+
+  function draw(id, options) {
+    const chart = new ApexCharts(el(id), options);
+    chart.render();
+    charts.push(chart);
+  }
+
+  function drawCumulative(view, colors, height, compact) {
+    const { slots, years } = view.cumulative;
+    const isCurrent = y => y.year === view.year;
+    const base = baseOptions(colors, 'line', height);
+    draw('run-cumulative-chart', {
+      ...base,
+      series: years.map(y => ({ name: y.year, data: y.values.map(v => (v === null ? null : Math.round(v))) })),
+      colors: years.map(y => (isCurrent(y) ? colors.accent : colors.context)),
+      stroke: { ...LINE, width: years.map(y => (isCurrent(y) ? 2.5 : 1.25)) },
+      // Every other month when space is tight.
+      xaxis: categoryAxis(colors, slots, key => (compact && +key.slice(5, 7) % 2 === 0 ? '' : monthAtFirst(key))),
+      yaxis: valueAxis(colors, years.flatMap(y => y.values)),
+      tooltip: indexTooltip(
+        base,
+        i => formatDay(M.toDay(slots[i]), 'dayMonth'),
+        v => (Number.isFinite(v) ? `${whole.format(v)} km` : ''),
+        { ...SHARED, inverseOrder: true }
+      )
+    });
+  }
+
+  function drawMonthlyDistance(months, colors, height) {
+    const base = baseOptions(colors, 'bar', height);
+    draw('run-monthly-chart', {
+      ...base,
+      series: [{
+        name: 'Distance',
+        data: months.map((m, i) => ({
+          x: m.month,
+          y: Math.round(km(m.distance)),
+          // The last month is still in progress.
+          fillColor: i === months.length - 1 ? colors.context : colors.ink
         }))
-    }
-  };
-
-  const chart = new ApexCharts(document.querySelector('#efficiency-chart'), options);
-  chart.render();
-  chartInstances.efficiency = chart;
-
-  // Add EF statistics and interpretation below chart
-  const chartContainer = document.querySelector('#efficiency-chart').parentElement;
-  let statsElement = chartContainer.querySelector('.efficiency-stats');
-
-  if (!statsElement) {
-    statsElement = document.createElement('div');
-    statsElement.className = 'efficiency-stats';
-    chartContainer.appendChild(statsElement);
-  }
-
-  const positiveOutlierCount = scatterData.filter(d => d.isPositiveOutlier).length;
-  const negativeOutlierCount = scatterData.filter(d => d.isNegativeOutlier).length;
-
-  statsElement.innerHTML = `
-    <div class="efficiency-metrics">
-      <div class="efficiency-metric">
-        <span class="metric-label">▲ Better than expected:</span>
-        <span class="metric-value" style="color: #4CAF50;">${positiveOutlierCount}</span>
-      </div>
-      <div class="efficiency-metric">
-        <span class="metric-label">▼ Worse than expected:</span>
-        <span class="metric-value" style="color: #FF6B6B;">${negativeOutlierCount}</span>
-      </div>
-      <div class="efficiency-legend">
-        <div class="legend-gradient-bar"></div>
-        <div class="legend-labels-row">
-          <span>Older</span>
-          <span>Recent</span>
-        </div>
-      </div>
-    </div>
-    <div class="efficiency-info">
-      <p class="efficiency-interpretation">
-        ⚙️ Each dot represents one run. A flatter or upward-shifting <strong>LOWESS trend line</strong> indicates improved aerobic efficiency (faster pace at the same heart rate).
-      </p>
-      <div class="efficiency-outlier-guide">
-        <div class="outlier-guide-item">
-          <span class="outlier-icon" style="color: #4CAF50; font-weight: bold;">▲</span>
-          <span class="outlier-text"><strong>Faster pace</strong> (better efficiency) — pace faster than expected for given HR</span>
-        </div>
-        <div class="outlier-guide-item">
-          <span class="outlier-icon" style="color: #FF6B6B; font-weight: bold;">▼</span>
-          <span class="outlier-text"><strong>Slower pace</strong> (less efficient) — pace slower than expected for given HR</span>
-        </div>
-      </div>
-      <p class="efficiency-features">
-        • <strong>Color:</strong> Light to dark blue shows older to recent runs<br>
-        • <strong>Outliers:</strong> Green squares (▲) and red squares (▼) mark unusual performances (±2σ from trend)<br>
-        • <strong>Trend:</strong> LOWESS smoothed line captures non-linear HR response patterns
-      </p>
-    </div>
-  `;
-}
-
-
-/**
- * Format month string (YYYY-MM) to readable format
- */
-function formatMonth(monthStr) {
-  const [year, month] = monthStr.split('-');
-  const date = new Date(parseInt(year), parseInt(month) - 1, 1);
-  return MONTH_FORMATTER.format(date);
-}
-
-/**
- * Activity Calendar - shows last 4 months of activities with TSS intensity
- */
-function initializeActivityCalendar(data) {
-  if (!data.activities) {
-    return;
-  }
-
-  const calendarElement = document.getElementById('activity-calendar');
-  if (!calendarElement) {
-    return;
-  }
-
-  const colors = getThemeColors();
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-  // Initialize metrics calculator
-  const metrics = new StravaMetrics(data);
-
-  // Get dates for last 4 months
-  const today = new Date();
-  const todayKey = getLocalDateKey(today);
-  const todayDate = parseLocalDateKey(todayKey);
-  const fourMonthsAgo = new Date(todayDate);
-  fourMonthsAgo.setMonth(todayDate.getMonth() - 4);
-
-  // Create map of dates with activities and TSS
-  const activityDates = new Map();
-  data.activities.forEach(activity => {
-    if (activity.type === 'Run') {
-      const dateKey = activity.start_date_local.split('T')[0];
-      const activityDate = parseLocalDateKey(dateKey);
-      if (activityDate && activityDate >= fourMonthsAgo) {
-        if (!activityDates.has(dateKey)) {
-          activityDates.set(dateKey, { activities: [], tss: 0 });
-        }
-        const tss = metrics.calculateTSS(activity);
-        activityDates.get(dateKey).activities.push(activity);
-        activityDates.get(dateKey).tss += tss;
-      }
-    }
-  });
-
-  // Find max TSS for scaling colors
-  let maxTSS = 0;
-  activityDates.forEach(data => {
-    if (data.tss > maxTSS) maxTSS = data.tss;
-  });
-
-  // Generate calendar HTML
-  let calendarHTML = '<div class="calendar-months">';
-
-  // Generate for current month and previous month only
-  for (let i = 1; i >= 0; i--) {
-    const monthDate = new Date(todayDate.getFullYear(), todayDate.getMonth() - i, 1);
-    const monthName = MONTH_LONG_FORMATTER.format(monthDate);
-
-    calendarHTML += `<div class="calendar-month">`;
-    calendarHTML += `<h3 class="calendar-month-title">${monthName}</h3>`;
-    calendarHTML += `<div class="calendar-grid">`;
-
-    // Add day headers
-    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    dayNames.forEach(day => {
-      calendarHTML += `<div class="calendar-day-header">${day}</div>`;
+      }],
+      plotOptions: { bar: { columnWidth: '64%', borderRadius: 2, borderRadiusApplication: 'end' } },
+      xaxis: categoryAxis(colors, months.map(m => m.month), yearAtJanuary),
+      yaxis: valueAxis(colors, months.map(m => km(m.distance))),
+      tooltip: indexTooltip(base, i => formatMonth(months[i].month), v => `${whole.format(v)} km`, SINGLE_SERIES)
     });
-
-    // Calculate first day of month (0 = Sunday, 1 = Monday, etc.)
-    const firstDay = monthDate.getDay();
-    // Adjust so Monday is 0 (shift Sunday to 6)
-    const firstDayAdjusted = firstDay === 0 ? 6 : firstDay - 1;
-
-    // Add empty cells for days before month starts
-    for (let j = 0; j < firstDayAdjusted; j++) {
-      calendarHTML += `<div class="calendar-day calendar-day-empty"></div>`;
-    }
-
-    // Get number of days in month
-    const daysInMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
-
-    // Add days of month
-    for (let day = 1; day <= daysInMonth; day++) {
-      const currentDate = new Date(monthDate.getFullYear(), monthDate.getMonth(), day);
-      const dateKey = getLocalDateKey(currentDate);
-      const dayData = activityDates.get(dateKey);
-      const isFuture = currentDate > todayDate;
-      const hasActivity = !isFuture && dayData && dayData.activities.length > 0;
-
-      let dayClass = 'calendar-day';
-      let dayStyle = '';
-      let detailsText = '';
-      let ariaLabel = '';
-      let tabIndex = '';
-      let role = '';
-      let pressed = '';
-
-      if (hasActivity) {
-        dayClass += ' calendar-day-active';
-
-        // Calculate color intensity based on TSS (0-100% scale)
-        const intensity = Math.min(dayData.tss / Math.max(maxTSS, 100), 1);
-        // Use grayscale from light to dark gray
-        const grayValue = Math.round(255 - (intensity * 180)); // 255 (light) to 75 (dark)
-        const textColor = grayValue < 140 ? '#ffffff' : '#0a0a0a';
-        const borderColor = isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.15)';
-        dayStyle = `background-color: rgb(${grayValue}, ${grayValue}, ${grayValue}); color: ${textColor}; border-color: ${borderColor};`;
-      }
-
-      let title = '';
-      if (hasActivity) {
-        const totalDistance = dayData.activities.reduce((sum, a) => sum + a.distance, 0) / 1000;
-        detailsText = `${dayData.activities.length} run${dayData.activities.length > 1 ? 's' : ''} | ${totalDistance.toFixed(1)} km | TSS ${Math.round(dayData.tss)}`;
-        title = detailsText;
-        ariaLabel = `${formatDateFromISO(dateKey)}: ${detailsText}`;
-        tabIndex = ' tabindex="0"';
-        role = ' role="button"';
-        pressed = ' aria-pressed="false"';
-      }
-
-      const safeTitle = title.replace(/"/g, '&quot;');
-      const safeDetails = detailsText.replace(/"/g, '&quot;');
-      const safeAria = ariaLabel.replace(/"/g, '&quot;');
-
-      calendarHTML += `<div class="${dayClass}" style="${dayStyle}" title="${safeTitle}" data-date="${dateKey}" data-details="${safeDetails}" aria-label="${safeAria}"${tabIndex}${role}${pressed}>`;
-      calendarHTML += `<span class="calendar-day-number">${day}</span>`;
-      calendarHTML += `</div>`;
-    }
-
-    calendarHTML += `</div>`; // calendar-grid
-    calendarHTML += `</div>`; // calendar-month
   }
 
-  calendarHTML += '</div>'; // calendar-months
-
-  // Add gradient legend below calendars
-  calendarHTML += '<div class="calendar-legend">';
-  calendarHTML += '<span class="legend-label">Training Load:</span>';
-  calendarHTML += '<div class="legend-gradient"></div>';
-  calendarHTML += '<div class="legend-labels">';
-  calendarHTML += '<span class="legend-text">0 TSS</span>';
-  calendarHTML += `<span class="legend-text">${Math.round(maxTSS || 0)} TSS</span>`;
-  calendarHTML += '</div>';
-  calendarHTML += '</div>';
-  calendarHTML += '<div class="calendar-details" aria-live="polite">';
-  calendarHTML += '<span class="calendar-details-label">Selected day:</span>';
-  calendarHTML += '<span class="calendar-details-value">Tap a day to see details.</span>';
-  calendarHTML += '</div>';
-
-  calendarElement.innerHTML = calendarHTML;
-
-  const defaultDetailsText = shouldUseCompactVisuals()
-    ? 'Tap a day to see details.'
-    : 'Hover, focus, or click a day to see details.';
-
-  const detailsValue = calendarElement.querySelector('.calendar-details-value');
-  const activeDays = Array.from(calendarElement.querySelectorAll('.calendar-day-active'));
-  let selectedDay = null;
-
-  const detailTextForDay = (dayEl) => {
-    const dateKey = dayEl.getAttribute('data-date');
-    const details = dayEl.getAttribute('data-details');
-    if (!dateKey || !details) return null;
-    return `${formatDateFromISO(dateKey)} - ${details}`;
-  };
-
-  const applySelection = (dayEl) => {
-    if (!dayEl) return;
-    if (selectedDay && selectedDay !== dayEl) {
-      selectedDay.classList.remove('calendar-day-selected');
-      selectedDay.setAttribute('aria-pressed', 'false');
-    }
-    selectedDay = dayEl;
-    selectedDay.classList.add('calendar-day-selected');
-    selectedDay.setAttribute('aria-pressed', 'true');
-    const selectedDetails = detailTextForDay(dayEl);
-    if (detailsValue && selectedDetails) {
-      detailsValue.textContent = selectedDetails;
-    }
-  };
-
-  const updateDetails = (dayEl) => {
-    const text = detailTextForDay(dayEl);
-    if (detailsValue && text) {
-      detailsValue.textContent = text;
-    }
-  };
-
-  if (detailsValue) {
-    detailsValue.textContent = defaultDetailsText;
-  }
-
-  activeDays.forEach(dayEl => {
-    dayEl.addEventListener('mouseenter', () => updateDetails(dayEl));
-    dayEl.addEventListener('focus', () => updateDetails(dayEl));
-    dayEl.addEventListener('mouseleave', () => {
-      if (selectedDay) {
-        updateDetails(selectedDay);
-      } else if (detailsValue) {
-        detailsValue.textContent = defaultDetailsText;
-      }
+  function drawPace(id, colors, height, { name, categories, paces, labelOf, titleOf, dots }) {
+    const base = baseOptions(colors, 'line', height);
+    draw(id, {
+      ...base,
+      series: [{ name, data: paces }],
+      colors: [colors.ink],
+      stroke: LINE,
+      markers: dots ? { ...base.markers, size: 4, hover: { size: 5 } } : base.markers,
+      xaxis: categoryAxis(colors, categories, labelOf),
+      yaxis: paceAxis(colors, paces),
+      tooltip: indexTooltip(base, titleOf, v => `${M.formatPace(v)}/km`, SINGLE_SERIES)
     });
-    dayEl.addEventListener('blur', () => {
-      if (selectedDay) {
-        updateDetails(selectedDay);
-      } else if (detailsValue) {
-        detailsValue.textContent = defaultDetailsText;
-      }
+  }
+
+  function drawMonthlyPace(months, colors, height) {
+    drawPace('run-pace-chart', colors, height, {
+      name: 'Average pace',
+      categories: months.map(m => m.month),
+      paces: months.map(m => (m.count ? Math.round(m.pace) : null)),
+      labelOf: yearAtJanuary,
+      titleOf: i => formatMonth(months[i].month)
     });
-    dayEl.addEventListener('click', () => applySelection(dayEl));
-    dayEl.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        applySelection(dayEl);
-      }
+  }
+
+  function drawEasyPace(quarters, colors, height) {
+    if (!quarters.length) return;
+    drawPace('run-easy-chart', colors, height, {
+      name: 'Easy pace',
+      categories: quarters.map(q => q.quarter),
+      paces: quarters.map(q => Math.round(q.pace)),
+      labelOf: quarter => (quarter.endsWith('Q1') ? quarter.slice(0, 4) : ''),
+      titleOf: i => `${quarters[i].quarter.slice(5)} ${quarters[i].quarter.slice(0, 4)}, ${quarters[i].count} runs`,
+      dots: true
     });
-  });
-
-  if (activeDays.length > 0) {
-    const mostRecentActiveDay = activeDays.reduce((latest, current) => {
-      const latestDate = latest.getAttribute('data-date') || '';
-      const currentDate = current.getAttribute('data-date') || '';
-      return currentDate > latestDate ? current : latest;
-    }, activeDays[0]);
-    applySelection(mostRecentActiveDay);
-  } else if (detailsValue) {
-    detailsValue.textContent = 'No runs in the displayed months.';
-  }
-}
-
-/**
- * VO2max Trend Chart
- */
-function initializeVO2maxChart(data) {
-  if (!data.activities) {
-    return;
   }
 
-  const metrics = new StravaMetrics(data);
-  const vo2History = metrics.generateVO2maxHistory();
-
-  const colors = getThemeColors();
-
-  if (vo2History.length === 0) {
-    document.querySelector('#vo2max-chart').innerHTML =
-      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">Not enough data to estimate VO2max. Need runs >3km with heart rate data.</p>`;
-    return;
+  function drawLoad(view, colors, height) {
+    const days = view.load.slice(-LOAD_CHART_DAYS);
+    const series = pick => days.map(d => Math.round(pick(d) * 10) / 10);
+    const base = baseOptions(colors, 'line', height);
+    draw('run-load-chart', {
+      ...base,
+      series: [
+        { name: 'Fitness', data: series(d => d.fitness) },
+        { name: 'Fatigue', data: series(d => d.fatigue) }
+      ],
+      colors: [colors.accent, colors.context],
+      stroke: { ...LINE, width: [2.5, 1.25] },
+      xaxis: categoryAxis(colors, days.map(d => M.toDateKey(d.day)), monthAtFirst),
+      yaxis: valueAxis(colors, days.map(d => Math.max(d.fitness, d.fatigue))),
+      tooltip: indexTooltip(base, i => formatDay(days[i].day), v => whole.format(v), SHARED)
+    });
   }
 
-  const options = {
-    series: [{
-      name: 'VO2max',
-      data: vo2History.map(h => ({
-        x: parseLocalDateKey(h.date)?.getTime(),
-        y: h.vo2max
-      }))
-    }],
-    chart: {
-      type: 'line',
-      height: 350,
-      toolbar: {
-        show: false
-      },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    stroke: {
-      curve: 'smooth',
-      width: 2
-    },
-    colors: [colors.textPrimary],
-    xaxis: {
-      type: 'datetime',
-      title: {
-        text: 'Date',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        },
-        formatter: function(val) {
-          const parsed = typeof val === 'number' ? val : parseInt(val, 10);
-          return Number.isFinite(parsed) ? formatDateFromTimestamp(parsed) : val;
-        }
-      }
-    },
-    yaxis: {
-      title: {
-        text: 'VO2max (ml/kg/min)',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      min: Math.floor(Math.min(...vo2History.map(h => h.vo2max)) - 2),
-      max: Math.ceil(Math.max(...vo2History.map(h => h.vo2max)) + 2)
-    },
-    grid: {
-      borderColor: colors.borderPrimary
-    },
-    tooltip: {
-      theme: getTooltipTheme(),
-      custom: function({ seriesIndex, dataPointIndex, w }) {
-        const colors = getThemeColors();
-        const point = vo2History[dataPointIndex];
-        return `<div style="padding: 10px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 4px;">
-          <strong>${point.activityName}</strong><br>
-          ${formatDateFromISO(point.date)}<br>
-          <strong>VO2max:</strong> ${point.vo2max.toFixed(1)} ml/kg/min<br>
-          <strong>Distance:</strong> ${(point.distance / 1000).toFixed(2)} km
-        </div>`;
-      }
-    }
-  };
+  function renderCharts(view) {
+    const compact = window.matchMedia(COMPACT_QUERY).matches;
+    const heights = compact ? CHART_HEIGHTS.compact : CHART_HEIGHTS.wide;
+    // Hold the space so the page does not jump when the charts arrive.
+    document.querySelectorAll('.run-chart').forEach(node => {
+      node.style.minHeight = `${node.id === 'run-cumulative-chart' ? heights.cumulative : heights.standard}px`;
+    });
+    if (!window.ApexCharts) return;
 
-  const chart = new ApexCharts(document.querySelector('#vo2max-chart'), options);
-  chart.render();
-  chartInstances.vo2max = chart;
-}
+    // main.js re-applies the current theme on load, so only redraw on a real change.
+    const colors = themeColors();
+    const signature = `${colors.dark}:${compact}`;
+    if (signature === drawnWith) return;
+    drawnWith = signature;
 
-/**
- * Race Predictions Table
- */
-function initializeRacePredictions(data) {
-  if (!data.activities) {
-    return;
+    charts.splice(0).forEach(chart => chart.destroy());
+    const months = view.months.slice(compact ? -24 : -36);
+    drawCumulative(view, colors, heights.cumulative, compact);
+    drawMonthlyDistance(months, colors, heights.standard);
+    drawMonthlyPace(months, colors, heights.standard);
+    drawEasyPace(view.easyPace, colors, heights.standard);
+    drawLoad(view, colors, heights.standard);
   }
 
-  const metrics = new StravaMetrics(data);
-  const predictions = metrics.predictRaceTimes();
+  /* ---------- start ---------- */
 
-  const predElement = document.querySelector('#race-predictions');
-  if (!predElement) return;
+  function start() {
+    const view = buildView();
+    if (!view.runs.length) return;
 
-  const colors = getThemeColors();
+    renderAllTime(view);
+    renderYear(view);
+    renderCalendar(view);
+    renderRecent(view);
+    renderYears(view);
+    renderTrendNotes(view);
+    renderLoad(view);
+    renderRaces(view);
+    renderWorkouts(view);
+    renderRecords(view);
+    renderMethod(view);
+    renderCharts(view);
 
-  if (!predictions) {
-    predElement.innerHTML =
-      `<p style="text-align: center; color: ${colors.textLight}; padding: 20px;">Not enough data for race predictions.</p>`;
-    return;
+    // ApexCharts loads async so it never holds up the text; draw once it arrives.
+    if (!window.ApexCharts) el('apexcharts-script').addEventListener('load', () => renderCharts(view));
+    // Chart colors are read from CSS, so redraw when the theme or layout changes.
+    new MutationObserver(() => renderCharts(view))
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    window.matchMedia(COMPACT_QUERY).addEventListener('change', () => renderCharts(view));
   }
 
-  let html = `
-    <div class="predictions-header">
-      <p>Based on current VO2max: <strong>${predictions.currentVO2max}</strong> ml/kg/min</p>
-    </div>
-    <table class="predictions-table">
-      <thead>
-        <tr>
-          <th>Distance</th>
-          <th>Predicted Time</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
-
-  for (const [distance, time] of Object.entries(predictions.predictions)) {
-    html += `
-      <tr>
-        <td>${distance}</td>
-        <td>${time}</td>
-      </tr>
-    `;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
-
-  html += `
-      </tbody>
-    </table>
-  `;
-
-  predElement.innerHTML = html;
-}
-
-/**
- * Training Load Chart (CTL/ATL/TSB)
- */
-function initializeTrainingLoadChart(data) {
-  if (!data.activities) {
-    return;
-  }
-
-  const metrics = new StravaMetrics(data);
-  const history = metrics.generateTrainingLoadHistory(90);
-
-  const colors = getThemeColors();
-
-  if (history.length === 0) {
-    document.querySelector('#training-load-chart').innerHTML =
-      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">Not enough activity data.</p>`;
-    return;
-  }
-
-  // Calculate warm-up period (first 42 days)
-  const WARMUP_DAYS = 42;
-  const firstDateObj = parseLocalDateKey(history[0].date);
-  const firstDate = firstDateObj ? firstDateObj.getTime() : new Date(history[0].date).getTime();
-  const warmupEndDate = firstDateObj ? new Date(firstDateObj) : new Date(history[0].date);
-  warmupEndDate.setDate(warmupEndDate.getDate() + WARMUP_DAYS);
-  const warmupEndTime = warmupEndDate.getTime();
-  const lastDateObj = parseLocalDateKey(history[history.length - 1].date);
-  const lastDate = lastDateObj ? lastDateObj.getTime() : new Date(history[history.length - 1].date).getTime();
-
-  // Check if entire dataset is within warm-up period
-  const entirelyWarmup = history.length <= WARMUP_DAYS;
-
-  const options = {
-    series: [
-      {
-        name: 'CTL (Fitness)',
-        data: history.map(h => ({ x: parseLocalDateKey(h.date)?.getTime(), y: h.ctl }))
-      },
-      {
-        name: 'ATL (Fatigue)',
-        data: history.map(h => ({ x: parseLocalDateKey(h.date)?.getTime(), y: h.atl }))
-      },
-      {
-        name: 'TSB (Form)',
-        data: history.map(h => ({ x: parseLocalDateKey(h.date)?.getTime(), y: h.tsb }))
-      }
-    ],
-    chart: {
-      type: 'line',
-      height: 400,
-      toolbar: {
-        show: false
-      },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    stroke: {
-      curve: 'smooth',
-      width: 2
-    },
-    colors: ['#4169E1', '#DC143C', '#32CD32'],
-    xaxis: {
-      type: 'datetime',
-      title: {
-        text: 'Date',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        },
-        formatter: function(val) {
-          const parsed = typeof val === 'number' ? val : parseInt(val, 10);
-          return Number.isFinite(parsed) ? formatDateFromTimestamp(parsed) : val;
-        }
-      }
-    },
-    yaxis: {
-      title: {
-        text: 'Training Load',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      }
-    },
-    grid: {
-      borderColor: colors.borderPrimary
-    },
-    legend: {
-      position: 'top',
-      horizontalAlign: 'center',
-      labels: {
-        colors: colors.textPrimary
-      }
-    },
-    tooltip: {
-      theme: getTooltipTheme(),
-      x: {
-        formatter: function(val) {
-          return formatDateFromTimestamp(val);
-        }
-      }
-    },
-    annotations: {
-      xaxis: [
-        {
-          x: firstDate,
-          x2: entirelyWarmup ? lastDate : warmupEndTime,
-          fillColor: colors.textMuted,
-          opacity: 0.15,
-          label: {
-            text: 'Warm-up period',
-            borderColor: 'transparent',
-            style: {
-              color: colors.textMuted,
-              background: 'transparent',
-              fontSize: '11px'
-            },
-            position: 'top',
-            offsetY: 0
-          }
-        }
-      ]
-    }
-  };
-
-  const chart = new ApexCharts(document.querySelector('#training-load-chart'), options);
-  chart.render();
-  chartInstances.trainingLoad = chart;
-
-  // Add warning caption below the chart
-  const chartContainer = document.querySelector('#training-load-chart').parentElement;
-  let captionElement = chartContainer.querySelector('.warmup-caption');
-
-  if (!captionElement) {
-    captionElement = document.createElement('p');
-    captionElement.className = 'warmup-caption';
-    chartContainer.appendChild(captionElement);
-  }
-
-  captionElement.innerHTML = '⚠️ <strong>Model warm-up:</strong> Absolute fitness values may be underestimated during the first 6 weeks due to limited historical data.';
-}
-
-/**
- * Power-Duration Curve Chart
- */
-function initializePowerCurveChart(data) {
-  if (!data.activities) {
-    return;
-  }
-
-  const metrics = new StravaMetrics(data);
-  const powerData = metrics.analyzePowerCurve();
-
-  const chartElement = document.querySelector('#power-curve-chart');
-  if (!chartElement) return;
-
-  const colors = getThemeColors();
-
-  if (!powerData || powerData.curve.length === 0) {
-    chartElement.innerHTML =
-      `<p style="text-align: center; color: ${colors.textLight}; padding: 40px;">No power data available. Power meter required.</p>`;
-    return;
-  }
-
-  const options = {
-    series: [{
-      name: 'Best Power',
-      data: powerData.curve.map(c => ({
-        x: c.duration,
-        y: c.power
-      }))
-    }],
-    chart: {
-      type: 'line',
-      height: 350,
-      toolbar: {
-        show: false
-      },
-      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    },
-    stroke: {
-      curve: 'smooth',
-      width: 2
-    },
-    colors: [colors.textPrimary],
-    xaxis: {
-      type: 'numeric',
-      title: {
-        text: 'Duration (seconds)',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        },
-        formatter: function(val) {
-          if (val < 60) return val + 's';
-          if (val < 3600) return (val / 60).toFixed(0) + 'min';
-          return (val / 3600).toFixed(1) + 'h';
-        }
-      }
-    },
-    yaxis: {
-      title: {
-        text: 'Power (watts)',
-        style: {
-          color: colors.textPrimary,
-          fontSize: '12px'
-        }
-      },
-      labels: {
-        style: {
-          colors: colors.textPrimary,
-          fontSize: '12px'
-        }
-      }
-    },
-    grid: {
-      borderColor: colors.borderPrimary
-    },
-    markers: {
-      size: 5,
-      strokeWidth: 1,
-      strokeColors: colors.bgPrimary,
-      hover: {
-        size: 7
-      }
-    },
-    tooltip: {
-      theme: getTooltipTheme(),
-      custom: function({ seriesIndex, dataPointIndex, w }) {
-        const colors = getThemeColors();
-        const point = powerData.curve[dataPointIndex];
-        let durationStr = '';
-        if (point.duration < 60) durationStr = point.duration + 's';
-        else if (point.duration < 3600) durationStr = Math.round(point.duration / 60) + ' min';
-        else durationStr = (point.duration / 3600).toFixed(1) + ' hours';
-
-        return `<div style="padding: 10px; background: ${colors.bgPrimary}; border: 1px solid ${colors.borderPrimary}; border-radius: 4px;">
-          <strong>${point.activityName}</strong><br>
-          ${formatDateFromISO(point.date)}<br>
-          <strong>Duration:</strong> ${durationStr}<br>
-          <strong>Power:</strong> ${point.power}W
-        </div>`;
-      }
-    },
-    annotations: powerData.criticalPower ? {
-      yaxis: [{
-        y: powerData.criticalPower.cp,
-        borderColor: colors.textLight,
-        label: {
-          borderColor: colors.textLight,
-          style: {
-            color: colors.bgPrimary,
-            background: colors.textLight,
-          },
-          text: `Critical Power: ${powerData.criticalPower.cp}W`
-        }
-      }]
-    } : {}
-  };
-
-  const chart = new ApexCharts(chartElement, options);
-  chart.render();
-  chartInstances.powerCurve = chart;
-}
-
-/**
- * Interval Scorecard Table
- */
-function initializeIntervalScorecard(data) {
-  if (!data.activities) {
-    return;
-  }
-
-  const metrics = new StravaMetrics(data);
-  const intervals = metrics.detectIntervals();
-
-  const scorecardElement = document.querySelector('#interval-scorecard');
-  if (!scorecardElement) return;
-
-  const colors = getThemeColors();
-
-  if (intervals.length === 0) {
-    scorecardElement.innerHTML =
-      `<p style="text-align: center; color: ${colors.textLight}; padding: 20px;">No interval workouts detected. Workouts with "interval", "tempo", or "rep" in the name will appear here.</p>`;
-    return;
-  }
-
-  // Show last 10 interval workouts
-  const recentIntervals = intervals.slice(0, 10);
-
-  let html = `
-    <table class="interval-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Workout</th>
-          <th>Distance</th>
-          <th>Avg Pace</th>
-          <th>Avg HR</th>
-          <th>Avg Power</th>
-          <th>TSS</th>
-          <th>Quality</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
-
-  for (const workout of recentIntervals) {
-    html += `
-      <tr>
-        <td>${formatDateFromISO(workout.date)}</td>
-        <td class="workout-name">${workout.name}</td>
-        <td>${workout.distance} km</td>
-        <td>${workout.avgPace}</td>
-        <td>${workout.avgHR ? workout.avgHR + ' bpm' : '-'}</td>
-        <td>${workout.avgPower ? workout.avgPower + 'W' : '-'}</td>
-        <td>${workout.tss}</td>
-        <td><span class="quality-badge quality-${Math.floor(workout.quality / 3)}">${workout.quality.toFixed(1)}/10</span></td>
-      </tr>
-    `;
-  }
-
-  html += `
-      </tbody>
-    </table>
-  `;
-
-  scorecardElement.innerHTML = html;
-}
+})();
