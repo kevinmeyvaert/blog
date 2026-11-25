@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-24T13:30:35Z",
+  "last_updated": "2026-11-25T12:31:50Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21109351948,
+      "name": "fris aan de vis",
+      "date": "2026-11-24T17:16:27Z",
+      "distance": 7037.5,
+      "moving_time": 1859,
+      "kudos_count": 5,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21083342784,
       "name": "herfstjog",
@@ -1607,8 +1616,8 @@
     }
   ],
   "summary": {
-    "total_runs": 178,
+    "total_runs": 179,
     "ward_kudos": 134,
-    "loyalty_pct": 75.3
+    "loyalty_pct": 74.9
   }
 }
