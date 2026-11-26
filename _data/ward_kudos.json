@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-25T12:31:50Z",
+  "last_updated": "2026-11-26T12:10:37Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21122651356,
+      "name": "3 x 8 x 200m yeet",
+      "date": "2026-11-25T17:59:23Z",
+      "distance": 15575.2,
+      "moving_time": 4081,
+      "kudos_count": 4,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21109351948,
       "name": "fris aan de vis",
@@ -1616,8 +1625,8 @@
     }
   ],
   "summary": {
-    "total_runs": 179,
+    "total_runs": 180,
     "ward_kudos": 134,
-    "loyalty_pct": 74.9
+    "loyalty_pct": 74.4
   }
 }
