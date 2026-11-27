@@ -1,8 +1,17 @@
 {
-  "last_updated": "2026-11-26T12:10:37Z",
+  "last_updated": "2026-11-27T11:58:59Z",
   "ward_name": "Ward",
   "period_start": "2026-03-24",
   "activities": [
+    {
+      "activity_id": 21134688275,
+      "name": "niet ok",
+      "date": "2026-11-26T17:50:13Z",
+      "distance": 13061.5,
+      "moving_time": 3617,
+      "kudos_count": 5,
+      "ward_kudoed": false
+    },
     {
       "activity_id": 21122651356,
       "name": "3 x 8 x 200m yeet",
@@ -1625,8 +1634,8 @@
     }
   ],
   "summary": {
-    "total_runs": 180,
+    "total_runs": 181,
     "ward_kudos": 134,
-    "loyalty_pct": 74.4
+    "loyalty_pct": 74
   }
 }
